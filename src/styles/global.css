@@ -1,0 +1,21 @@
+@import "tailwindcss";
+@import "@fontsource-variable/inter";
+
+:root {
+  --navy: #0F2041;
+  --navy-dark: #0A0D1A;
+  --accent: #1E6FF5;
+  --accent-hover: #1558cc;
+  --light: #F0F4FF;
+  --body: #0D141A;
+  --muted: #56585E;
+  --white: #FFFFFF;
+}
+
+* {
+  font-family: 'Inter Variable', 'Inter', system-ui, sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
