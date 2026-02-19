@@ -1,0 +1,176 @@
+---
+const faqs = [
+  {
+    q: "What exactly does JD Fortress AI provide?",
+    a: `We deploy advanced large language models (LLMs) and custom retrieval-augmented generation (RAG) pipelines entirely on your premises — on your hardware, in your VPC, or in fully air-gapped environments.<br><br>No internet connection is required for operation. Your data never leaves your network or touches any external cloud provider. This gives you AI comparable to leading tools, but built exclusively around your own documents, policies, contracts, procedures, and knowledge — ask detailed questions and get precise, cited answers from your own sources.<br><br>For teams ready for the next step, we can layer on agentic capabilities: proactive, always-on AI assistants that monitor channels, triage issues, execute routine tasks, and handle workflows autonomously — all running locally on your infrastructure with the same zero-leak guarantees.`
+  },
+  {
+    q: "What are typical use cases for a law firm?",
+    a: `Here are examples we\u2019ve seen with law firms running our secure, local RAG system:<br><br>
+<ul>
+<li>Pull and summarise relevant case law, precedents, or internal notes instantly when preparing advice, pleadings, or opinions — cutting research time significantly.</li>
+<li>Upload new regulations, client contracts, or updates and have the system highlight potential risks, inconsistencies, or next steps for compliance review.</li>
+<li>Produce first-draft letters, NDAs, engagement letters, or other standard documents in your firm\u2019s style, referencing past examples from your repository.</li>
+<li>Handle due-diligence requests during transactions by quickly searching and cross-referencing your full document set.</li>
+<li>Give junior lawyers and paralegals reliable, context-aware explanations of clauses, procedures, or points of law — without sending anything externally.</li>
+<li>With agentic mode enabled: an always-on assistant monitors incoming queries, retrieves context from your knowledge base, drafts compliant responses or flags issues proactively (often overnight), and escalates only when human review is needed — freeing senior staff for higher-value work.</li>
+</ul>`
+  },
+  {
+    q: "How much does it cost?",
+    a: `Pricing depends on your setup: model size, number of users, storage volume, whether it\u2019s air-gapped, and any professional services for data ingestion, customisation, or agentic extensions.<br><br>Under conservative assumptions, many clients see payback within 6 months through time saved and reduced risk exposure. Agentic features can accelerate ROI further by automating ongoing workflows.<br><br><a href="mailto:contact@jdfortress.com" style="color:#1E6FF5;">Contact us</a> for a tailored discussion and quote \u2014 no obligation.`
+  },
+  {
+    q: "How frequently are the underlying language models updated, and who handles this?",
+    a: `We refresh the core models roughly every six months, timed to major capability jumps in the LLM field that justify the update effort. Updates are fully offline: we deliver new model weights via secure transfer (encrypted drives or similar), and your team \u2014 or ours during onboarding/support \u2014 applies them.<br><br>Since the entire system has no internet exposure, there are no ongoing security patches or vulnerability scans needed for the deployment itself \u2014 no external attack surface. This holds true even when running proactive agents.`
+  },
+  {
+    q: "How does my company\u2019s data get integrated into the AI system?",
+    a: `Data integration is handled end-to-end by our team as part of deployment. We work with you to:<br><br>
+<ul>
+<li>Organise and securely export your documents and knowledge sources</li>
+<li>Convert formats as needed</li>
+<li>Create vector embeddings and build the searchable index (the RAG foundation)</li>
+<li>Tune the retrieval and generation pipeline to match your workflows and terminology</li>
+</ul>
+You don\u2019t manage the technical pipeline \u2014 we set it up, test it with your data, and hand over a working system. Ongoing additions or tweaks are straightforward.`
+  },
+  {
+    q: "What if much of our data still exists only on paper?",
+    a: `We can handle that. Through optional professional services, we coordinate secure scanning and OCR to turn physical files into searchable digital text ready for ingestion. This is quoted separately based on volume and complexity \u2014 get in touch for details and a realistic timeline. Digitised content then feeds seamlessly into both standard RAG queries and any proactive agent behaviours.`
+  },
+  {
+    q: "Can email archives be included in the knowledge base?",
+    a: `Yes \u2014 archived email exports (PST, EML, or similar) are one of the richest sources of institutional knowledge we incorporate.<br><br>For compliance, we stick to non-live, historical exports only \u2014 no live mailbox connections. We can set up a completely local, agent-triggered refresh schedule (e.g., weekly ingestions) that keeps the knowledge base current without ongoing risk.`
+  },
+  {
+    q: "Which file formats are supported?",
+    a: `We fully support the most common business formats, including:<br><br>
+<ul>
+<li>PDF</li>
+<li>Microsoft Word (.doc, .docx)</li>
+<li>Microsoft Excel (.xls, .xlsx)</li>
+<li>Microsoft PowerPoint (.ppt, .pptx)</li>
+<li>Plain text, Markdown, emails, and scanned images via OCR</li>
+</ul>
+The pipeline manages both structured and unstructured content effectively \u2014 whether for on-demand queries or feeding into proactive agent tools.`
+  },
+  {
+    q: "How frequently is the ingested data refreshed or updated?",
+    a: `Refresh cadence is entirely up to you and defined in your service agreement. Options include:<br><br>
+<ul>
+<li>Manual/on-demand (e.g., after major document updates)</li>
+<li>Scheduled automated syncs (daily, weekly, monthly) where feasible within your security rules</li>
+</ul>
+For agentic deployments, more frequent controlled refreshes can keep proactive behaviours highly relevant. We discuss the right frequency during setup.`
+  },
+  {
+    q: "Since the system is fully isolated, how do I actually get answers on my everyday work computer?",
+    a: `In true air-gapped setups (common for our highest-security clients), the system runs isolated by design. Practical access options we help implement:<br><br>
+<ul>
+<li>Run the interface on a dedicated secure workstation or thin client connected via internal LAN (browser-based or approved app).</li>
+<li>Use controlled removable media (encrypted USB drives) to transfer queries in and responses out \u2014 sneakernet style.</li>
+<li>For agentic features: configure internal triggers (e.g., file drops, scheduled checks, or approved messaging channels on a segmented network) so the AI monitors and acts without needing constant manual input.</li>
+</ul>
+Many clients find this deliberate separation actually improves focus, auditability, and compliance \u2014 especially when agents handle routine monitoring autonomously.`
+  },
+  {
+    q: "If my data is already stored securely in Google Cloud, why is a local AI solution more secure?",
+    a: `Even when data resides in a highly secure cloud environment, sending that data to a third-party LLM provider creates a material risk: your confidential information temporarily leaves your perimeter and is processed by someone else\u2019s infrastructure.<br><br>With JD Fortress:<br><br>
+<ul>
+<li>Your data never leaves your controlled environment to reach an external LLM.</li>
+<li>You keep using your existing secure cloud storage as the source of truth.</li>
+<li>All AI inference happens locally \u2014 so answers, insights, and generated content remain entirely within your fortress.</li>
+</ul>
+This gives you the best of both worlds: the convenience of cloud-hosted data with the ironclad privacy of offline, on-premises AI.`
+  }
+];
+---
+
+<div class="faq-list">
+  {faqs.map((item, i) => (
+    <details class="faq-item">
+      <summary class="faq-question">
+        <span class="faq-q-text">{item.q}</span>
+        <span class="faq-chevron" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+            <path d="M5 7.5L10 12.5L15 7.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </span>
+      </summary>
+      <div class="faq-answer" set:html={item.a} />
+    </details>
+  ))}
+</div>
+
+<style is:global>
+  .faq-list {
+    border-top: 1px solid #e0e8f5;
+  }
+
+  .faq-item {
+    border-bottom: 1px solid #e0e8f5;
+  }
+
+  .faq-item[open] .faq-chevron {
+    transform: rotate(180deg);
+  }
+
+  .faq-question {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 22px 0;
+    cursor: pointer;
+    list-style: none;
+    user-select: none;
+  }
+
+  .faq-question::-webkit-details-marker {
+    display: none;
+  }
+
+  .faq-q-text {
+    color: #0D141A;
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 1.4;
+    flex: 1;
+    transition: color 0.15s;
+  }
+
+  .faq-question:hover .faq-q-text {
+    color: #1E6FF5;
+  }
+
+  .faq-chevron {
+    color: #1E6FF5;
+    flex-shrink: 0;
+    transition: transform 0.25s ease;
+  }
+
+  .faq-answer {
+    color: #374151;
+    font-size: 0.96rem;
+    line-height: 1.8;
+    padding: 0 0 24px;
+    padding-right: 36px;
+  }
+
+  .faq-answer ul {
+    padding-left: 1.4rem;
+    margin: 0.75rem 0;
+    list-style-type: disc;
+  }
+
+  .faq-answer li {
+    margin-bottom: 0.5rem;
+  }
+
+  .faq-answer a {
+    color: #1E6FF5;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+</style>

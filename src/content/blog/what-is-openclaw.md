@@ -45,6 +45,6 @@ If your organisation has valuable internal knowledge, needs 24/7 monitoring/auto
 
 We’ve seen enough to be convinced. The future has claws — and it runs on your hardware.
 
----
+* * *
 
 *JD Fortress AI builds secure, on-premises RAG and agent solutions for UK businesses in regulated sectors. If you’re exploring always-on, private AI teammates, get in touch for a confidential discussion — no pitch, just practical talk.*

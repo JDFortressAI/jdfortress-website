@@ -1,24 +1,31 @@
 ---
-import { getCollection, getEntry } from 'astro:content';
+import { getCollection, render } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
 
 export async function getStaticPaths() {
   const posts = await getCollection('blog');
   return posts.map((post) => ({
-    params: { slug: post.slug },
+    params: { slug: post.id },
     props: { post },
   }));
 }
 
 const { post } = Astro.props;
-const { Content } = await post.render();
+const { Content } = await render(post);
+const isFuture = post.data.date > new Date();
 
 function formatDate(date: Date) {
   return date.toLocaleDateString('en-GB', { year: 'numeric', month: 'long', day: 'numeric' });
 }
 ---
 
-<Layout title={`${post.data.title} — JD Fortress AI`} description={post.data.excerpt}>
+<Layout title={`${post.data.title} — JD Fortress AI`} description={post.data.excerpt} noindex={isFuture}>
+
+  {isFuture && (
+    <div style="background:#fef3c7; border-bottom:1px solid #f59e0b; padding:10px 24px; text-align:center;">
+      <span style="color:#92400e; font-size:0.85rem; font-weight:600;">🐛 Debug preview — this post is scheduled for {formatDate(post.data.date)} and is not yet publicly visible.</span>
+    </div>
+  )}
 
   <!-- HERO -->
   <section style="background:#0F2041; padding:80px 24px 64px;">

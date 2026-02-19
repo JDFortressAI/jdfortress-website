@@ -1,8 +1,8 @@
 ---
-title: “What is RAG and Why Does It Matter for Your Business?”
+title: "What is RAG and Why Does It Matter for Your Business?"
 date: 2026-02-10
-excerpt: “Retrieval-Augmented Generation lets AI answer questions using your own documents. Here’s what it means, how it works, and why it’s the missing piece for businesses that can’t share their data with public AI.“
-author: “JD Fortress AI”
+excerpt: "Retrieval-Augmented Generation lets AI answer questions using your own documents. Here’s what it means, how it works, and why it’s the missing piece for businesses that can’t share their data with public AI."
+author: JD Fortress AI
 ---
 
 If you’ve been trying to get your head around AI for your business, you’ve probably heard the term RAG. It sounds technical — and it is — but the concept is surprisingly straightforward, and the implications for businesses with sensitive data are significant.
@@ -47,6 +47,6 @@ RAG is valuable for any organisation that:
 
 If that sounds like your business, we should talk.
 
----
+* * *
 
 *JD Fortress AI builds custom RAG pipelines for UK businesses. [Get in touch](/contact) for a confidential conversation.*

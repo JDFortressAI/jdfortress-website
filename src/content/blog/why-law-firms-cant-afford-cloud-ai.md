@@ -1,8 +1,8 @@
 ---
-title: “Why High Street Law Firms Can’t Afford Cloud AI”
+title: "Why High Street Law Firms Can’t Afford Cloud AI"
 date: 2026-02-03
-excerpt: “Cloud AI tools promise efficiency. But for law firms, every document you upload could be a professional conduct breach. Here’s what partners need to know.“
-author: “JD Fortress AI”
+excerpt: "Cloud AI tools promise efficiency. But for law firms, every document you upload could be a professional conduct breach. Here’s what partners need to know."
+author: "JD Fortress AI"
 ---
 
 Over the past few months we have sat down with several people working right at the coalface of legal AI adoption in the UK: partners at mid-sized High Street firms, in-house legal teams at corporates, and sales reps who spend their days pitching tools to cautious practices.
@@ -36,6 +36,6 @@ The real question isn’t “Can we afford to run our own AI stack?” It’s �
 
 If you’re a partner or compliance lead weighing the same trade-offs Alex, Jack, and their peers are, we’re happy to talk through what a realistic, low-friction on-premises option looks like for your firm — no hard sell, just a confidential conversation.
 
----
+* * *
 
 *JD Fortress AI deploys secure, on-premises AI for law firms across the UK. Get in touch for a no-obligation discussion.*
