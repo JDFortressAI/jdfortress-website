@@ -12,7 +12,9 @@
   --white: #FFFFFF;
 }
 
-* {
+*,
+html,
+body {
   font-family: 'Inter Variable', 'Inter', system-ui, sans-serif;
 }
 
