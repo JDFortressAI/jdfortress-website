@@ -1,0 +1,173 @@
+# ============================================================
+# JD Fortress — Cost Reduction Calculator Configuration
+# Edit this file to adjust all calculator values, ranges,
+# labels and notes. The page re-reads this on every build.
+# ============================================================
+
+meta:
+  title: "JDFortVault ROI Calculator"
+  heroHeading: "See How Much Your Firm Could Save"
+  heroSubtitle: >
+    Adjust the sliders below to match your firm.
+    The financial case updates instantly.
+  tagline: "Your Data. Your AI. Your Fortress."
+  founders: "Joseph & Dev"
+  foundersTitle: "Founders, JD Fortress AI Ltd"
+  foundersQuote: "Give Your Employees Superpowers"
+  contactEmail: "contact@jdfortress.com"
+  contactPhone: "07401 059732"
+
+# ============================================================
+# USER INPUTS — drives slider rendering and validation
+# ============================================================
+inputs:
+  - id: lawyers
+    label: "Number of Lawyers"
+    default: 5
+    min: 2
+    max: 15
+    step: 1
+    unit: ""
+    description: "How many users will interact with the AI system"
+
+  - id: vaults
+    label: "Number of JDF Vaults"
+    default: 3
+    min: 1
+    max: 10
+    step: 1
+    unit: ""
+    description: "Hardware units to be deployed"
+
+  - id: timeHorizon
+    label: "Time Horizon"
+    default: 2
+    min: 1
+    max: 5
+    step: 1
+    unit: "years"
+    description: "Period over which to evaluate costs vs. benefits"
+
+# ============================================================
+# CONSTANTS — cost assumptions
+# All GBP values are in whole pounds unless noted.
+# format: gbp | percent | multiplier | integer | decimal
+# ============================================================
+costs:
+  - id: hardwareCostPerVault
+    value: 9000
+    label: "Hardware per Vault"
+    format: gbp
+    note: "2026 Premium On-Prem AI Appliance (extreme memory tier, custom lockdown for zero-exposure environments"
+
+  - id: setupCostFirst
+    value: 6000
+    label: "Setup — first Vault"
+    format: gbp
+    note: "Professional installation, RAG pipeline config, data source integration, security audits"
+
+  - id: setupCostAdditional
+    value: 2000
+    label: "Setup — each additional Vault"
+    format: gbp
+    note: "Incremental setup cost for each unit beyond the first"
+
+  - id: trainingCost
+    value: 2000
+    label: "Training (one-off)"
+    format: gbp
+    note: "On-site or virtual training for up to 10 users"
+
+  - id: vatRate
+    value: 0.20
+    label: "VAT rate"
+    format: percent
+    note: "UK standard rate applied to initial costs"
+
+  - id: electricityCostPerVaultMonth
+    value: 44.80
+    label: "Electricity per Vault / month"
+    format: gbp
+    note: "Based on 800W average load × 160 hrs/month × £0.35/kWh"
+
+  - id: supportFlatRateMonth
+    value: 3000
+    label: "Support — flat rate (1–3 Vaults) / month"
+    format: gbp
+    note: "Covers 1, 2, or 3 Vaults at the same price — same effort to monitor 1 machine as 3"
+
+  - id: supportCostPerAdditionalVault
+    value: 1000
+    label: "Support — each additional Vault (4+) / month"
+    format: gbp
+    note: "Per Vault per month beyond the first three"
+
+  - id: discountRate
+    value: 0.05
+    label: "Discount rate (NPV)"
+    format: percent
+    note: "Applied to future running costs to calculate net present value"
+
+# ============================================================
+# CONSTANTS — benefit assumptions
+# ============================================================
+benefits:
+  - id: productivityMultiplier
+    value: 1.2
+    label: "Productivity multiplier"
+    format: multiplier
+    note: "Your lawyers, powered by fortress-secure AI, operate at 1.2× productivity"
+
+  - id: hoursPerMonth
+    value: 160
+    label: "Working hours / month"
+    format: integer
+    note: "8 hours/day × 20 working days"
+
+  - id: recoupRate
+    value: 0.50
+    label: "Freed-hour recoup rate"
+    format: percent
+    note: "Proportion of freed-up time that converts to billable hours (the rest is admin, breaks, etc.)"
+
+  - id: avgSalaryYear
+    value: 85000
+    label: "Avg. lawyer salary / year"
+    format: gbp
+    note: "Mid-level UK solicitor; includes benefits & overheads at 1.5× base"
+
+  - id: hiringCostPerFTE
+    value: 10000
+    label: "Hiring cost per FTE"
+    format: gbp
+    note: "Recruitment fees + onboarding cost"
+
+  - id: billingRate
+    value: 300
+    label: "Billing rate per hour"
+    format: gbp
+    note: "Client-facing hourly rate"
+
+# ============================================================
+# PRODUCT COMPARISON TABLE
+# ============================================================
+products:
+  highlighted: "JDFVault"
+  columns:
+    - name: "JDFSpan"
+    - name: "JDFVault"
+      highlight: true
+    - name: "JDFTower"
+  rows:
+    - label: "Hardware"
+      values: ["Varies", 9000, 50000]
+    - label: "Software Setup"
+      values: [6000, 6000, 9000]
+    - label: "Ongoing Costs (Electricity + Hosting)"
+      values: [3000, 500, 1500]
+    - label: "Monthly Support (including VAT)"
+      values: [3000, 3000, 9000]
+      bold: true
+  footnote: >
+    The calculator above models JDFVault specifically.
+    Comparison uses indicative product catalogue figures.
