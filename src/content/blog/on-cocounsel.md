@@ -9,7 +9,7 @@ author: "JD Fortress AI"
 Thomson Reuters has been a fixture in legal research for generations, so when their CoCounsel platform started getting serious attention as a generative AI assistant for lawyers, we paid attention.
 
 First, a quick note on Practical Law, since CoCounsel builds heavily on it. Practical Law is essentially a vast, curated know-how resource: over 118,000 documents across practice areas, including standard clauses, drafting notes, checklists, and plain-language explanations maintained by hundreds of experienced attorney-editors. It’s designed to help practitioners (especially in firms without massive libraries) draft faster, understand unfamiliar areas, and stay current on changes. For UK firms, it offers solid coverage of English/Welsh law alongside global materials. CoCounsel integrates this content directly, grounding its AI outputs in those authoritative sources rather than pure open-web generation.
-From what we've gathered talking to contacts and reviewing public materials, the main attractions for High Street and mid-sized firms seem to be:
+From what we’ve gathered talking to contacts and reviewing public materials, the main attractions for High Street and mid-sized firms seem to be:
 
 Speed on repetitive tasks: document review, contract drafting, summarising large sets of materials, spotting issues in litigation docs, or pulling together research plans.
 
