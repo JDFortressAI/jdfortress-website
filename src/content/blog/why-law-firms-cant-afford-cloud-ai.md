@@ -5,7 +5,7 @@ excerpt: "Cloud AI tools promise efficiency. But for law firms, every document y
 author: "JD Fortress AI"
 ---
 
-Over the past few months we have sat down with several people working right at the coalface of legal AI adoption in the UK: partners at mid-sized High Street firms, in-house legal teams at corporates, and sales reps who spend their days pitching tools to cautious practices.
+Over the past few months we have sat down with several people working right at the coalface of legal AI adoption in the UK: partners at mid-sized High Street firms, [in-house legal teams](/blog/gen-ai-for-in-house-lawyers) at corporates, and sales reps who spend their days pitching tools to cautious practices.
 
 Alex runs compliance at a 15-partner firm in Hertfordshire—mostly property, family, and small commercial work. He told me straight: “We trialled one of the big-name cloud legal AIs last year. The speed was impressive, but as soon as someone asked ‘Where exactly is our clients’ data going?’, the conversation stopped. No one could give a clean answer that satisfied the risk register.”
 
@@ -19,7 +19,7 @@ Under SRA Principle 6 (and paragraph 6.3 of the Code of Conduct for Solicitors),
 
 ## The CLOUD Act Isn’t Going Away
 
-Most of the popular legal AI platforms — whether from US-headquartered providers like OpenAI, Microsoft, Thomson Reuters, or others — fall under US jurisdiction. That brings the CLOUD Act into play: US authorities can compel those companies to hand over data, even if it’s stored in European data centres. Recent commentary from law firms and data protection specialists underlines that the US–UK Data Access Agreement hasn’t eliminated the underlying exposure; it’s simply streamlined one channel for law enforcement requests.
+Most of the popular legal AI platforms — whether from US-headquartered providers like OpenAI, Microsoft, Thomson Reuters, or others — fall under US jurisdiction. That brings the [CLOUD Act](/blog/chatgpt-discovery-legal-risk) into play: US authorities can compel those companies to hand over data, even if it’s stored in European data centres. Recent commentary from law firms and data protection specialists underlines that the US–UK Data Access Agreement hasn’t eliminated the underlying exposure; it’s simply streamlined one channel for law enforcement requests.
 
 For a High Street firm handling personal injury, conveyancing, or probate, that’s not an abstract risk — it’s a potential breach of client trust that no professional indemnity insurer wants to defend.
 
@@ -27,7 +27,7 @@ For a High Street firm handling personal injury, conveyancing, or probate, that�
 
 The practices that are getting real value from AI aren’t rejecting it — they’re insisting on architectures that keep the risk profile acceptable.
 
-On-premises (or private VPC/air-gapped) deployment is the route many are taking. The model and the inference happen inside the firm’s own perimeter: no documents transit the public internet, no third-party processor touches the data, no CLOUD Act reach. The productivity lift — faster research, document summarisation, drafting first cuts — remains the same, but the compliance headache disappears.
+[On-premises (or private VPC/air-gapped) deployment](/blog/what-is-rag) is the route many are taking. The model and the inference happen inside the firm’s own perimeter: no documents transit the public internet, no third-party processor touches the data, no CLOUD Act reach. The productivity lift — faster research, document summarisation, drafting first cuts — remains the same, but the compliance headache disappears.
 
 ## The Bottom Line for High Street Practices
 

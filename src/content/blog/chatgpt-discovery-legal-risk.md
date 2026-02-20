@@ -21,7 +21,7 @@ The practical upshot: for users on standard Free, Plus, Pro, or Team plans, and 
 
 ## Two distinct risks for UK businesses
 
-The first risk is straightforward: your organisation's ChatGPT conversations could become evidence in US legal proceedings, even if your business has no direct connection to the case. The CLOUD Act means US federal authorities can compel US-headquartered AI providers — OpenAI, Microsoft, Google — to produce data regardless of where the user is located or where the data is nominally stored. You don't need to be a party to a US lawsuit for your chats to become relevant.
+The first risk is straightforward: your organisation's ChatGPT conversations could become evidence in US legal proceedings, even if your business has no direct connection to the case. The [CLOUD Act](/blog/why-law-firms-cant-afford-cloud-ai) means US federal authorities can compel US-headquartered AI providers — OpenAI, Microsoft, Google — to produce data regardless of where the user is located or where the data is nominally stored. You don't need to be a party to a US lawsuit for your chats to become relevant.
 
 The second risk is closer to home. UK litigation carries its own disclosure obligations. If a dispute arises — commercial, employment, regulatory — and AI conversations are relevant to the facts in question, a UK court can order disclosure of any documents in your control, including communications with third-party platforms. "We deleted it" is not a defence if the data still exists on a vendor's servers and is recoverable. The question of whether AI chat logs constitute "documents" for the purposes of UK disclosure is still being tested, but the direction of travel is clear.
 
@@ -31,7 +31,7 @@ Helen, a compliance director at a mid-sized financial services firm in Mancheste
 
 This is where the *New York Times* case is inadvertently clarifying. The preservation order, and the subsequent 20 million chat log ruling, applied to OpenAI's consumer and standard commercial users — not to Enterprise customers with Zero Data Retention contracts, and not to users operating entirely on private or on-premises infrastructure.
 
-Enterprise-tier agreements with OpenAI exclude user inputs from model training and offer stronger deletion guarantees. But they still involve data transiting OpenAI's servers, and they still carry the underlying exposure to US legal process. The more durable solution is one that doesn't rely on contractual protections at all: AI that runs on infrastructure you control, where the conversation logs are yours alone and no third-party vendor can be compelled to produce them, because they never had them.
+Enterprise-tier agreements with OpenAI exclude user inputs from model training and offer stronger deletion guarantees. But they still involve data transiting OpenAI's servers, and they still carry the underlying exposure to US legal process. The more durable solution is one that doesn't rely on contractual protections at all: AI that runs on [infrastructure you control](/blog/what-is-rag), where the conversation logs are yours alone and no third-party vendor can be compelled to produce them, because they never had them.
 
 That isn't a futuristic arrangement. It's a configuration choice that organisations across regulated sectors are making now — for exactly the reasons this case has put in sharp relief.
 

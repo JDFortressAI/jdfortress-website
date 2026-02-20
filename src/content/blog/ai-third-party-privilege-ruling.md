@@ -5,7 +5,7 @@ excerpt: "A US federal court just stripped legal privilege from documents create
 author: "JD Fortress AI"
 ---
 
-A few months ago, we started hearing a version of the same question from compliance leads at law firms across the south of England: "If a fee earner types something into ChatGPT or Claude, and it relates to a client matter, where does that go?" The honest answer was always: to a server owned by a US tech company, under terms that permit training, disclosure to regulators, and use in ways you haven't fully parsed. Uncomfortable — but, until recently, still somewhat theoretical.
+A few months ago, we started hearing a version of the same question from compliance leads at law firms across the south of England: "If a fee earner types something into [ChatGPT](/blog/chatgpt-discovery-legal-risk) or Claude, and it relates to a client matter, where does that go?" The honest answer was always: to a server owned by a US tech company, under terms that permit training, disclosure to regulators, and use in ways you haven't fully parsed. Uncomfortable — but, until recently, still somewhat theoretical.
 
 On 10 February 2026, it stopped being theoretical.
 
@@ -35,7 +35,7 @@ That distinction matters enormously for how firms approach their technology choi
 
 This is a US ruling, applying US privilege law. But its underlying logic maps directly onto the landscape facing UK solicitors.
 
-Legal professional privilege in England and Wales operates on the same foundational principle: confidentiality. The SRA's own risk outlook on AI notes that "firms adopting AI will need to make sure that their use of it protects confidentiality and legal privilege." Their compliance tips for solicitors urge due diligence on whether third-party AI platforms have been designed so that firms aren't in breach of their obligations. That's measured regulatory language for: if you can't trace where your clients' data goes, you're exposed.
+Legal professional privilege in England and Wales operates on the same foundational principle: confidentiality. The [SRA's own risk outlook on AI](/blog/why-law-firms-cant-afford-cloud-ai) notes that "firms adopting AI will need to make sure that their use of it protects confidentiality and legal privilege." Their compliance tips for solicitors urge due diligence on whether third-party AI platforms have been designed so that firms aren't in breach of their obligations. That's measured regulatory language for: if you can't trace where your clients' data goes, you're exposed.
 
 We spoke recently with a fee earner at a small commercial property firm outside of London. She'd been using a general-purpose AI assistant to help draft correspondence — nothing dramatic, just time-saving. When we asked whether she'd reviewed the tool's data policies, she paused. "I assumed the firm had done that. No one told me not to use it." Her firm had no AI use policy at all.
 
@@ -43,7 +43,7 @@ That scenario is now a privilege waiver waiting to happen.
 
 The Heppner ruling won't bind UK courts. But the question it answers — can a public AI tool constitute a third-party disclosure that destroys legal privilege? — is one UK practitioners should be asking before a domestic court answers it for them.
 
-The answer isn't to ban AI from legal work. It's to ensure that whatever AI your firm uses operates entirely within a controlled, private environment: one where data doesn't transit a public provider's servers, where terms don't permit training on your inputs, and where confidentiality is a structural guarantee rather than a contractual hope.
+The answer isn't to ban AI from legal work. It's to ensure that whatever AI your firm uses operates entirely within a controlled, [private environment](/blog/what-is-rag): one where data doesn't transit a public provider's servers, where terms don't permit training on your inputs, and where confidentiality is a structural guarantee rather than a contractual hope.
 
 If you'd like to understand what that looks like in practice for a firm your size — no jargon, no hard sell — we're happy to talk it through.
 

@@ -29,7 +29,7 @@ Taalas is not alone. The broader industry is moving the same direction. Groq has
 
 ## What this means for the way we think about our product
 
-We deploy AI privately, on-premises, for regulated UK businesses. Today, that means a piece of hardware — a Mac Studio, or a custom server — sitting quietly in a client's office or server room, running frontier models locally. It means no data leaving the building, no vendor with a legal obligation to preserve or disclose conversation logs, no dependency on a cloud provider's pricing decisions or data governance policies.
+We deploy AI privately, on-premises, for regulated UK businesses. Today, that means a piece of hardware — a Mac Studio, or a custom server — sitting quietly in a client's office or server room, running frontier models locally. It means no data leaving the building, no vendor with a legal obligation to [preserve or disclose conversation logs](/blog/chatgpt-discovery-legal-risk), no dependency on a cloud provider's pricing decisions or data governance policies.
 
 The hardware is capable. But it's also bigger, more expensive, and more power-hungry than it needs to be — because the underlying technology hasn't yet found its most efficient form.
 
@@ -43,7 +43,7 @@ We don't know exactly how that future arrives. But we believe it arrives. And th
 
 There's a version of this moment where we wait — where we say the hardware isn't mature enough, the models aren't good enough, the economics aren't there yet. That version exists, and it's a reasonable position.
 
-We've taken a different one. The clients we're working with today — law firms and in-house legal teams handling genuinely sensitive work — aren't waiting for perfect. They want capable, private, and trustworthy now. The hardware available today is good enough to deliver that. What we're building on top of it — the RAG pipelines over client document libraries, the integrations, the compliance documentation, the institutional knowledge of how these systems behave in legal practice contexts — that compounds over time regardless of what the underlying silicon looks like.
+We've taken a different one. The clients we're working with today — law firms and [in-house legal teams](/blog/gen-ai-for-in-house-lawyers) handling genuinely sensitive work — aren't waiting for perfect. They want capable, private, and trustworthy now. The hardware available today is good enough to deliver that. What we're building on top of it — the [RAG pipelines](/blog/what-is-rag) over client document libraries, the integrations, the compliance documentation, the institutional knowledge of how these systems behave in legal practice contexts — that compounds over time regardless of what the underlying silicon looks like.
 
 When the Taalas-shaped future arrives, or something like it, we won't need to rebuild from scratch. We'll swap in the better hardware, and everything we've built on top of it gets dramatically more capable overnight.
 
