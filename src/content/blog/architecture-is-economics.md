@@ -45,7 +45,7 @@ For [enterprises in regulated sectors](/blog/why-law-firms-cant-afford-cloud-ai)
 
 ## What “engineered from day one” actually means
 
-The phrase we use with clients — “engineered from day one for production” — refers precisely to this kind of architectural thinking. Not benchmark results. Not which model version we’re running. The decisions about how context is structured, how tools are loaded, how state transitions are handled, how the prefix is kept stable across the lifetime of a session: these are what determine whether an AI system is economically viable over a three-year deployment rather than just impressive during a proof of concept.
+The phrase we use with clients — “engineered from day one for production” — refers precisely to this kind of architectural thinking. Not benchmark results. Not which model version we’re running. The decisions about how context is structured, how tools are loaded, how state transitions are handled, [how the prefix is kept stable across the lifetime of a session](/blog/cache-rules-everything): these are what determine whether an AI system is economically viable over a three-year deployment rather than just impressive during a proof of concept.
 
 Anthropic’s disclosure is unusual in its candour. Most AI product marketing focuses on capability. What the Claude Code team described is something more useful for anyone actually building or buying these systems: the constraints that separate systems that work in production from systems that look like they work in a demo.
 
