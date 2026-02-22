@@ -37,7 +37,7 @@ The most powerful use case for in-house legal AI isn’t general research or doc
 
 That institutional knowledge retrieval is qualitatively different from anything a general-purpose AI tool provides. It’s also, for obvious reasons, something that requires complete confidence in where that data goes. The document library of a corporate legal function is among the most sensitive information a company holds: M&A materials, employment disputes, commercial negotiations, regulatory exposures. Feeding that into a public AI service — one whose terms permit training on inputs, or [disclosure to third parties](/blog/chatgpt-discovery-legal-risk) — is a risk that grows with the sophistication of the use case.
 
-James, at his logistics company, could begin using a general AI tool to draft NDAs today. What he couldn’t do without a private deployment is ask it to cross-reference every active supplier contract for indemnification terms and flag the three that create the most exposure. That requires a system that works only with his data, on infrastructure he controls.
+James, at his logistics company, could begin using a general AI tool to draft NDAs today. What he couldn’t do without a private deployment is ask it to cross-reference every active supplier contract for indemnification terms and flag the three that create the most exposure. That requires a system that works only with his data, on [infrastructure he controls](/blog/small-enough-to-trust).
 
 That’s the version worth building toward.
 
