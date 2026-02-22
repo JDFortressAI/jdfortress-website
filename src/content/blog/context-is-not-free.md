@@ -39,7 +39,7 @@ For enterprises in [legal, financial, or healthcare settings](/blog/why-law-firm
 
 This is why the architecture of a RAG pipeline matters far more than the size of the context window it uses. The choice of retrieval strategy, the handling of conflicting documents, the pruning of outdated content, the isolation of task-specific contexts from one another - these are engineering decisions that determine whether the system is trustworthy in practice, not just impressive in a demo.
 
-When we build RAG pipelines for clients, context management sits at the centre of every design decision. Not because it's technically interesting - though it is - but because the organisations we work with need to be able to rely on the output. A system that sometimes produces excellent answers and occasionally compounds a retrieval error into something worse is not a system that can be trusted with client work, regulatory submissions, or anything where the cost of a confident wrong answer is high.
+When we build RAG pipelines for clients, [context management sits at the centre of every design decision](/blog/architecture-is-economics). Not because it's technically interesting - though it is - but because the organisations we work with need to be able to rely on the output. A system that sometimes produces excellent answers and occasionally compounds a retrieval error into something worse is not a system that can be trusted with client work, regulatory submissions, or anything where the cost of a confident wrong answer is high.
 
 The context window is a tool. How you fill it is the work.
 
