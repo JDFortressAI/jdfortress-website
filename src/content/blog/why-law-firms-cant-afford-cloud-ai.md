@@ -15,7 +15,7 @@ Samantha works in legal tech sales and covers the full spectrum — from Magic C
 
 ## The SRA Principle 6 Reality
 
-Under SRA Principle 6 (and paragraph 6.3 of the Code of Conduct for Solicitors), confidentiality to clients is absolute — not “reasonable efforts,” not “best endeavours.” Uploading client documents to any third-party cloud service means the data leaves your controlled environment. Even with a data processing addendum in place, the SRA’s position on whether that amounts to impermissible disclosure remains unsettled in 2026. Their latest compliance tips (updated February 2026) remind firms that technology use must still satisfy the full suite of principles, including secure handling of client information. Guidance is evolving, but no one wants to be the test case.
+Under SRA Principle 6 (and paragraph 6.3 of the Code of Conduct for Solicitors), confidentiality to clients is absolute — not “reasonable efforts,” not “best endeavours.” Uploading client documents to any third-party cloud service means [the data leaves your controlled environment](/blog/notebooklm-lawyer-lockout-warning). Even with a data processing addendum in place, the SRA’s position on whether that amounts to impermissible disclosure remains unsettled in 2026. Their latest compliance tips (updated February 2026) remind firms that technology use must still satisfy the full suite of principles, including secure handling of client information. Guidance is evolving, but no one wants to be the test case.
 
 ## The CLOUD Act Isn’t Going Away
 
