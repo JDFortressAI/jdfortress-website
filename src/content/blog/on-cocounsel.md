@@ -1,5 +1,5 @@
 ---
-title: "Our Thoughts on CoCounsel-the "Industry-leading AI assistant for professionals""
+title: "Our Thoughts on CoCounsel—the “Industry-leading AI assistant for professionals”"
 date: 2026-02-24
 excerpt: "CoCounsel from Thomson Reuters promises serious productivity gains for legal work, built on decades of trusted content. But for many UK High Street firms, the cloud-based architecture still raises hard questions about client confidentiality under SRA rules. Here's what we've found."
 author: "JD Fortress AI"
