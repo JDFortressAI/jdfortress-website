@@ -13,7 +13,7 @@ Anthropic has since banned the accounts involved and investigated the incident. 
 
 ## Why guardrails are not a security architecture
 
-Content moderation policies applied to a public AI are not a security control. They are a friction layer — one that slows down unsophisticated or casual misuse, but offers no reliable protection against a motivated attacker with time and determination. The Mexico hacker did not discover a zero-day vulnerability in Claude’s safety systems. They applied the oldest technique in social engineering: keep asking, try different framings, and wait.
+Content moderation policies applied to a public AI are not a security control. They are a [friction layer](/blog/notebooklm-lawyer-lockout-warning) — one that slows down unsophisticated or casual misuse, but offers no reliable protection against a motivated attacker with time and determination. The Mexico hacker did not discover a zero-day vulnerability in Claude’s safety systems. They applied the oldest technique in social engineering: keep asking, try different framings, and wait.
 
 This isn’t a critique of Anthropic’s guardrail engineering. Their researchers are serious and their safety work is genuine. The problem is categorical: any system where an attacker can interact directly with the AI, probe its limits, and iterate on their approach is a system where the AI’s content policy is the primary defence. That is not a design you can make secure by improving the policy. It is a design where the attacker’s patience is the only limiting factor.
 
