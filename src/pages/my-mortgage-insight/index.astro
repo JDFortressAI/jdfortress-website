@@ -1,0 +1,416 @@
+---
+import Layout from '../../layouts/Layout.astro';
+
+const rateScenarios = [0.25, 0.5, 0.75, 1, 1.5, 2, 3, 4];
+---
+
+<Layout
+  title="My Mortgage Insight — JD Fortress Labs"
+  description="Know exactly how much your monthly mortgage payment will change at renewal. Enter three numbers, get instant clarity. No accounts. No data stored."
+>
+
+  <!-- HERO -->
+  <section style="background:#0F2041; padding:100px 24px 90px; text-align:center;">
+    <div style="max-width:760px; margin:0 auto;">
+      <p style="color:#1E6FF5; font-size:0.85rem; font-weight:600; letter-spacing:0.12em; text-transform:uppercase; margin:0 0 20px;">JD Fortress Labs</p>
+      <h1 style="color:#fff; font-size:clamp(2.2rem, 5vw, 3.4rem); font-weight:700; line-height:1.1; letter-spacing:-0.03em; margin:0 0 24px;">
+        My Mortgage Insight
+      </h1>
+      <p style="color:rgba(255,255,255,0.7); font-size:1.15rem; line-height:1.7; max-width:640px; margin:0 auto 20px;">
+        Turning mortgage renewal uncertainty into precise, actionable clarity.
+      </p>
+      <p style="color:rgba(255,255,255,0.45); font-size:0.9rem; line-height:1.6; max-width:580px; margin:0 auto;">
+        Three inputs. Instant answers. No accounts. No data stored. Built during a 36-hour bank innovation sprint to replace fear with confidence.
+      </p>
+    </div>
+  </section>
+
+  <!-- CALCULATOR -->
+  <div style="background:#F0F4FF; padding:56px 24px 80px;" id="calc-root">
+    <div style="max-width:960px; margin:0 auto;">
+
+      <!-- CURRENT MORTGAGE INPUTS -->
+      <div style="background:#fff; border-radius:16px; padding:40px; box-shadow:0 2px 16px rgba(15,32,65,0.08); margin-bottom:28px;">
+        <h2 style="color:#0D141A; font-size:1.05rem; font-weight:700; margin:0 0 28px; text-transform:uppercase; letter-spacing:0.06em;">Your Current Mortgage</h2>
+
+        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(240px, 1fr)); gap:36px;">
+
+          <!-- Current monthly payment -->
+          <div>
+            <label style="display:block; color:#0D141A; font-size:0.95rem; font-weight:600; margin-bottom:10px;" for="input-payment">Monthly payment</label>
+            <div style="position:relative; display:flex; align-items:center;">
+              <span style="position:absolute; left:14px; color:#0F2041; font-weight:700; font-size:1.1rem; pointer-events:none;">£</span>
+              <input
+                id="input-payment"
+                type="number"
+                min="100"
+                max="10000"
+                value="2020"
+                style="width:100%; padding:12px 14px 12px 30px; border:1.5px solid #e0e8f5; border-radius:10px; font-size:1.3rem; font-weight:700; color:#0F2041; font-family:inherit; box-sizing:border-box; transition:border-color 0.2s; -moz-appearance:textfield;"
+                onfocus="this.style.borderColor='#1E6FF5'"
+                onblur="this.style.borderColor='#e0e8f5'"
+              />
+            </div>
+            <p style="color:#9ca3af; font-size:0.78rem; margin:6px 0 0;">per month</p>
+          </div>
+
+          <!-- Current interest rate -->
+          <div>
+            <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:10px;">
+              <label style="color:#0D141A; font-size:0.95rem; font-weight:600;" for="slider-rate">Current interest rate</label>
+              <span id="val-rate" style="font-size:1.3rem; font-weight:700; color:#0F2041; font-family:monospace;">1.9%</span>
+            </div>
+            <input id="slider-rate" type="range" min="0.5" max="9" value="1.9" step="0.1" class="calc-slider" />
+            <div style="display:flex; justify-content:space-between; margin-top:6px;">
+              <span style="color:#9ca3af; font-size:0.75rem;">0.5%</span>
+              <span style="color:#9ca3af; font-size:0.75rem;">9.0%</span>
+            </div>
+          </div>
+
+          <!-- Remaining term -->
+          <div>
+            <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:10px;">
+              <label style="color:#0D141A; font-size:0.95rem; font-weight:600;" for="slider-term">Remaining term</label>
+              <span id="val-term" style="font-size:1.3rem; font-weight:700; color:#0F2041; font-family:monospace;">21 yrs</span>
+            </div>
+            <input id="slider-term" type="range" min="5" max="35" value="21" step="1" class="calc-slider" />
+            <div style="display:flex; justify-content:space-between; margin-top:6px;">
+              <span style="color:#9ca3af; font-size:0.75rem;">5 yrs</span>
+              <span style="color:#9ca3af; font-size:0.75rem;">35 yrs</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- FUTURE SCENARIO -->
+      <div style="background:#0F2041; border-radius:16px; padding:40px; margin-bottom:28px; box-shadow:0 4px 24px rgba(15,32,65,0.25);">
+        <h2 style="color:#fff; font-size:1.05rem; font-weight:700; margin:0 0 28px; text-transform:uppercase; letter-spacing:0.06em;">Future Scenario</h2>
+
+        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:36px; align-items:end;">
+
+          <!-- New interest rate -->
+          <div>
+            <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:10px;">
+              <label style="color:rgba(255,255,255,0.75); font-size:0.95rem; font-weight:600;" for="slider-new-rate">New interest rate</label>
+              <span id="val-new-rate" style="font-size:1.3rem; font-weight:700; color:#fff; font-family:monospace;">4.0%</span>
+            </div>
+            <input id="slider-new-rate" type="range" min="0.5" max="9" value="4.0" step="0.1" class="calc-slider calc-slider--dark" />
+            <div style="display:flex; justify-content:space-between; margin-top:6px;">
+              <span style="color:rgba(255,255,255,0.35); font-size:0.75rem;">0.5%</span>
+              <span style="color:rgba(255,255,255,0.35); font-size:0.75rem;">9.0%</span>
+            </div>
+          </div>
+
+          <!-- Term extension -->
+          <div>
+            <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:10px;">
+              <label style="color:rgba(255,255,255,0.75); font-size:0.95rem; font-weight:600;" for="slider-extension">Term extension</label>
+              <span id="val-extension" style="font-size:1.3rem; font-weight:700; color:#fff; font-family:monospace;">+0 yrs</span>
+            </div>
+            <input id="slider-extension" type="range" min="0" max="15" value="0" step="1" class="calc-slider calc-slider--dark" />
+            <div style="display:flex; justify-content:space-between; margin-top:6px;">
+              <span style="color:rgba(255,255,255,0.35); font-size:0.75rem;">No extension</span>
+              <span style="color:rgba(255,255,255,0.35); font-size:0.75rem;">+15 yrs</span>
+            </div>
+          </div>
+
+          <!-- Result -->
+          <div style="text-align:center; background:rgba(255,255,255,0.06); border-radius:12px; padding:24px 20px;">
+            <p style="color:rgba(255,255,255,0.5); font-size:0.75rem; font-weight:600; text-transform:uppercase; letter-spacing:0.1em; margin:0 0 10px;">New monthly payment</p>
+            <p id="result-payment" style="color:#fff; font-size:3rem; font-weight:700; letter-spacing:-0.03em; margin:0 0 10px; line-height:1;">—</p>
+            <div id="result-change" style="display:flex; align-items:center; justify-content:center; gap:6px; font-size:1.1rem; font-weight:600; color:rgba(255,255,255,0.5);">
+              <span id="result-arrow">—</span>
+              <span id="result-change-val"></span>
+            </div>
+            <p style="color:rgba(255,255,255,0.35); font-size:0.75rem; margin:8px 0 0;">per month vs. current</p>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- SCENARIO TABLE -->
+      <div style="background:#fff; border-radius:16px; padding:40px; box-shadow:0 2px 12px rgba(15,32,65,0.06);">
+        <h2 style="color:#0D141A; font-size:1.05rem; font-weight:700; margin:0 0 6px; text-transform:uppercase; letter-spacing:0.06em;">What if rates rise by…</h2>
+        <p style="color:#9ca3af; font-size:0.85rem; margin:0 0 24px;">Based on your current mortgage details</p>
+
+        <div style="overflow-x:auto;">
+          <table style="width:100%; border-collapse:collapse; font-size:0.9rem; min-width:400px;">
+            <thead>
+              <tr style="border-bottom:2px solid #e0e8f5;">
+                <th style="text-align:left; padding:12px 16px; color:#56585E; font-weight:600; font-size:0.8rem; text-transform:uppercase; letter-spacing:0.06em;">Rate increase</th>
+                <th style="text-align:right; padding:12px 16px; color:#56585E; font-weight:600; font-size:0.8rem; text-transform:uppercase; letter-spacing:0.06em;">New rate</th>
+                <th style="text-align:right; padding:12px 16px; color:#56585E; font-weight:600; font-size:0.8rem; text-transform:uppercase; letter-spacing:0.06em;">New payment</th>
+                <th style="text-align:right; padding:12px 16px; color:#56585E; font-weight:600; font-size:0.8rem; text-transform:uppercase; letter-spacing:0.06em;">Monthly change</th>
+              </tr>
+            </thead>
+            <tbody id="scenario-tbody">
+              {rateScenarios.map((delta) => (
+                <tr class="scenario-row" data-delta={delta} style="border-bottom:1px solid #f3f4f6;">
+                  <td style="padding:14px 16px; font-weight:600; color:#0D141A;">+{delta}%</td>
+                  <td class="col-new-rate" style="padding:14px 16px; text-align:right; font-family:monospace; color:#56585E;">—</td>
+                  <td class="col-new-payment" style="padding:14px 16px; text-align:right; font-weight:700; color:#0D141A;">—</td>
+                  <td class="col-change" style="padding:14px 16px; text-align:right; font-weight:700;">—</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- STORY SECTION -->
+  <section style="background:#fff; padding:96px 24px;">
+    <div style="max-width:800px; margin:0 auto;">
+      <p style="color:#1E6FF5; font-size:0.85rem; font-weight:600; letter-spacing:0.12em; text-transform:uppercase; margin:0 0 20px;">The Story Behind It</p>
+      <h2 style="color:#0D141A; font-size:clamp(1.6rem, 3vw, 2.2rem); font-weight:700; line-height:1.2; letter-spacing:-0.02em; margin:0 0 28px;">
+        Three inputs. One honest answer.
+      </h2>
+      <div style="color:#56585E; font-size:1rem; line-height:1.85; display:flex; flex-direction:column; gap:20px;">
+        <p>
+          During the Cost of Living Crisis, millions of homeowners knew one thing with certainty: their fixed-rate deal was ending, and the new rate would be higher. What they didn't know was exactly <em>how much higher</em> — and that uncertainty was the real source of anxiety.
+        </p>
+        <p>
+          The challenge wasn't a complex machine-learning problem. It was a simple failure of communication. People had the numbers. They just needed someone to do the maths for them clearly, honestly, and privately.
+        </p>
+        <p>
+          Built in a focused 36-hour sprint for a bank innovation challenge, My Mortgage Insight uses only three everyday inputs — current monthly payment, current interest rate, and remaining term — to instantly reveal what renewal at any rate would actually cost. Not vague ranges. Exact figures: "+4% rates = +£650 per month."
+        </p>
+        <p>
+          The result: families replacing fear of the unknown with confident budget planning.
+        </p>
+      </div>
+
+      <div style="display:flex; gap:48px; margin-top:48px; flex-wrap:wrap;">
+        <div>
+          <p style="color:#0F2041; font-size:2rem; font-weight:700; margin:0 0 4px;">3</p>
+          <p style="color:#56585E; font-size:0.9rem; margin:0;">inputs required</p>
+        </div>
+        <div>
+          <p style="color:#0F2041; font-size:2rem; font-weight:700; margin:0 0 4px;">36 hrs</p>
+          <p style="color:#56585E; font-size:0.9rem; margin:0;">to build</p>
+        </div>
+        <div>
+          <p style="color:#0F2041; font-size:2rem; font-weight:700; margin:0 0 4px;">0</p>
+          <p style="color:#56585E; font-size:0.9rem; margin:0;">data stored</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section style="background:#0F2041; padding:80px 24px; text-align:center;">
+    <div style="max-width:640px; margin:0 auto;">
+      <h2 style="color:#fff; font-size:clamp(1.6rem, 3vw, 2.2rem); font-weight:700; letter-spacing:-0.02em; margin:0 0 20px;">
+        Secure, private tools — built for real people.
+      </h2>
+      <p style="color:rgba(255,255,255,0.65); font-size:1rem; line-height:1.75; margin:0 0 36px;">
+        This is what we do at JD Fortress: take complex, sensitive problems and solve them with clarity and sovereignty. Your data stays yours.
+      </p>
+      <div style="display:flex; gap:16px; justify-content:center; flex-wrap:wrap;">
+        <a href="/labs" style="background:#1E6FF5; color:#fff; padding:14px 28px; border-radius:8px; text-decoration:none; font-weight:600; font-size:1rem;" onmouseover="this.style.background='#1558cc'" onmouseout="this.style.background='#1E6FF5'">
+          See all Labs projects →
+        </a>
+        <a href="/contact" style="background:rgba(255,255,255,0.1); color:#fff; padding:14px 28px; border-radius:8px; text-decoration:none; font-weight:600; font-size:1rem; border:1px solid rgba(255,255,255,0.2);" onmouseover="this.style.background='rgba(255,255,255,0.15)'" onmouseout="this.style.background='rgba(255,255,255,0.1)'">
+          Work with us
+        </a>
+      </div>
+    </div>
+  </section>
+
+</Layout>
+
+<style is:global>
+  .calc-slider {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 6px;
+    border-radius: 3px;
+    background: linear-gradient(to right, #1E6FF5 0%, #1E6FF5 var(--pct, 0%), #e0e8f5 var(--pct, 0%), #e0e8f5 100%);
+    outline: none;
+    cursor: pointer;
+  }
+  .calc-slider--dark {
+    background: linear-gradient(to right, #1E6FF5 0%, #1E6FF5 var(--pct, 0%), rgba(255,255,255,0.2) var(--pct, 0%), rgba(255,255,255,0.2) 100%);
+  }
+  .calc-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: #0F2041;
+    border: 3px solid #fff;
+    box-shadow: 0 1px 6px rgba(15,32,65,0.3);
+    cursor: pointer;
+    transition: transform 0.15s;
+  }
+  .calc-slider--dark::-webkit-slider-thumb {
+    background: #1E6FF5;
+    border: 3px solid #fff;
+  }
+  .calc-slider::-webkit-slider-thumb:hover {
+    transform: scale(1.15);
+  }
+  .calc-slider::-moz-range-thumb {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: #0F2041;
+    border: 3px solid #fff;
+    box-shadow: 0 1px 6px rgba(15,32,65,0.3);
+    cursor: pointer;
+  }
+  .calc-slider--dark::-moz-range-thumb {
+    background: #1E6FF5;
+  }
+  .calc-slider:focus {
+    outline: 2px solid #1E6FF5;
+    outline-offset: 3px;
+    border-radius: 3px;
+  }
+  #input-payment::-webkit-outer-spin-button,
+  #input-payment::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+</style>
+
+<script>
+// ============================================================
+// MORTGAGE MATHS
+// ============================================================
+function calculatePrincipal(currentPayment: number, currentRate: number, remainingYears: number): number {
+  const r = currentRate / 100 / 12;
+  const n = remainingYears * 12;
+  if (r === 0) return currentPayment * n;
+  return currentPayment * (1 - Math.pow(1 + r, -n)) / r;
+}
+
+function calculateNewPayment(principal: number, newRate: number, newYears: number): number {
+  const r = newRate / 100 / 12;
+  const n = newYears * 12;
+  if (r === 0) return principal / n;
+  return principal * r * Math.pow(1 + r, n) / (Math.pow(1 + r, n) - 1);
+}
+
+// ============================================================
+// FORMATTING
+// ============================================================
+function fmtGBP(n: number): string {
+  return '£' + Math.round(n).toLocaleString('en-GB');
+}
+
+function fmtChange(change: number): { text: string; arrow: string; colour: string } {
+  const abs = Math.abs(Math.round(change));
+  if (change > 0) return { text: '£' + abs.toLocaleString('en-GB') + ' / month', arrow: '▲', colour: '#dc2626' };
+  if (change < 0) return { text: '£' + abs.toLocaleString('en-GB') + ' / month', arrow: '▼', colour: '#16a34a' };
+  return { text: 'No change', arrow: '—', colour: 'rgba(255,255,255,0.5)' };
+}
+
+// ============================================================
+// SLIDER TRACK FILL
+// ============================================================
+function updateTrack(slider: HTMLInputElement): void {
+  const min = parseFloat(slider.min);
+  const max = parseFloat(slider.max);
+  const val = parseFloat(slider.value);
+  const pct = ((val - min) / (max - min)) * 100;
+  slider.style.setProperty('--pct', pct + '%');
+}
+
+// ============================================================
+// READ INPUTS
+// ============================================================
+function readInputs() {
+  const payment   = parseFloat((document.getElementById('input-payment')     as HTMLInputElement).value) || 2020;
+  const rate      = parseFloat((document.getElementById('slider-rate')       as HTMLInputElement).value) || 1.9;
+  const term      = parseFloat((document.getElementById('slider-term')       as HTMLInputElement).value) || 21;
+  const newRate   = parseFloat((document.getElementById('slider-new-rate')   as HTMLInputElement).value) || 4.0;
+  const extension = parseFloat((document.getElementById('slider-extension')  as HTMLInputElement).value) || 0;
+  return { payment, rate, term, newRate, extension };
+}
+
+// ============================================================
+// RECALCULATE + RENDER
+// ============================================================
+function recalculate(): void {
+  const { payment, rate, term, newRate, extension } = readInputs();
+
+  const principal  = calculatePrincipal(payment, rate, term);
+  const newTerm    = term + extension;
+  const newPayment = calculateNewPayment(principal, newRate, newTerm);
+  const change     = newPayment - payment;
+
+  // Main result
+  const resultEl   = document.getElementById('result-payment');
+  const arrowEl    = document.getElementById('result-arrow');
+  const changeValEl = document.getElementById('result-change-val');
+  if (resultEl) resultEl.textContent = fmtGBP(newPayment);
+
+  const fmt = fmtChange(change);
+  if (arrowEl) {
+    arrowEl.textContent = fmt.arrow;
+    arrowEl.style.color = fmt.colour;
+  }
+  if (changeValEl) {
+    changeValEl.textContent = fmt.text;
+    changeValEl.style.color = fmt.colour;
+  }
+
+  // Scenario table
+  const rows = document.querySelectorAll<HTMLTableRowElement>('.scenario-row');
+  rows.forEach(row => {
+    const delta      = parseFloat(row.dataset.delta || '0');
+    const testRate   = rate + delta;
+    const testPayment = calculateNewPayment(principal, testRate, newTerm);
+    const testChange  = Math.round(testPayment) - Math.round(payment);
+
+    const rateCell    = row.querySelector('.col-new-rate');
+    const paymentCell = row.querySelector('.col-new-payment');
+    const changeCell  = row.querySelector('.col-change');
+
+    if (rateCell)    rateCell.textContent   = testRate.toFixed(1) + '%';
+    if (paymentCell) paymentCell.textContent = fmtGBP(testPayment);
+    if (changeCell) {
+      changeCell.textContent = (testChange >= 0 ? '+' : '') + '£' + Math.abs(testChange).toLocaleString('en-GB');
+      (changeCell as HTMLElement).style.color = testChange >= 0 ? '#dc2626' : '#16a34a';
+    }
+  });
+}
+
+// ============================================================
+// INIT
+// ============================================================
+document.addEventListener('DOMContentLoaded', () => {
+  const sliders: Array<[string, string, string]> = [
+    ['slider-rate',      'val-rate',      (v) => v + '%'],
+    ['slider-term',      'val-term',      (v) => v + ' yrs'],
+    ['slider-new-rate',  'val-new-rate',  (v) => v + '%'],
+    ['slider-extension', 'val-extension', (v) => '+' + v + ' yrs'],
+  ] as any;
+
+  sliders.forEach(([sliderId, labelId, fmt]: any) => {
+    const slider = document.getElementById(sliderId) as HTMLInputElement;
+    const label  = document.getElementById(labelId);
+    if (!slider) return;
+
+    updateTrack(slider);
+    if (label) label.textContent = fmt(slider.value);
+
+    slider.addEventListener('input', () => {
+      updateTrack(slider);
+      if (label) label.textContent = fmt(slider.value);
+      recalculate();
+    });
+  });
+
+  const paymentInput = document.getElementById('input-payment');
+  paymentInput?.addEventListener('input', recalculate);
+
+  recalculate();
+});
+</script>
