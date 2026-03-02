@@ -58,9 +58,9 @@ const rateScenarios = [0.25, 0.5, 0.75, 1, 1.5, 2, 3, 4];
           <div>
             <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:10px;">
               <label style="color:#0D141A; font-size:0.95rem; font-weight:600;" for="slider-rate">Current interest rate</label>
-              <span id="val-rate" style="font-size:1.3rem; font-weight:700; color:#0F2041; font-family:monospace;">1.9%</span>
+              <span id="val-rate" style="font-size:1.3rem; font-weight:700; color:#0F2041; font-family:monospace;">4.2%</span>
             </div>
-            <input id="slider-rate" type="range" min="0.5" max="9" value="1.9" step="0.1" class="calc-slider" />
+            <input id="slider-rate" type="range" min="0.5" max="9" value="4.2" step="0.1" class="calc-slider" />
             <div style="display:flex; justify-content:space-between; margin-top:6px;">
               <span style="color:#9ca3af; font-size:0.75rem;">0.5%</span>
               <span style="color:#9ca3af; font-size:0.75rem;">9.0%</span>
@@ -93,9 +93,9 @@ const rateScenarios = [0.25, 0.5, 0.75, 1, 1.5, 2, 3, 4];
           <div>
             <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:10px;">
               <label style="color:rgba(255,255,255,0.75); font-size:0.95rem; font-weight:600;" for="slider-new-rate">New interest rate</label>
-              <span id="val-new-rate" style="font-size:1.3rem; font-weight:700; color:#fff; font-family:monospace;">4.0%</span>
+              <span id="val-new-rate" style="font-size:1.3rem; font-weight:700; color:#fff; font-family:monospace;">4.9%</span>
             </div>
-            <input id="slider-new-rate" type="range" min="0.5" max="9" value="4.0" step="0.1" class="calc-slider calc-slider--dark" />
+            <input id="slider-new-rate" type="range" min="0.5" max="9" value="4.9" step="0.1" class="calc-slider calc-slider--dark" />
             <div style="display:flex; justify-content:space-between; margin-top:6px;">
               <span style="color:rgba(255,255,255,0.35); font-size:0.75rem;">0.5%</span>
               <span style="color:rgba(255,255,255,0.35); font-size:0.75rem;">9.0%</span>
@@ -327,9 +327,9 @@ function updateTrack(slider: HTMLInputElement): void {
 // ============================================================
 function readInputs() {
   const payment   = parseFloat((document.getElementById('input-payment')     as HTMLInputElement).value) || 2020;
-  const rate      = parseFloat((document.getElementById('slider-rate')       as HTMLInputElement).value) || 1.9;
+  const rate      = parseFloat((document.getElementById('slider-rate')       as HTMLInputElement).value) || 4.2;
   const term      = parseFloat((document.getElementById('slider-term')       as HTMLInputElement).value) || 21;
-  const newRate   = parseFloat((document.getElementById('slider-new-rate')   as HTMLInputElement).value) || 4.0;
+  const newRate   = parseFloat((document.getElementById('slider-new-rate')   as HTMLInputElement).value) || 4.9;
   const extension = parseFloat((document.getElementById('slider-extension')  as HTMLInputElement).value) || 0;
   return { payment, rate, term, newRate, extension };
 }
