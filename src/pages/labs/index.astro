@@ -156,10 +156,10 @@ import Layout from '../../layouts/Layout.astro';
 
 </Layout>
 
-<style>
+<style is:global>
   @media (max-width: 640px) {
     .labs-card-grid {
-      grid-template-columns: 1fr;
+      grid-template-columns: 1fr !important;
     }
   }
 </style>
