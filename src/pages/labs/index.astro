@@ -25,7 +25,7 @@ import Layout from '../../layouts/Layout.astro';
     <div style="max-width:1000px; margin:0 auto; display:flex; flex-direction:column; gap:48px;">
 
       <!-- Bible Fortress -->
-      <div style="background:#F0F4FF; border:1px solid #e0e8f5; border-radius:16px; padding:48px; display:grid; grid-template-columns:1fr auto; gap:32px; align-items:start; flex-wrap:wrap;">
+      <div class="labs-card-grid" style="background:#F0F4FF; border:1px solid #e0e8f5; border-radius:16px; padding:48px; display:grid; grid-template-columns:1fr auto; gap:32px; align-items:start;">
         <div>
           <div style="display:flex; align-items:center; gap:12px; margin-bottom:20px;">
             <div style="width:48px; height:48px; background:#0F2041; border-radius:10px; display:flex; align-items:center; justify-content:center;">
@@ -61,7 +61,7 @@ import Layout from '../../layouts/Layout.astro';
       </div>
 
       <!-- FortiCIS -->
-      <div style="background:#F0F4FF; border:1px solid #e0e8f5; border-radius:16px; padding:48px; display:grid; grid-template-columns:1fr auto; gap:32px; align-items:start; flex-wrap:wrap;">
+      <div class="labs-card-grid" style="background:#F0F4FF; border:1px solid #e0e8f5; border-radius:16px; padding:48px; display:grid; grid-template-columns:1fr auto; gap:32px; align-items:start;">
         <div>
           <div style="display:flex; align-items:center; gap:12px; margin-bottom:20px;">
             <div style="width:48px; height:48px; background:#0F2041; border-radius:10px; display:flex; align-items:center; justify-content:center;">
@@ -100,7 +100,7 @@ import Layout from '../../layouts/Layout.astro';
       </div>
 
       <!-- My Mortgage Insight -->
-      <div style="background:#F0F4FF; border:1px solid #e0e8f5; border-radius:16px; padding:48px; display:grid; grid-template-columns:1fr auto; gap:32px; align-items:start; flex-wrap:wrap;">
+      <div class="labs-card-grid" style="background:#F0F4FF; border:1px solid #e0e8f5; border-radius:16px; padding:48px; display:grid; grid-template-columns:1fr auto; gap:32px; align-items:start;">
         <div>
           <div style="display:flex; align-items:center; gap:12px; margin-bottom:20px;">
             <div style="width:48px; height:48px; background:#0F2041; border-radius:10px; display:flex; align-items:center; justify-content:center;">
@@ -153,4 +153,13 @@ import Layout from '../../layouts/Layout.astro';
     </div>
   </section>
 
+
 </Layout>
+
+<style>
+  @media (max-width: 640px) {
+    .labs-card-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
