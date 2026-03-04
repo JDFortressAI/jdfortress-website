@@ -1,7 +1,7 @@
 ---
-title: "The Off Switch You Don't Control"
+title: "The Off Switch You Don’t Control"
 date: 2026-03-06
-excerpt: "A lawyer lost access to his Gmail, photos, and phone number after uploading lawful case files to Google's NotebookLM. The implications for UK legal professionals are worth sitting with."
+excerpt: "A lawyer lost access to his Gmail, photos, and phone number after uploading lawful case files to Google’s NotebookLM. The implications for UK legal professionals are worth sitting with."
 author: "JD Fortress AI"
 ---
 
