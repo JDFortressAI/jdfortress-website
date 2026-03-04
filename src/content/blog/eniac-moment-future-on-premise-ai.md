@@ -1,5 +1,5 @@
 ---
-title: "The ENIAC Moment: Why We're Building for the AI That's Coming"
+title: "The ENIAC Moment: Why We’re Building for the AI That’s Coming"
 date: 2026-02-27
 excerpt: "A startup just built a chip that runs an AI model at 17,000 tokens per second, using a tenth of the power of a GPU. It's a glimpse at a future that changes everything about how private AI gets deployed - and we think we're building the right things to meet it."
 author: "JD Fortress AI"

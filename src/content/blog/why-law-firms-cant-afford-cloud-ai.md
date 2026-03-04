@@ -1,5 +1,5 @@
 ---
-title: "Why High Street Law Firms Can't Afford Cloud AI"
+title: "Why High Street Law Firms Can’t Afford Cloud AI"
 date: 2026-02-03
 excerpt: "Cloud AI tools promise efficiency. But for law firms, every document you upload could be a professional conduct breach. Here's what partners need to know."
 author: "JD Fortress AI"
