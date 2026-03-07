@@ -27,7 +27,7 @@ What strikes us about the list itself is how specific and behavioural it is. Not
 
 At JD Fortress, we’ve been thinking about this. Not because we plan to republish Hipp’s document or claim his covenant as our own — its weight comes partly from being his, specific and personal. But because we want to be the kind of company where the ethics are this concrete, this old, and this unapologetically grounded in the Word of God.
 
-Modern technology culture has developed an intense interest in ethics as marketing. Responsible AI frameworks. Trust and safety teams. Values summits. The problem isn’t always insincerity — sometimes these efforts are genuine. But they are almost always disconnected from character, because they describe what a company wants to be seen to believe, rather than what the people inside it have actually committed to being.
+Modern technology culture has developed an intense interest in ethics as marketing. [Responsible AI frameworks](/blog/when-guardrails-break). Trust and safety teams. Values summits. The problem isn’t always insincerity — sometimes these efforts are genuine. But they are almost always disconnected from character, because they describe what a company wants to be seen to believe, rather than what the people inside it have actually committed to being.
 
 What Hipp demonstrates — quietly, over twenty-five years, producing software that runs on Mars — is that a different approach is possible. Build from real conviction. Let the commitment run in one direction, binding only yourself. And let the work speak.
 
