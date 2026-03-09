@@ -1,26 +1,24 @@
-Dear {{firmName}},
+Twitter Integration
 
-At JD Fortress AI Ltd, we empower businesses like yours with “Your Data. Your AI. Your Fortress.” — secure, on-premises solutions that deliver powerful productivity gains without risking data leaks.
 
-Our **JDFortVault** — a tailored high-performance secure AI workstation with custom RAG pipelines — transforms legal workflows by accelerating case research, compliance, and decision-making by up to **{{productivityMult}}×** — for example, reducing typical 10-hour research tasks to ~4 hours.
 
-Based on your inputs of **{{numLawyers}} lawyer{{lawyerPlural}}** at **{{avgSalary}}/year**, billing **{{billingRate}}/hour**, significant cost reduction and revenue upside is achievable. We strongly recommend immediate adoption to capture this advantage. Here is the impact breakdown:
+Consumer Key:4v7ulk2afMC4uhfmK4XBAzrGY
 
-<div style="background:#F0F4FF; border-radius:10px; padding:24px; margin:24px 0;">
-<p style="margin:0 0 12px; font-weight:700; color:#0D141A;">Total Costs — {{numVaults}} JDF Vault{{vaultPlural}} + running costs</p>
-<p style="margin:0; color:#374151;">{{totalInitial}} initial investment + {{totalRunningMo}}/month running costs (electricity + support).</p>
-</div>
 
-<div style="background:#f0fdf4; border-radius:10px; padding:24px; margin:24px 0;">
-<p style="margin:0 0 12px; font-weight:700; color:#0D141A;">Savings & Revenue Boost</p>
-<p style="margin:0; color:#374151;">Save <strong>{{salarySavingsYr}}</strong> per year on salaries by avoiding <strong>{{equivalentFTE}} FTE</strong> hire{{ftePlural}}, plus generate <strong>{{revenueYr}}</strong> in additional billable revenue annually. Over <strong>{{timeHorizon}} year{{yearPlural}}</strong>, that is <strong>{{totalSaved}}</strong> in total value, {{roiClause}}.</p>
-</div>
+Secret Key:JYdhWj11yL7b6Rz3BsMpK7WBUbwWdHi3zLdB7oeqFqg1gorlIX
 
-We’d love to schedule a pilot and demonstrate these numbers in your exact environment. Contact us at <a href="mailto:{{contactEmail}}" style="color:#1E6FF5;">{{contactEmail}}</a> or <a href="tel:{{contactPhone}}" style="color:#1E6FF5;">{{contactPhone}}</a>. Secure your fortress today.
 
-Warm regards,  
+Bearer Token:AAAAAAAAAAAAAAAAAAAAAD1P7wEAAAAAglDzpCISCc6cMPs4chD%2Bcu%2BQcWU%3DA85xYrjXWwdEfapLa74osFXhsV2fMhW3M1CsHDnNUeN2Vi3TGu
 
-**{{founders}}**  
-{{foundersTitle}}  
 
-“Secure, On-Premises AI Models Tailored for Your Business Needs.”
+
+Client Secret ID:YVBaZGpxMC1ZcXM2WlRRM2FpWWs6MTpjaQ
+
+
+Client Secret:Q6PAH0FtHe2K3NrywggiMSith8uAPzFfwumBos54ty43lXDAi2
+
+
+
+Access Token:1943342749480062979-JFzkCwB4PpKrh1zflV6xiLCXWWu44u
+
+Access Token Secret:xcD0xmwDxienMqvyiHePrQuBOa2UFwkcrsjZJYX9P59uR

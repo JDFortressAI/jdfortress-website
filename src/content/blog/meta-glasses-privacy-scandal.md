@@ -29,7 +29,7 @@ The ICO’s decision to write to Meta is significant. Under UK GDPR — the post
 
 There is also a data transfer question that has not been resolved. Kenya currently has no adequacy decision from the UK or the EU — meaning there is no formal determination that Kenyan data protection law meets the equivalent standard required to receive transfers lawfully. Negotiations between the EU and Kenya began in May 2024 and are expected to take time. In the meantime, transfers to Sama’s Nairobi operation require alternative safeguards, and it is not clear those are in place.
 
-The ICO writing to Meta does not answer any of these questions. It begins a process. But the reputational and regulatory exposure for any organisation whose employees have been wearing these glasses in a professional context — at client meetings, in legal consultations, on site — is not a hypothetical.
+The ICO writing to Meta does not answer any of these questions. It begins a process. But the reputational and regulatory exposure for any organisation whose employees have been wearing these glasses in a professional context — at client meetings, [in legal consultations](/blog/notebooklm-lawyer-lockout-warning), on site — is not a hypothetical.
 
 ## The architectural reality
 
@@ -37,7 +37,7 @@ It would be easy to read this story as a Meta-specific scandal. It is not. It is
 
 When you use an AI assistant that requires a server connection to function, your data is not under your control from the moment you speak. It is transmitted, stored, processed, and — as the Sama workers make clear — sometimes reviewed by people you have never met and whose confidentiality obligations are governed by contracts you will never see.
 
-The sales staff who told customers that “nothing is shared” were not lying as a matter of policy. They simply did not know. This is not unusual. The opacity is structural. It is how the product is designed to work. The alternative — an AI that processes everything locally, on hardware you own, with no outbound traffic at all — is precisely the architecture that eliminates this class of problem entirely.
+The sales staff who told customers that “nothing is shared” were not lying as a matter of policy. They simply did not know. This is not unusual. The opacity is structural. It is how the product is designed to work. The alternative — an AI that processes everything locally, on hardware you own, with no outbound traffic at all — is precisely [the architecture that eliminates this class of problem entirely](/blog/small-enough-to-trust).
 
 If the footage never leaves the building, there is no Nairobi.
 
