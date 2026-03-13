@@ -110,10 +110,13 @@ const prodRows: Array<{ label: string; values: any[]; bold?: boolean }> = produc
             id="customer-name"
             type="text"
             placeholder="Your Firm"
-            maxlength="80"
+            maxlength="100"
+            pattern="[a-zA-Z0-9 ]*"
+            autocomplete="organization"
             style="width:100%; max-width:320px; padding:10px 14px; border:1.5px solid #e0e8f5; border-radius:8px; font-size:0.95rem; color:#0D141A; outline:none; font-family:inherit; box-sizing:border-box; transition:border-color 0.2s;"
             onfocus="this.style.borderColor='#1E6FF5'"
             onblur="this.style.borderColor='#e0e8f5'"
+            oninput="this.value=this.value.replace(/[^a-zA-Z0-9 ]/g,'').slice(0,100)"
           />
         </div>
 
@@ -436,6 +439,19 @@ const PROPOSAL_TEMPLATE = (window as any).__calcProposalTemplate as string;
 const META              = (window as any).__calcMeta             as { contactEmail: string; contactPhone: string; founders: string; foundersTitle: string; foundersQuote: string };
 
 // ============================================================
+// INPUT SANITISATION
+// Firm name: alphanumeric + spaces only, max 100 chars.
+// Applied on every read — defence-in-depth alongside the
+// oninput attribute on the HTML element.
+// ============================================================
+const FIRM_NAME_RE = /[^a-zA-Z0-9 ]/g;
+const FIRM_NAME_MAX = 100;
+
+function sanitizeFirmName(raw: string): string {
+  return raw.replace(FIRM_NAME_RE, '').slice(0, FIRM_NAME_MAX).trim() || 'Your Firm';
+}
+
+// ============================================================
 // TEMPLATE RENDERER
 // Replaces every {{key}} in the HTML template with the
 // corresponding string from the vars map.
@@ -622,7 +638,7 @@ function setText(id: string, val: string): void {
 }
 
 function updateProposal(r: ReturnType<typeof calculate>, firmName: string, roiDisplay: string): void {
-  const firm = firmName.trim() || 'Your Firm';
+  const firm = sanitizeFirmName(firmName);
   const dateStr = new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
 
   setText('proposal-firm', firm);
@@ -787,7 +803,7 @@ function _recalculate(): void {
   const lawyers  = parseInt((document.getElementById('num-lawyers')  as HTMLInputElement).value, 10) || SL.lawyers.default;
   const vaults   = parseInt((document.getElementById('num-vaults')   as HTMLInputElement).value, 10) || SL.vaults.default;
   const years    = parseInt((document.getElementById('num-years')    as HTMLInputElement).value, 10) || SL.years.default;
-  const firmName = (document.getElementById('customer-name') as HTMLInputElement).value;
+  const firmName = sanitizeFirmName((document.getElementById('customer-name') as HTMLInputElement).value);
 
   const result = calculate(lawyers, vaults, years);
   updateUI(result, firmName);
@@ -806,7 +822,7 @@ function printProposal(): void {
 }
 
 function emailProposal(): void {
-  const firm   = (document.getElementById('customer-name') as HTMLInputElement)?.value.trim() || 'Your Firm';
+  const firm   = sanitizeFirmName((document.getElementById('customer-name') as HTMLInputElement)?.value ?? '');
   const lawyers = (document.getElementById('num-lawyers')  as HTMLInputElement)?.value || String(SL.lawyers.default);
   const vaults  = (document.getElementById('num-vaults')   as HTMLInputElement)?.value || String(SL.vaults.default);
   const years   = (document.getElementById('num-years')    as HTMLInputElement)?.value || String(SL.years.default);
