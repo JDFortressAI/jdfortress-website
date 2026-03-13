@@ -1,24 +1,53 @@
-Twitter Integration
+Dear {{firmName}},
 
+Thank you for taking the time to run the numbers. Based on what you've told us, here is the financial case for deploying JDFortVault at your firm.
 
+---
 
-Consumer Key:4v7ulk2afMC4uhfmK4XBAzrGY
+## The Opportunity
 
+With **{{numLawyers}} lawyer{{lawyerPlural}}** working at an average salary of **{{avgSalary}}/year** and a billing rate of **{{billingRate}}/hour**, your firm is sitting on a significant productivity opportunity. Our conservative modelling — at a **{{productivityMult}}× productivity uplift** — shows the following over a **{{timeHorizon}}-year{{yearPlural}} horizon**:
 
-Secret Key:JYdhWj11yL7b6Rz3BsMpK7WBUbwWdHi3zLdB7oeqFqg1gorlIX
+---
 
+## Your Numbers at a Glance
 
-Bearer Token:AAAAAAAAAAAAAAAAAAAAAD1P7wEAAAAAglDzpCISCc6cMPs4chD%2Bcu%2BQcWU%3DA85xYrjXWwdEfapLa74osFXhsV2fMhW3M1CsHDnNUeN2Vi3TGu
+| | Estimate |
+|---|---|
+| **Total investment (incl. VAT)** | {{totalInitial}} |
+| **Monthly running cost** | {{totalRunningMo}} |
+| **Salary savings** | {{salarySavingsYr}}/year |
+| **Equivalent FTE avoided** | {{equivalentFTE}} FTE{{ftePlural}} |
+| **Additional billable revenue** | {{revenueYr}}/year |
+| **Total savings & revenue ({{timeHorizon}} yr{{yearPlural}})** | {{totalSaved}} |
+| **Payback** | {{roiClause}} |
 
+---
 
+## What You Get
 
-Client Secret ID:YVBaZGpxMC1ZcXM2WlRRM2FpWWs6MTpjaQ
+**{{numVaults}} JDFortVault{{vaultPlural}}** deployed on your own hardware — fully private, fully air-isolated, no third-party data processors, no cloud dependency.
 
+Your lawyers get a private AI that knows your document library: contracts, precedents, matter files, policy documents. Research that takes a day takes minutes. Contract review that needed external counsel can happen in-house. The work does not change; the capacity to do it does.
 
-Client Secret:Q6PAH0FtHe2K3NrywggiMSith8uAPzFfwumBos54ty43lXDAi2
+No SRA grey areas. No CLOUD Act exposure. No data processing agreements to manage. The data does not leave, so it cannot be exposed.
 
+---
 
+## Next Steps
 
-Access Token:1943342749480062979-JFzkCwB4PpKrh1zflV6xiLCXWWu44u
+We would welcome a short call to walk through these figures, answer any questions about our assumptions, and — if it makes sense — arrange a pilot deployment so you can see the performance for yourself before committing.
 
-Access Token Secret:xcD0xmwDxienMqvyiHePrQuBOa2UFwkcrsjZJYX9P59uR
+Everything you share with us stays with us.
+
+*{{foundersQuote}}*
+
+**{{founders}}**
+{{foundersTitle}}
+
+📧 {{contactEmail}}
+📞 {{contactPhone}}
+
+---
+
+*All figures are estimates based on conservative assumptions. Full methodology is available at jdfortress.com/calculator.*
