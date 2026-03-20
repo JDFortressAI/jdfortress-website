@@ -7,6 +7,10 @@ author: "JD Fortress AI"
 
 There’s a comic strip from 2007 that’s been pinned to server-room walls for nearly two decades. A school phones a mother to report computer trouble. Did she really name her son Robert’); DROP TABLE Students;-? “Oh yes,” she replies. “Little Bobby Tables, we call him.” The joke — if you need it explained — is that SQL injection was already so famous, so thoroughly catalogued, so thoroughly taught, that Randall Munroe could make it into a punchline. OWASP has listed it since 2003. Certification exams ask about it. And on 28 February this year, a variant of exactly that joke walked through the front door of McKinsey & Company’s internal AI platform and stayed for two hours.
 
+![xkcd 327: Exploits of a Mom — Little Bobby Tables](/blog/exploits-of-a-mom.jpg)
+
+*[xkcd #327: Exploits of a Mom](https://xkcd.com/327/) by Randall Munroe — [CC BY-NC 2.5](https://creativecommons.org/licenses/by-nc/2.5/)*
+
 Most headlines have called this an “AI hack.” A few have reached for “prompt injection.” We want to be precise: it was neither. What CodeWall’s autonomous offensive agent found was SQL injection — a twenty-eight-year-old bug class — deployed against the backend of an AI platform. The AI part isn’t incidental, but it also isn’t the vulnerability. Understanding the distinction matters more than the headlines suggest.
 
 ## What the agent actually found
