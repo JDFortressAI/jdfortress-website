@@ -39,7 +39,7 @@ An AI that runs entirely within your own infrastructure — on hardware you cont
 
 This is what [on-premises private AI deployment](/blog/small-enough-to-trust) actually means in security terms. Not “we have strong data processing agreements.” Not “we use zero-retention APIs.” Not “our latest model has improved guardrails.” It means the interaction between your data and the AI model happens inside your network, under your control, with no third party in the loop and no public service for an attacker to probe.
 
-The [SRA’s guidance on AI tools](/blog/why-law-firms-cant-afford-cloud-ai) asks solicitors to undertake due diligence on whether third-party platforms are consistent with their professional obligations. The Mexico incident suggests that question deserves a more searching answer than most organisations have yet given it. The threat actors are patient. The guardrails are imperfect. And 195 million records is a very concrete illustration of what imperfect looks like in practice.
+The [SRA’s guidance on AI tools](/blog/why-law-firms-cant-afford-cloud-ai) asks solicitors to undertake due diligence on whether third-party platforms are consistent with their professional obligations. The Mexico incident suggests that question deserves a more searching answer than most organisations have yet given it. The threat actors are patient. The [guardrails are imperfect](/blog/bobby-tables-mckinsey-lilli-hack). And 195 million records is a very concrete illustration of what imperfect looks like in practice.
 
 * * *
 

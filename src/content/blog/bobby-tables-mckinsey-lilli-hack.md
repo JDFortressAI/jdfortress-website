@@ -27,7 +27,7 @@ The agent also chained the SQL injection with an IDOR vulnerability to read indi
 
 ## The prompt layer as target
 
-Here’s where the story stops being merely embarrassing and starts being structurally important. Lilli’s system prompts — the instructions governing how the AI behaves, what it refuses, how it cites sources — were stored in the same database the agent now had write access to. An attacker could have rewritten those instructions silently. No deployment. No code change. A single UPDATE statement, a single HTTP request, and the AI starts behaving differently: poisoning financial models, stripping guardrails, embedding confidential data in user-facing responses. No file changes. No process anomalies. No log trail. Just an AI that used to work correctly and quietly doesn’t any more.
+Here’s where the story stops being merely embarrassing and starts being structurally important. Lilli’s system prompts — the instructions governing how the AI behaves, what it refuses, how it cites sources — were stored in the same database the agent now had write access to. An attacker could have rewritten those instructions silently. No deployment. No code change. A single UPDATE statement, a single HTTP request, and the AI starts behaving differently: poisoning financial models, stripping [guardrails](/blog/when-guardrails-break), embedding confidential data in user-facing responses. No file changes. No process anomalies. No log trail. Just an AI that used to work correctly and quietly doesn’t any more.
 
 This is what we mean when we say the prompt layer is the new crown jewel. Cloud AI platforms tend to store system prompts as mutable application data — because that’s operationally convenient. Convenient and database-accessible are the same thing. And once something is in a database reachable from the internet, the question isn’t whether it can be targeted but when.
 
@@ -35,7 +35,7 @@ This is what we mean when we say the prompt layer is the new crown jewel. Cloud 
 
 CodeWall’s agent maps, probes, and chains vulnerabilities continuously at machine speed — a genuine advance in offensive capability. But the defence isn’t exotic. The attack worked because Lilli had a public-facing API surface: documented, partly unauthenticated, reachable from anywhere. Remove that surface and most of this chain doesn’t exist.
 
-That’s the architecture we work from. On-premises deployment means no public API documentation for an agent to map, no unauthenticated endpoints reachable from the internet, no path from an external network to the prompt layer or the knowledge base. You’ve removed the exterior wall from the equation.
+That’s the architecture we work from. On-premises deployment means no public API documentation for an agent to map, no unauthenticated endpoints reachable from the internet, no path from an external network to the prompt layer or the [knowledge base](/blog/what-is-rag). You’ve removed the exterior wall from the equation.
 
 McKinsey wasn’t negligent. Significant security investment, internal scanners running continuously, two years in production — and the injection went undetected. The lesson isn’t that they cut corners. It’s that cloud-hosted AI platforms accumulate attack surface by design — every endpoint, every integration, every public documentation page is part of the perimeter. The SQL injection was twenty-eight years old. The breach was two hours.
 

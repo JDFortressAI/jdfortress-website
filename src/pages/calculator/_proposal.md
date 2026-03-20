@@ -1,53 +1,26 @@
 Dear {{firmName}},
 
-Thank you for taking the time to run the numbers. Based on what you've told us, here is the financial case for deploying JDFortVault at your firm.
+At JD Fortress AI Ltd, we empower businesses like yours with “Your Data. Your AI. Your Fortress.” — secure, on-premises solutions that deliver powerful productivity gains without risking data leaks.
 
----
+Our **JDFortVault** — a tailored high-performance secure AI workstation with custom RAG pipelines — transforms legal workflows by accelerating case research, compliance, and decision-making by up to **{{productivityMult}}×** — for example, reducing typical 10-hour research tasks to ~4 hours.
 
-## The Opportunity
+Based on your inputs of **{{numLawyers}} lawyer{{lawyerPlural}}** at **{{avgSalary}}/year**, billing **{{billingRate}}/hour**, significant cost reduction and revenue upside is achievable. We strongly recommend immediate adoption to capture this advantage. Here is the impact breakdown:
 
-With **{{numLawyers}} lawyer{{lawyerPlural}}** working at an average salary of **{{avgSalary}}/year** and a billing rate of **{{billingRate}}/hour**, your firm is sitting on a significant productivity opportunity. Our conservative modelling — at a **{{productivityMult}}× productivity uplift** — shows the following over a **{{timeHorizon}}-year{{yearPlural}} horizon**:
+<div style="background:#F0F4FF; border-radius:10px; padding:24px; margin:24px 0;">
+<p style="margin:0 0 12px; font-weight:700; color:#0D141A;">Total Costs — {{numVaults}} JDF Vault{{vaultPlural}} + running costs</p>
+<p style="margin:0; color:#374151;">{{totalInitial}} initial investment + {{totalRunningMo}}/month running costs (electricity + support).</p>
+</div>
 
----
+<div style="background:#f0fdf4; border-radius:10px; padding:24px; margin:24px 0;">
+<p style="margin:0 0 12px; font-weight:700; color:#0D141A;">Savings & Revenue Boost</p>
+<p style="margin:0; color:#374151;">Save <strong>{{salarySavingsYr}}</strong> per year on salaries by avoiding <strong>{{equivalentFTE}} FTE</strong> hire{{ftePlural}}, plus generate <strong>{{revenueYr}}</strong> in additional billable revenue annually. Over <strong>{{timeHorizon}} year{{yearPlural}}</strong>, that is <strong>{{totalSaved}}</strong> in total value, {{roiClause}}.</p>
+</div>
 
-## Your Numbers at a Glance
+We’d love to schedule a pilot and demonstrate these numbers in your exact environment. Contact us at <a href="mailto:{{contactEmail}}" style="color:#1E6FF5;">{{contactEmail}}</a> or <a href="tel:{{contactPhone}}" style="color:#1E6FF5;">{{contactPhone}}</a>. Secure your fortress today.
 
-| | Estimate |
-|---|---|
-| **Total investment (incl. VAT)** | {{totalInitial}} |
-| **Monthly running cost** | {{totalRunningMo}} |
-| **Salary savings** | {{salarySavingsYr}}/year |
-| **Equivalent FTE avoided** | {{equivalentFTE}} FTE{{ftePlural}} |
-| **Additional billable revenue** | {{revenueYr}}/year |
-| **Total savings & revenue ({{timeHorizon}} yr{{yearPlural}})** | {{totalSaved}} |
-| **Payback** | {{roiClause}} |
+Warm regards,  
 
----
+**{{founders}}**  
+{{foundersTitle}}  
 
-## What You Get
-
-**{{numVaults}} JDFortVault{{vaultPlural}}** deployed on your own hardware — fully private, fully air-isolated, no third-party data processors, no cloud dependency.
-
-Your lawyers get a private AI that knows your document library: contracts, precedents, matter files, policy documents. Research that takes a day takes minutes. Contract review that needed external counsel can happen in-house. The work does not change; the capacity to do it does.
-
-No SRA grey areas. No CLOUD Act exposure. No data processing agreements to manage. The data does not leave, so it cannot be exposed.
-
----
-
-## Next Steps
-
-We would welcome a short call to walk through these figures, answer any questions about our assumptions, and — if it makes sense — arrange a pilot deployment so you can see the performance for yourself before committing.
-
-Everything you share with us stays with us.
-
-*{{foundersQuote}}*
-
-**{{founders}}**
-{{foundersTitle}}
-
-📧 {{contactEmail}}
-📞 {{contactPhone}}
-
----
-
-*All figures are estimates based on conservative assumptions. Full methodology is available at jdfortress.com/calculator.*
+“Secure, On-Premises AI Models Tailored for Your Business Needs.”
