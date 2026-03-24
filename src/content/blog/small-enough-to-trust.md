@@ -27,7 +27,7 @@ Most software platforms grow by addition. The vendor ships updates, capabilities
 
 NanoClaw inverts this. The base system is deliberately minimal. When you need a new capability - Gmail integration, a new communication channel, scheduled briefings - you add a skill: a set of instructions that transforms your installation to include exactly that capability. Not a toggle in a settings panel. An actual change to the code, scoped precisely to what you need, that you can read and understand before it goes live.
 
-The practical implication for a business is significant. A deployment that starts with document review and later needs to add regulatory compliance queries, or cross-reference supplier contracts, or monitor a specific set of public filings - each of those additions is deliberate, auditable, and reversible. The system grows with the business's actual needs rather than arriving pre-loaded with capabilities that may or may not be relevant. There's no inherited feature set to worry about. There's no "we're not sure exactly what that module does" answer to give an auditor.
+The practical implication for a business is significant. A deployment that starts with document review and later needs to add regulatory compliance queries, or cross-reference supplier contracts, or monitor a specific set of public filings - each of those additions is deliberate, auditable, and reversible. The system grows with the business's actual needs rather than arriving pre-loaded with capabilities that may or may not be relevant. There's no [inherited feature set](/blog/litellm-supply-chain-attack) to worry about. There's no "we're not sure exactly what that module does" answer to give an auditor.
 
 ## The harness matters as much as the model
 
