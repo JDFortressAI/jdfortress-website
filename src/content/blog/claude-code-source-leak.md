@@ -25,7 +25,7 @@ The most significant finds across the 1,900-file codebase:
 
 ## What this means for local models
 
-The community’s reaction to the Self-Healing Memory architecture and KAIROS was immediate and practical: people started porting both to work with open-weight local models. Within hours, r/LocalLLaMA had threads demonstrating multi-agent orchestration built on the leaked patterns, running entirely offline. The architectural blueprint — pointer-based memory, on-demand retrieval, write discipline, background consolidation — is model-agnostic. It works with Llama, Gemma, Mistral, or anything with sufficient context capacity.
+The community’s reaction to the Self-Healing Memory architecture and KAIROS was immediate and practical: people started porting both to work with open-weight local models. Within hours, r/LocalLLaMA had threads demonstrating multi-agent orchestration built on the leaked patterns, running entirely offline. The architectural blueprint — pointer-based memory, [on-demand retrieval](/blog/what-is-rag), write discipline, background consolidation — is model-agnostic. It works with Llama, Gemma, Mistral, or anything with sufficient context capacity.
 
 The anti-distillation mechanisms themselves confirm what Anthropic clearly believes: the patterns are distillable. The architecture is the product, not just the model. A capable local model running these patterns will behave very differently from the same model running without them.
 
