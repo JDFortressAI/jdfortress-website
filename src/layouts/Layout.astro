@@ -145,5 +145,149 @@ const canonicalUrl = canonical || new URL(Astro.url.pathname, 'https://jdfortres
     window.toggleMenu = toggleMenu;
   </script>
 
+  <!-- ── Internal access: triple-click the logo ───────────────────── -->
+  <div id="auth-modal" style="
+    display:none; position:fixed; inset:0; z-index:9999;
+    background:rgba(0,0,0,0.75); backdrop-filter:blur(4px);
+    align-items:center; justify-content:center; padding:24px;
+  ">
+    <div style="
+      background:#0F2041; border:1px solid rgba(255,255,255,0.12);
+      border-radius:16px; padding:36px; width:100%; max-width:380px;
+    ">
+      <div style="display:flex; align-items:center; gap:12px; margin-bottom:28px;">
+        <img src="/logo-white.png" alt="JD Fortress AI" style="height:28px;" />
+        <span style="color:#fff; font-weight:700; font-size:1rem;">Internal Access</span>
+      </div>
+      <div id="auth-error" style="
+        display:none; background:rgba(239,68,68,0.1); border:1px solid rgba(239,68,68,0.3);
+        color:#fca5a5; font-size:0.82rem; padding:10px 14px; border-radius:8px; margin-bottom:16px;
+      "></div>
+      <div style="margin-bottom:14px;">
+        <label style="display:block; font-size:0.75rem; color:rgba(255,255,255,0.4); text-transform:uppercase; letter-spacing:0.08em; font-weight:600; margin-bottom:6px;">Email</label>
+        <input id="auth-email" type="email" placeholder="you@jdfortress.com"
+          autocomplete="username"
+          style="width:100%; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.1); color:#fff; padding:11px 14px; border-radius:8px; font-size:0.9rem; outline:none; box-sizing:border-box;"
+          onfocus="this.style.borderColor='rgba(30,111,245,0.6)'" onblur="this.style.borderColor='rgba(255,255,255,0.1)'"
+          onkeydown="if(event.key==='Enter') document.getElementById('auth-password').focus()"
+        />
+      </div>
+      <div style="margin-bottom:22px;">
+        <label style="display:block; font-size:0.75rem; color:rgba(255,255,255,0.4); text-transform:uppercase; letter-spacing:0.08em; font-weight:600; margin-bottom:6px;">Password</label>
+        <input id="auth-password" type="password"
+          autocomplete="current-password"
+          style="width:100%; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.1); color:#fff; padding:11px 14px; border-radius:8px; font-size:0.9rem; outline:none; box-sizing:border-box;"
+          onfocus="this.style.borderColor='rgba(30,111,245,0.6)'" onblur="this.style.borderColor='rgba(255,255,255,0.1)'"
+          onkeydown="if(event.key==='Enter') submitAuth()"
+        />
+      </div>
+      <button onclick="submitAuth()" style="
+        width:100%; background:#1E6FF5; color:#fff; border:none; padding:12px;
+        border-radius:8px; font-size:0.95rem; font-weight:600; cursor:pointer;
+        transition:background 0.2s; margin-bottom:12px;
+      " onmouseover="this.style.background='#1558cc'" onmouseout="this.style.background='#1E6FF5'">
+        Sign In
+      </button>
+      <button onclick="closeAuthModal()" style="
+        width:100%; background:none; color:rgba(255,255,255,0.3); border:none;
+        padding:8px; font-size:0.82rem; cursor:pointer;
+      ">
+        Cancel
+      </button>
+    </div>
+  </div>
+
+  <script is:inline>
+    // Long-press detection on the nav logo (600ms — works on mobile & desktop)
+    (function() {
+      const logoArea = document.querySelector('nav a[href="/"]');
+      if (!logoArea) return;
+
+      let pressTimer = null;
+
+      function startPress(e) {
+        pressTimer = setTimeout(function() {
+          pressTimer = null;
+          e.preventDefault();
+          openAuthModal();
+        }, 600);
+      }
+
+      function cancelPress() {
+        if (pressTimer) {
+          clearTimeout(pressTimer);
+          pressTimer = null;
+        }
+      }
+
+      // Touch (mobile)
+      logoArea.addEventListener('touchstart', startPress, { passive: true });
+      logoArea.addEventListener('touchend', cancelPress);
+      logoArea.addEventListener('touchmove', cancelPress);
+
+      // Mouse (desktop fallback)
+      logoArea.addEventListener('mousedown', startPress);
+      logoArea.addEventListener('mouseup', cancelPress);
+      logoArea.addEventListener('mouseleave', cancelPress);
+    })();
+
+    function openAuthModal() {
+      const m = document.getElementById('auth-modal');
+      m.style.display = 'flex';
+      setTimeout(function() { document.getElementById('auth-email').focus(); }, 100);
+    }
+
+    function closeAuthModal() {
+      document.getElementById('auth-modal').style.display = 'none';
+      document.getElementById('auth-error').style.display = 'none';
+      document.getElementById('auth-email').value = '';
+      document.getElementById('auth-password').value = '';
+    }
+
+    document.getElementById('auth-modal').addEventListener('click', function(e) {
+      if (e.target === this) closeAuthModal();
+    });
+
+    async function submitAuth() {
+      const email = document.getElementById('auth-email').value.trim();
+      const password = document.getElementById('auth-password').value;
+      const errEl = document.getElementById('auth-error');
+      errEl.style.display = 'none';
+
+      if (!email || !password) {
+        errEl.textContent = 'Please enter your email and password.';
+        errEl.style.display = 'block';
+        return;
+      }
+
+      const btn = document.querySelector('#auth-modal button[onclick="submitAuth()"]');
+      btn.textContent = 'Signing in…';
+      btn.disabled = true;
+
+      try {
+        const res = await fetch('/api/auth/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, password }),
+        });
+        const data = await res.json();
+        if (res.ok && data.ok) {
+          window.location.href = '/dashboard';
+        } else {
+          errEl.textContent = data.error || 'Invalid credentials.';
+          errEl.style.display = 'block';
+          btn.textContent = 'Sign In';
+          btn.disabled = false;
+          document.getElementById('auth-password').value = '';
+        }
+      } catch {
+        errEl.textContent = 'Network error. Please try again.';
+        errEl.style.display = 'block';
+        btn.textContent = 'Sign In';
+        btn.disabled = false;
+      }
+    }
+  </script>
+
 </body>
 </html>

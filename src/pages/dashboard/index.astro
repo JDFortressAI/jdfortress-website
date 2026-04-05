@@ -1,0 +1,1038 @@
+---
+import { verifySessionToken, SESSION_COOKIE } from "../../lib/auth";
+import { STAGE_LABELS, STAGE_ORDER, STAGE_COLORS, VERTICAL_LABELS, SOURCE_LABELS } from "../../lib/crm";
+
+const token = Astro.cookies.get(SESSION_COOKIE)?.value;
+const user  = await verifySessionToken(token);
+if (!user) return Astro.redirect("/");
+
+const stageLabels = JSON.stringify(STAGE_LABELS);
+const stageOrder  = JSON.stringify(STAGE_ORDER);
+const stageColors = JSON.stringify(STAGE_COLORS);
+const vertLabels  = JSON.stringify(VERTICAL_LABELS);
+const srcLabels   = JSON.stringify(SOURCE_LABELS);
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>JD Fortress — Dashboard</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=2" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Inter', system-ui, sans-serif; background: #080c18; color: #e5e7eb; min-height: 100vh; }
+
+    /* ── Topbar ──────────────────────────────────────────────── */
+    .topbar { background: #0d1b38; border-bottom: 1px solid rgba(255,255,255,0.07); padding: 0 24px; height: 56px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; }
+    .topbar-left { display: flex; align-items: center; gap: 12px; }
+    .topbar-logo { display: flex; align-items: center; gap: 8px; text-decoration: none; }
+    .topbar-logo img { height: 28px; }
+    .topbar-logo span { color: #fff; font-weight: 700; font-size: 0.95rem; }
+    .badge-internal { background: rgba(239,68,68,0.12); color: #f87171; font-size: 0.62rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; padding: 2px 7px; border-radius: 4px; border: 1px solid rgba(239,68,68,0.2); }
+    .topbar-right { display: flex; align-items: center; gap: 10px; }
+    .user-chip { display: flex; align-items: center; gap: 7px; background: rgba(255,255,255,0.05); padding: 5px 12px; border-radius: 20px; font-size: 0.82rem; color: rgba(255,255,255,0.6); white-space: nowrap; }
+    .user-chip .dot { width: 7px; height: 7px; background: #22c55e; border-radius: 50%; flex-shrink: 0; }
+    .btn-ghost { background: none; border: 1px solid rgba(255,255,255,0.12); color: rgba(255,255,255,0.45); padding: 5px 13px; border-radius: 6px; font-size: 0.78rem; cursor: pointer; transition: all 0.15s; }
+    .btn-ghost:hover { border-color: rgba(255,255,255,0.28); color: rgba(255,255,255,0.8); }
+    .btn-demo-toggle { background: rgba(245,158,11,0.08); border: 1px solid rgba(245,158,11,0.22); color: rgba(245,158,11,0.6); padding: 5px 13px; border-radius: 6px; font-size: 0.78rem; cursor: pointer; transition: all 0.15s; white-space: nowrap; }
+    .btn-demo-toggle:hover { border-color: rgba(245,158,11,0.45); color: #fbbf24; }
+    .btn-demo-toggle.active { background: rgba(245,158,11,0.14); border-color: rgba(245,158,11,0.45); color: #fbbf24; }
+    .demo-badge { display: inline-flex; align-items: center; font-size: 0.6rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; padding: 1px 5px; border-radius: 3px; background: rgba(245,158,11,0.12); color: rgba(245,158,11,0.7); border: 1px solid rgba(245,158,11,0.18); margin-left: 5px; vertical-align: middle; flex-shrink: 0; }
+
+    /* ── Tabs ────────────────────────────────────────────────── */
+    .tabs { background: #0d1b38; border-bottom: 1px solid rgba(255,255,255,0.07); padding: 0 24px; display: flex; gap: 0; overflow-x: auto; }
+    .tab { padding: 12px 20px; color: rgba(255,255,255,0.4); font-size: 0.85rem; font-weight: 500; cursor: pointer; border: none; border-bottom: 2px solid transparent; background: none; white-space: nowrap; transition: color 0.15s; }
+    .tab:hover { color: rgba(255,255,255,0.7); }
+    .tab.active { color: #fff; border-bottom-color: #1E6FF5; }
+
+    /* ── Layout ──────────────────────────────────────────────── */
+    .main { padding: 20px 24px; max-width: 1500px; margin: 0 auto; }
+    .section { display: none; }
+    .section.active { display: block; }
+
+    /* ── Summary strip ───────────────────────────────────────── */
+    .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin-bottom: 24px; }
+    .stat { background: #111827; border: 1px solid rgba(255,255,255,0.06); border-radius: 10px; padding: 16px 18px; }
+    .stat.blue  { border-color: rgba(30,111,245,0.25); }
+    .stat.green { border-color: rgba(34,197,94,0.25); }
+    .stat.amber { border-color: rgba(245,158,11,0.25); }
+    .stat.purple{ border-color: rgba(139,92,246,0.25); }
+    .stat-lbl { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.09em; color: rgba(255,255,255,0.32); margin-bottom: 6px; }
+    .stat-val { font-size: 1.55rem; font-weight: 700; color: #fff; line-height: 1; }
+    .stat-sub { font-size: 0.71rem; color: rgba(255,255,255,0.3); margin-top: 4px; }
+
+    /* ── Section header ──────────────────────────────────────── */
+    .sh { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; flex-wrap: wrap; gap: 10px; }
+    .sh-title { font-size: 0.95rem; font-weight: 700; color: #fff; }
+    .btn-primary { background: rgba(30,111,245,0.1); color: #60a5fa; border: 1px solid rgba(30,111,245,0.2); padding: 7px 16px; border-radius: 7px; font-size: 0.82rem; font-weight: 600; cursor: pointer; transition: background 0.15s; }
+    .btn-primary:hover { background: rgba(30,111,245,0.2); }
+    .btn-blue { background: #1E6FF5; color: #fff; border: none; padding: 9px 18px; border-radius: 7px; font-size: 0.85rem; font-weight: 600; cursor: pointer; transition: background 0.15s; }
+    .btn-blue:hover { background: #1558cc; }
+
+    /* ── Add-lead panel ──────────────────────────────────────── */
+    .panel { background: #111827; border: 1px solid rgba(255,255,255,0.07); border-radius: 11px; padding: 20px; margin-bottom: 20px; display: none; }
+    .panel.open { display: block; }
+    .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 12px; }
+    .fg { display: flex; flex-direction: column; gap: 5px; }
+    .fl { font-size: 0.7rem; color: rgba(255,255,255,0.4); text-transform: uppercase; letter-spacing: 0.07em; font-weight: 600; }
+    .fi, .fsel { background: #1a2236; border: 1px solid rgba(255,255,255,0.09); color: #e5e7eb; border-radius: 7px; padding: 8px 11px; font-size: 0.85rem; font-family: inherit; width: 100%; transition: border-color 0.15s; }
+    .fi:focus, .fsel:focus { outline: none; border-color: rgba(30,111,245,0.5); }
+    .fsel option { background: #1a2236; }
+    .panel-actions { display: flex; gap: 10px; margin-top: 14px; align-items: center; }
+
+    /* ── Kanban ───────────────────────────────────────────────── */
+    .kanban-wrap { overflow-x: auto; padding-bottom: 16px; cursor: default; }
+    .kanban { display: flex; gap: 14px; min-width: max-content; align-items: flex-start; }
+    .kcol { width: 268px; background: #0e1625; border: 1px solid rgba(255,255,255,0.06); border-radius: 12px; padding: 14px; flex-shrink: 0; transition: background 0.15s; }
+    .kcol.drag-over { background: #141f35; border-color: rgba(30,111,245,0.35); }
+    .kcol-hd { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; padding-bottom: 10px; border-bottom: 1px solid rgba(255,255,255,0.05); }
+    .kcol-title { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; }
+    .kcol-count { font-size: 0.72rem; background: rgba(255,255,255,0.06); padding: 2px 8px; border-radius: 9px; color: rgba(255,255,255,0.4); }
+    .kcards { display: flex; flex-direction: column; gap: 8px; min-height: 48px; }
+
+    /* ── Kanban card ─────────────────────────────────────────── */
+    .kcard {
+      background: #111827;
+      border: 1px solid rgba(255,255,255,0.07);
+      border-left: 3px solid transparent;
+      border-radius: 8px;
+      padding: 12px 13px;
+      cursor: grab;
+      transition: transform 0.1s, box-shadow 0.1s, border-color 0.15s;
+      user-select: none;
+    }
+    .kcard:hover { transform: translateY(-1px); box-shadow: 0 4px 16px rgba(0,0,0,0.3); border-color: rgba(255,255,255,0.14); }
+    .kcard.dragging { opacity: 0.4; cursor: grabbing; }
+    .kcard-company { font-size: 0.88rem; font-weight: 600; color: #f1f5f9; margin-bottom: 2px; }
+    .kcard-contact { font-size: 0.75rem; color: rgba(255,255,255,0.38); margin-bottom: 10px; }
+    .kcard-row { display: flex; align-items: center; justify-content: space-between; gap: 6px; }
+    .vtag { font-size: 0.63rem; background: rgba(30,111,245,0.1); color: #60a5fa; padding: 2px 6px; border-radius: 4px; text-transform: uppercase; letter-spacing: 0.06em; flex-shrink: 0; }
+    .vval { font-size: 0.75rem; color: rgba(255,255,255,0.5); font-weight: 500; }
+    .kcard-action { font-size: 0.7rem; color: rgba(255,255,255,0.28); margin-top: 7px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .kcard-action.overdue { color: #f87171; }
+    .kempty { font-size: 0.78rem; color: rgba(255,255,255,0.18); text-align: center; padding: 16px 0; }
+
+    /* ── Customers grid ──────────────────────────────────────── */
+    .cust-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }
+    .cust-card { background: #111827; border: 1px solid rgba(34,197,94,0.15); border-left: 3px solid #16a34a; border-radius: 11px; padding: 20px; cursor: pointer; transition: border-color 0.15s, transform 0.1s; }
+    .cust-card:hover { border-color: rgba(34,197,94,0.35); transform: translateY(-1px); }
+    .cust-name { font-size: 1rem; font-weight: 700; color: #f1f5f9; margin-bottom: 4px; }
+    .cust-contact { font-size: 0.82rem; color: rgba(255,255,255,0.45); margin-bottom: 14px; }
+    .cust-row { display: flex; align-items: center; justify-content: space-between; }
+    .cust-value { font-size: 1.05rem; font-weight: 700; color: #4ade80; }
+    .cust-date { font-size: 0.75rem; color: rgba(255,255,255,0.3); }
+    .cust-notes { margin-top: 10px; font-size: 0.75rem; color: rgba(255,255,255,0.3); }
+    .cust-empty { text-align: center; padding: 60px 20px; color: rgba(255,255,255,0.2); font-size: 0.9rem; }
+
+    /* ── Contacts table ──────────────────────────────────────── */
+    .tw { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; font-size: 0.84rem; }
+    thead th { background: #0e1625; color: rgba(255,255,255,0.32); font-size: 0.69rem; text-transform: uppercase; letter-spacing: 0.08em; padding: 11px 14px; text-align: left; border-bottom: 1px solid rgba(255,255,255,0.05); font-weight: 600; white-space: nowrap; }
+    tbody tr { border-bottom: 1px solid rgba(255,255,255,0.03); cursor: pointer; transition: background 0.1s; }
+    tbody tr:hover { background: rgba(255,255,255,0.025); }
+    tbody td { padding: 12px 14px; color: #d1d5db; vertical-align: middle; }
+    .pill { display: inline-flex; align-items: center; font-size: 0.71rem; font-weight: 600; padding: 3px 9px; border-radius: 11px; white-space: nowrap; }
+    .avatar { width: 24px; height: 24px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 0.67rem; font-weight: 700; }
+    .search-input { background: #1a2236; border: 1px solid rgba(255,255,255,0.09); color: #e5e7eb; border-radius: 7px; padding: 8px 12px; font-size: 0.85rem; width: 260px; max-width: 100%; }
+    .search-input:focus { outline: none; border-color: rgba(30,111,245,0.5); }
+
+    /* ── Analytics ───────────────────────────────────────────── */
+    .ag { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; }
+    .ac { background: #111827; border: 1px solid rgba(255,255,255,0.06); border-radius: 11px; padding: 20px; }
+    .ac h3 { font-size: 0.7rem; color: rgba(255,255,255,0.35); text-transform: uppercase; letter-spacing: 0.09em; margin-bottom: 14px; font-weight: 600; }
+    .bar-row { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+    .bar-lbl { font-size: 0.75rem; color: rgba(255,255,255,0.5); width: 130px; flex-shrink: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .bar-track { flex: 1; height: 6px; background: rgba(255,255,255,0.05); border-radius: 3px; overflow: hidden; }
+    .bar-fill { height: 100%; border-radius: 3px; transition: width 0.5s ease; }
+    .bar-n { font-size: 0.72rem; color: rgba(255,255,255,0.32); width: 42px; text-align: right; flex-shrink: 0; }
+
+    /* ── Modal ───────────────────────────────────────────────── */
+    .overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.72); z-index: 200; align-items: center; justify-content: center; padding: 20px; }
+    .overlay.open { display: flex; }
+    .modal { background: #111827; border: 1px solid rgba(255,255,255,0.09); border-radius: 14px; width: 100%; max-width: 640px; max-height: 90vh; overflow-y: auto; display: flex; flex-direction: column; }
+    .modal-header { display: flex; align-items: center; justify-content: space-between; padding: 20px 24px 16px; border-bottom: 1px solid rgba(255,255,255,0.07); gap: 12px; flex-shrink: 0; }
+    .modal-header-left { display: flex; flex-direction: column; gap: 6px; flex: 1; min-width: 0; }
+    .modal-company-input { background: transparent; border: none; color: #f1f5f9; font-size: 1.1rem; font-weight: 700; font-family: inherit; width: 100%; padding: 0; }
+    .modal-company-input:focus { outline: none; border-bottom: 1px solid rgba(30,111,245,0.5); }
+    .modal-stage-pill { display: inline-flex; align-items: center; font-size: 0.72rem; font-weight: 600; padding: 3px 10px; border-radius: 10px; white-space: nowrap; align-self: flex-start; }
+    .modal-close { background: none; border: none; color: rgba(255,255,255,0.3); font-size: 1.5rem; cursor: pointer; line-height: 1; flex-shrink: 0; padding: 0 0 0 8px; transition: color 0.15s; }
+    .modal-close:hover { color: #fff; }
+    .modal-body { padding: 20px 24px; overflow-y: auto; flex: 1; }
+    .modal-footer { padding: 16px 24px; border-top: 1px solid rgba(255,255,255,0.07); display: flex; gap: 10px; align-items: center; flex-shrink: 0; }
+    .modal-section { margin-bottom: 20px; }
+    .modal-section-title { font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.09em; color: rgba(255,255,255,0.3); font-weight: 600; margin-bottom: 12px; }
+    .edit-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    @media (max-width: 520px) { .edit-grid { grid-template-columns: 1fr; } }
+    .edit-grid .fg.full { grid-column: 1 / -1; }
+    .divider { border: none; border-top: 1px solid rgba(255,255,255,0.06); margin: 16px 0; }
+
+    /* ── Notes ───────────────────────────────────────────────── */
+    .notes-list { display: flex; flex-direction: column; gap: 8px; margin-bottom: 12px; }
+    .note-item { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.05); border-radius: 8px; padding: 11px 13px; }
+    .note-meta { font-size: 0.69rem; color: rgba(255,255,255,0.25); margin-bottom: 5px; }
+    .note-text { font-size: 0.84rem; color: #d1d5db; line-height: 1.6; }
+    .note-input { background: #1a2236; border: 1px solid rgba(255,255,255,0.09); color: #e5e7eb; border-radius: 7px; padding: 9px 12px; font-size: 0.85rem; font-family: inherit; width: 100%; min-height: 70px; resize: vertical; transition: border-color 0.15s; }
+    .note-input:focus { outline: none; border-color: rgba(30,111,245,0.5); }
+
+    /* ── Misc ────────────────────────────────────────────────── */
+    .no-data { font-size: 0.8rem; color: rgba(255,255,255,0.18); text-align: center; padding: 16px; }
+    .saved-flash { color: #4ade80; font-size: 0.8rem; display: none; }
+    .saved-flash.show { display: inline; }
+
+    /* ── Leads board ─────────────────────────────────────────── */
+    .leads-board { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; align-items: start; }
+    @media (max-width: 900px) { .leads-board { grid-template-columns: 1fr; } }
+    .lcol { background: #0e1625; border: 1px solid rgba(255,255,255,0.06); border-radius: 12px; padding: 16px; }
+    .lcol-hd { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; padding-bottom: 10px; border-bottom: 1px solid rgba(255,255,255,0.05); }
+    .lcol-title { font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; }
+    .lcol-count { font-size: 0.72rem; background: rgba(255,255,255,0.06); padding: 2px 8px; border-radius: 9px; color: rgba(255,255,255,0.4); }
+    .lcards { display: flex; flex-direction: column; gap: 10px; min-height: 60px; }
+
+    /* Lead candidate card */
+    .lcard { background: #111827; border: 1px solid rgba(255,255,255,0.07); border-radius: 9px; padding: 14px; }
+    .lcard.inbox  { border-left: 3px solid #1E6FF5; }
+    .lcard.follow_up { border-left: 3px solid #16a34a; }
+    .lcard.rejected  { border-left: 3px solid #6b7280; opacity: 0.7; }
+    .lcard-co { font-size: 0.9rem; font-weight: 600; color: #f1f5f9; margin-bottom: 2px; }
+    .lcard-ct { font-size: 0.76rem; color: rgba(255,255,255,0.38); margin-bottom: 8px; }
+    .lcard-summary { font-size: 0.78rem; color: rgba(255,255,255,0.5); line-height: 1.5; margin-bottom: 10px; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+    .lcard-meta { display: flex; align-items: center; justify-content: space-between; gap: 6px; flex-wrap: wrap; }
+    .lcard-source { font-size: 0.63rem; background: rgba(255,255,255,0.05); color: rgba(255,255,255,0.4); padding: 2px 7px; border-radius: 4px; text-transform: uppercase; letter-spacing: 0.05em; }
+    .lcard-loc { font-size: 0.73rem; color: rgba(255,255,255,0.3); }
+    .lcard-actions { display: flex; gap: 6px; margin-top: 10px; flex-wrap: wrap; }
+    .lcard-btn { font-size: 0.72rem; font-weight: 600; padding: 4px 10px; border-radius: 5px; border: none; cursor: pointer; transition: opacity 0.15s; }
+    .lcard-btn:hover { opacity: 0.85; }
+    .lcard-btn.reject  { background: rgba(107,114,128,0.15); color: #9ca3af; border: 1px solid rgba(107,114,128,0.2); }
+    .lcard-btn.followup { background: rgba(22,163,74,0.12); color: #4ade80; border: 1px solid rgba(22,163,74,0.2); }
+    .lcard-btn.promote { background: rgba(30,111,245,0.12); color: #60a5fa; border: 1px solid rgba(30,111,245,0.2); }
+    .lcard-btn.undo    { background: rgba(245,158,11,0.1); color: #fbbf24; border: 1px solid rgba(245,158,11,0.2); }
+    .lcard-reject-reason { font-size: 0.75rem; color: #9ca3af; font-style: italic; margin-top: 7px; padding: 6px 9px; background: rgba(255,255,255,0.03); border-radius: 5px; }
+    .lcard-promoted { font-size: 0.73rem; color: #4ade80; margin-top: 6px; }
+    .lempty { font-size: 0.8rem; color: rgba(255,255,255,0.18); text-align: center; padding: 20px 0; }
+
+    /* Reject modal */
+    .reject-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 300; align-items: center; justify-content: center; padding: 20px; }
+    .reject-overlay.open { display: flex; }
+    .reject-box { background: #111827; border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 24px; width: 100%; max-width: 440px; }
+    .reject-box h3 { font-size: 0.95rem; font-weight: 700; color: #fff; margin-bottom: 14px; }
+    .reject-box .fl { font-size: 0.7rem; color: rgba(255,255,255,0.38); text-transform: uppercase; letter-spacing: 0.07em; font-weight: 600; margin-bottom: 6px; display: block; }
+    .reject-reason-input { background: #1a2236; border: 1px solid rgba(255,255,255,0.09); color: #e5e7eb; border-radius: 7px; padding: 9px 12px; font-size: 0.85rem; font-family: inherit; width: 100%; min-height: 80px; resize: vertical; margin-bottom: 14px; }
+    .reject-reason-input:focus { outline: none; border-color: rgba(30,111,245,0.5); }
+    .reject-actions { display: flex; gap: 10px; }
+
+    @media (max-width: 480px) {
+      .topbar-logo span { display: none; }
+      .user-chip { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Topbar -->
+<div class="topbar">
+  <div class="topbar-left">
+    <a href="/" class="topbar-logo">
+      <img src="/logo-white.png" alt="JD Fortress AI" />
+      <span>JD Fortress AI</span>
+    </a>
+    <span class="badge-internal">Internal</span>
+  </div>
+  <div class="topbar-right">
+    <button class="btn-demo-toggle" id="btn-demo-toggle" title="Show or hide demo seed data">Demo data: —</button>
+    <div class="user-chip"><span class="dot"></span><span id="user-name"></span></div>
+    <button class="btn-ghost" id="btn-logout">Sign out</button>
+  </div>
+</div>
+
+<!-- Tabs -->
+<div class="tabs">
+  <button class="tab" data-tab="leads">Leads</button>
+  <button class="tab active" data-tab="pipeline">Pipeline</button>
+  <button class="tab" data-tab="customers">Customers</button>
+  <button class="tab" data-tab="contacts">Contacts</button>
+  <button class="tab" data-tab="analytics">Analytics</button>
+</div>
+
+<div class="main">
+
+  <!-- Stats strip (always visible) -->
+  <div class="stats">
+    <div class="stat blue"><div class="stat-lbl">Active Leads</div><div class="stat-val" id="s-active">—</div><div class="stat-sub">excl. won &amp; lost</div></div>
+    <div class="stat green"><div class="stat-lbl">Pipeline Value</div><div class="stat-val" id="s-pipeline">—</div><div class="stat-sub">active opportunities</div></div>
+    <div class="stat purple"><div class="stat-lbl">Customers</div><div class="stat-val" id="s-customers">—</div><div class="stat-sub" id="s-customers-v">—</div></div>
+    <div class="stat amber"><div class="stat-lbl">Overdue Actions</div><div class="stat-val" id="s-due">—</div><div class="stat-sub">need attention</div></div>
+  </div>
+
+  <!-- ── Leads ───────────────────────────────────────────────── -->
+  <div class="section" id="tab-leads">
+    <div class="sh">
+      <div class="sh-title">Leads</div>
+      <span style="font-size:0.78rem;color:rgba(255,255,255,0.3)">Sourced by Hermes — review, reject, or promote to pipeline</span>
+    </div>
+    <div class="leads-board">
+      <div class="lcol">
+        <div class="lcol-hd">
+          <span class="lcol-title" style="color:#1E6FF5">Inbox</span>
+          <span class="lcol-count" id="lc-inbox">0</span>
+        </div>
+        <div class="lcards" id="lcards-inbox"></div>
+      </div>
+      <div class="lcol">
+        <div class="lcol-hd">
+          <span class="lcol-title" style="color:#16a34a">Follow Up</span>
+          <span class="lcol-count" id="lc-followup">0</span>
+        </div>
+        <div class="lcards" id="lcards-followup"></div>
+      </div>
+      <div class="lcol">
+        <div class="lcol-hd">
+          <span class="lcol-title" style="color:#6b7280">Rejected</span>
+          <span class="lcol-count" id="lc-rejected">0</span>
+        </div>
+        <div class="lcards" id="lcards-rejected"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Pipeline ─────────────────────────────────────────────── -->
+  <div class="section active" id="tab-pipeline">
+    <div class="sh">
+      <div class="sh-title">Pipeline</div>
+      <button class="btn-primary" id="btn-add-toggle">+ Add Lead</button>
+    </div>
+    <div class="panel" id="add-panel">
+      <div class="form-grid">
+        <div class="fg"><label class="fl">Company *</label><input class="fi" id="nl-company" type="text" placeholder="Acme Legal LLP" /></div>
+        <div class="fg"><label class="fl">Contact *</label><input class="fi" id="nl-contact" type="text" placeholder="Jane Smith" /></div>
+        <div class="fg"><label class="fl">Email *</label><input class="fi" id="nl-email" type="email" placeholder="jane@acme.co.uk" /></div>
+        <div class="fg"><label class="fl">Phone</label><input class="fi" id="nl-phone" type="tel" placeholder="020 7000 0000" /></div>
+        <div class="fg"><label class="fl">Stage</label>
+          <select class="fsel" id="nl-stage">
+            <option value="new_enquiry">New Enquiry</option>
+            <option value="discovery_booked">Discovery Booked</option>
+            <option value="discovery_done">Discovery Done</option>
+            <option value="proposal_sent">Proposal Sent</option>
+            <option value="negotiation">Negotiation</option>
+            <option value="nurture">Nurture</option>
+          </select>
+        </div>
+        <div class="fg"><label class="fl">Source</label>
+          <select class="fsel" id="nl-source">
+            <option value="website">Website</option><option value="referral">Referral</option>
+            <option value="linkedin">LinkedIn</option><option value="cold_outreach">Cold Outreach</option>
+            <option value="event">Event</option><option value="other">Other</option>
+          </select>
+        </div>
+        <div class="fg"><label class="fl">Vertical</label>
+          <select class="fsel" id="nl-vertical">
+            <option value="law_firm">Law Firm</option><option value="in_house_legal">In-House Legal</option>
+            <option value="finance">Finance</option><option value="healthcare">Healthcare</option>
+            <option value="charity">Charity</option><option value="enterprise">Enterprise</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+        <div class="fg"><label class="fl">Est. Value (£)</label><input class="fi" id="nl-value" type="number" placeholder="5000" /></div>
+        <div class="fg"><label class="fl">Next Action</label><input class="fi" id="nl-action" type="text" placeholder="Book discovery call" /></div>
+        <div class="fg"><label class="fl">Due Date</label><input class="fi" id="nl-due" type="date" /></div>
+      </div>
+      <div class="panel-actions">
+        <button class="btn-blue" id="btn-save-lead">Save Lead</button>
+        <button class="btn-ghost" id="btn-cancel-lead">Cancel</button>
+      </div>
+    </div>
+    <div class="kanban-wrap"><div class="kanban" id="kanban"></div></div>
+  </div>
+
+  <!-- ── Customers ────────────────────────────────────────────── -->
+  <div class="section" id="tab-customers">
+    <div class="sh">
+      <div class="sh-title">Customers</div>
+    </div>
+    <div class="cust-grid" id="cust-grid"></div>
+  </div>
+
+  <!-- ── Contacts ─────────────────────────────────────────────── -->
+  <div class="section" id="tab-contacts">
+    <div class="sh">
+      <div class="sh-title">All Contacts</div>
+      <input class="search-input" id="search" type="text" placeholder="Search company, name, email…" />
+    </div>
+    <div class="tw">
+      <table>
+        <thead><tr><th>Company</th><th>Contact</th><th>Email</th><th>Stage</th><th>Vertical</th><th>Value</th><th>Assigned</th><th>Next Action</th></tr></thead>
+        <tbody id="contacts-body"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ── Analytics ────────────────────────────────────────────── -->
+  <div class="section" id="tab-analytics">
+    <div class="sh"><div class="sh-title">Analytics</div></div>
+    <div class="ag">
+      <div class="ac"><h3>By Stage</h3><div id="ch-stage"></div></div>
+      <div class="ac"><h3>By Vertical</h3><div id="ch-vertical"></div></div>
+      <div class="ac"><h3>By Source</h3><div id="ch-source"></div></div>
+      <div class="ac"><h3>Pipeline Value by Stage</h3><div id="ch-value"></div></div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ── Lead / Customer modal ──────────────────────────────────── -->
+<div class="overlay" id="overlay">
+  <div class="modal" id="modal">
+    <div class="modal-header">
+      <div class="modal-header-left">
+        <input class="modal-company-input" id="modal-company-input" type="text" />
+        <span class="modal-stage-pill" id="modal-stage-pill"></span>
+      </div>
+      <button class="modal-close" id="modal-close">×</button>
+    </div>
+    <div class="modal-body" id="modal-body"></div>
+    <div class="modal-footer">
+      <button class="btn-blue" id="btn-modal-save">Save Changes</button>
+      <button class="btn-ghost" id="btn-modal-cancel">Cancel</button>
+      <span class="saved-flash" id="saved-flash">✓ Saved</span>
+    </div>
+  </div>
+</div>
+
+<!-- Reject reason modal -->
+<div class="reject-overlay" id="reject-overlay">
+  <div class="reject-box">
+    <h3>Reject this lead</h3>
+    <label class="fl">Reason — so Hermes can learn</label>
+    <textarea class="reject-reason-input" id="reject-reason-input" placeholder="e.g. Not compliance-driven, uses cloud AI happily, wrong sector…"></textarea>
+    <div class="reject-actions">
+      <button class="btn-blue" id="btn-reject-confirm">Reject</button>
+      <button class="btn-ghost" id="btn-reject-cancel">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- Step 1: inject server data (IIFE scoped — only writes to window) -->
+<script is:inline define:vars={{ userName: user.name, userEmail: user.email, stageLabels, stageOrder, stageColors, vertLabels, srcLabels }}>
+  window.__CRM = {
+    userName:  userName,
+    userEmail: userEmail,
+    SL:  JSON.parse(stageLabels),
+    SO:  JSON.parse(stageOrder),
+    SC:  JSON.parse(stageColors),
+    VL:  JSON.parse(vertLabels),
+    SRL: JSON.parse(srcLabels),
+  };
+</script>
+
+<!-- Step 2: app logic (plain is:inline — no define:vars — Astro does NOT wrap in IIFE) -->
+<script is:inline>
+  var SL  = window.__CRM.SL;
+  var SO  = window.__CRM.SO;
+  var SC  = window.__CRM.SC;
+  var VL  = window.__CRM.VL;
+  var SRL = window.__CRM.SRL;
+  var userName  = window.__CRM.userName;
+  var userEmail = window.__CRM.userEmail;
+
+  var leads = [];
+  var dragId = null;   // id of card being dragged
+  var modalLeadId = null; // lead currently open in modal
+
+  // ── Demo toggle state ─────────────────────────────────────────
+  var showDemo = localStorage.getItem('jdf-show-demo') !== 'false'; // default ON
+
+  function setShowDemo(val) {
+    showDemo = val;
+    localStorage.setItem('jdf-show-demo', val ? 'true' : 'false');
+    var btn = document.getElementById('btn-demo-toggle');
+    if (btn) {
+      btn.textContent = showDemo ? 'Demo: visible' : 'Demo: hidden';
+      btn.classList.toggle('active', showDemo);
+    }
+    renderAll();
+    if (typeof renderLeadsTab === 'function') renderLeadsTab();
+  }
+
+  function visibleLeads() {
+    return showDemo ? leads : leads.filter(function(l) { return !l.isDemo; });
+  }
+
+  // ── Utils ─────────────────────────────────────────────────────
+  function esc(s) {
+    return String(s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+  function escAttr(s) { return esc(s); }
+  function fmt(n) { return n != null ? '£' + Number(n).toLocaleString('en-GB') : '—'; }
+  function isOverdue(l) {
+    return l.nextActionDue && new Date(l.nextActionDue) < new Date() && l.stage !== 'won' && l.stage !== 'lost';
+  }
+  function fmtDate(iso) {
+    if (!iso) return '';
+    return new Date(iso).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+  }
+  function isoToDateInput(iso) {
+    if (!iso) return '';
+    return new Date(iso).toISOString().slice(0, 10);
+  }
+
+  // ── API ───────────────────────────────────────────────────────
+  async function fetchLeads() {
+    var res = await fetch('/api/crm/leads');
+    if (res.status === 401) { window.location.href = '/'; return; }
+    leads = await res.json();
+    renderAll();
+  }
+
+  async function apiPatch(id, patch) {
+    var res = await fetch('/api/crm/leads?id=' + id, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(patch),
+    });
+    if (!res.ok) throw new Error('Save failed');
+    var updated = await res.json();
+    var idx = leads.findIndex(function(l) { return l.id === id; });
+    if (idx !== -1) leads[idx] = updated;
+    return updated;
+  }
+
+  async function apiCreate(body) {
+    var res = await fetch('/api/crm/leads', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body),
+    });
+    if (!res.ok) { var e = await res.json(); throw new Error(e.error || 'Create failed'); }
+    var lead = await res.json();
+    leads.push(lead);
+    return lead;
+  }
+
+  // ── Render all ────────────────────────────────────────────────
+  function renderAll() {
+    var vis = visibleLeads();
+    renderStats(vis);
+    renderKanban(vis);
+    renderCustomers(vis);
+    renderContacts(vis);
+    renderAnalytics(vis);
+  }
+
+  // ── Stats ─────────────────────────────────────────────────────
+  function renderStats(vis) {
+    var active = vis.filter(function(l) { return l.stage !== 'won' && l.stage !== 'lost'; });
+    var pipeline = active.reduce(function(s,l) { return s + (l.estimatedValue || 0); }, 0);
+    var won = vis.filter(function(l) { return l.stage === 'won'; });
+    var wonVal = won.reduce(function(s,l) { return s + (l.estimatedValue || 0); }, 0);
+    var due = vis.filter(function(l) { return isOverdue(l); });
+    document.getElementById('s-active').textContent = active.length;
+    document.getElementById('s-pipeline').textContent = fmt(pipeline);
+    document.getElementById('s-customers').textContent = won.length;
+    document.getElementById('s-customers-v').textContent = fmt(wonVal) + ' total';
+    document.getElementById('s-due').textContent = due.length;
+  }
+
+  // ── Kanban ────────────────────────────────────────────────────
+  function renderKanban(vis) {
+    var board = document.getElementById('kanban');
+    board.innerHTML = SO.map(function(stage) {
+      var col = vis.filter(function(l) { return l.stage === stage; });
+      var color = SC[stage];
+      var cards = col.map(function(l) {
+        var od = isOverdue(l);
+        return '<div class="kcard" draggable="true" data-id="' + escAttr(l.id) + '" style="border-left-color:' + color + '">' +
+          '<div class="kcard-company">' + esc(l.companyName) + (l.isDemo ? '<span class="demo-badge">demo</span>' : '') + '</div>' +
+          '<div class="kcard-contact">' + esc(l.contactName) + '</div>' +
+          '<div class="kcard-row">' +
+            '<span class="vtag">' + esc(VL[l.vertical] || l.vertical) + '</span>' +
+            (l.estimatedValue ? '<span class="vval">' + fmt(l.estimatedValue) + '</span>' : '') +
+          '</div>' +
+          (l.nextAction ? '<div class="kcard-action' + (od ? ' overdue' : '') + '">' + (od ? '⚠ ' : '→ ') + esc(l.nextAction) + '</div>' : '') +
+        '</div>';
+      }).join('');
+      return '<div class="kcol" data-stage="' + stage + '">' +
+        '<div class="kcol-hd">' +
+          '<span class="kcol-title" style="color:' + color + '">' + esc(SL[stage]) + '</span>' +
+          '<span class="kcol-count">' + col.length + '</span>' +
+        '</div>' +
+        '<div class="kcards" data-stage="' + stage + '">' + (cards || '<div class="kempty">Drop here</div>') + '</div>' +
+      '</div>';
+    }).join('');
+
+    // Wire card events
+    board.querySelectorAll('.kcard').forEach(function(card) {
+      // Click to open
+      card.addEventListener('click', function(e) {
+        if (!e.defaultPrevented) openLead(this.dataset.id);
+      });
+      // Drag start
+      card.addEventListener('dragstart', function(e) {
+        dragId = this.dataset.id;
+        this.classList.add('dragging');
+        e.dataTransfer.effectAllowed = 'move';
+        e.dataTransfer.setData('text/plain', dragId);
+      });
+      card.addEventListener('dragend', function() {
+        this.classList.remove('dragging');
+        dragId = null;
+        board.querySelectorAll('.kcol').forEach(function(c) { c.classList.remove('drag-over'); });
+      });
+    });
+
+    // Wire column drop zones
+    board.querySelectorAll('.kcol').forEach(function(col) {
+      col.addEventListener('dragover', function(e) {
+        e.preventDefault();
+        e.dataTransfer.dropEffect = 'move';
+        board.querySelectorAll('.kcol').forEach(function(c) { c.classList.remove('drag-over'); });
+        col.classList.add('drag-over');
+      });
+      col.addEventListener('dragleave', function(e) {
+        if (!col.contains(e.relatedTarget)) col.classList.remove('drag-over');
+      });
+      col.addEventListener('drop', function(e) {
+        e.preventDefault();
+        col.classList.remove('drag-over');
+        var id = e.dataTransfer.getData('text/plain') || dragId;
+        if (!id) return;
+        var newStage = col.dataset.stage;
+        var lead = leads.find(function(l) { return l.id === id; });
+        if (!lead || lead.stage === newStage) return;
+        apiPatch(id, { stage: newStage }).then(function() {
+          renderAll();
+        }).catch(function(err) { alert('Could not move card: ' + err.message); });
+      });
+    });
+  }
+
+  // ── Customers ─────────────────────────────────────────────────
+  function renderCustomers(vis) {
+    var grid = document.getElementById('cust-grid');
+    var won = vis.filter(function(l) { return l.stage === 'won'; });
+    if (!won.length) {
+      grid.innerHTML = '<div class="cust-empty">No customers yet — won deals will appear here.</div>';
+      return;
+    }
+    grid.innerHTML = won.map(function(l) {
+      var noteCount = (l.notes || []).length;
+      return '<div class="cust-card" data-id="' + escAttr(l.id) + '">' +
+        '<div class="cust-name">' + esc(l.companyName) + (l.isDemo ? '<span class="demo-badge">demo</span>' : '') + '</div>' +
+        '<div class="cust-contact">' + esc(l.contactName) + ' · ' + esc(l.contactEmail) + '</div>' +
+        '<div class="cust-row">' +
+          '<span class="cust-value">' + (l.estimatedValue ? fmt(l.estimatedValue) : '—') + '</span>' +
+          '<span class="cust-date">' + fmtDate(l.updatedAt) + '</span>' +
+        '</div>' +
+        (noteCount ? '<div class="cust-notes">' + noteCount + ' note' + (noteCount > 1 ? 's' : '') + '</div>' : '') +
+      '</div>';
+    }).join('');
+    grid.querySelectorAll('.cust-card').forEach(function(card) {
+      card.addEventListener('click', function() { openLead(this.dataset.id); });
+    });
+  }
+
+  // ── Contacts ──────────────────────────────────────────────────
+  function renderContacts(data) {
+    var tbody = document.getElementById('contacts-body');
+    if (!data.length) { tbody.innerHTML = '<tr><td colspan="8" class="no-data">No contacts found.</td></tr>'; return; }
+    tbody.innerHTML = data.map(function(l) {
+      var color = SC[l.stage];
+      var od = isOverdue(l);
+      var isJ = (l.assignedTo || '').startsWith('joseph');
+      var initials = (l.assignedTo || '').split('@')[0].slice(0,2).toUpperCase();
+      return '<tr data-id="' + escAttr(l.id) + '">' +
+        '<td style="font-weight:600;color:#f1f5f9">' + esc(l.companyName) + (l.isDemo ? '<span class="demo-badge">demo</span>' : '') + '</td>' +
+        '<td>' + esc(l.contactName) + '</td>' +
+        '<td style="color:rgba(255,255,255,0.38);font-size:0.78rem">' + esc(l.contactEmail) + '</td>' +
+        '<td><span class="pill" style="background:' + color + '1a;color:' + color + '">' + esc(SL[l.stage]) + '</span></td>' +
+        '<td style="color:rgba(255,255,255,0.42);font-size:0.78rem">' + esc(VL[l.vertical] || l.vertical) + '</td>' +
+        '<td>' + (l.estimatedValue ? fmt(l.estimatedValue) : '—') + '</td>' +
+        '<td><span class="avatar" style="background:' + (isJ ? 'rgba(30,111,245,0.18)' : 'rgba(124,58,237,0.18)') + ';color:' + (isJ ? '#60a5fa' : '#c4b5fd') + '">' + initials + '</span></td>' +
+        '<td style="font-size:0.78rem;color:' + (od ? '#f87171' : 'rgba(255,255,255,0.32)') + ';max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">' +
+          (od ? '⚠ ' : '') + esc(l.nextAction || '—') +
+        '</td>' +
+      '</tr>';
+    }).join('');
+    tbody.querySelectorAll('tr[data-id]').forEach(function(row) {
+      row.addEventListener('click', function() { openLead(this.dataset.id); });
+    });
+  }
+
+  // ── Analytics ─────────────────────────────────────────────────
+  function renderAnalytics(vis) {
+    renderBars('ch-stage', SO.map(function(s) {
+      return { label: SL[s], n: vis.filter(function(l) { return l.stage === s; }).length, color: SC[s] };
+    }));
+    renderBars('ch-vertical', ['law_firm','in_house_legal','finance','healthcare','charity','enterprise','other'].map(function(v) {
+      return { label: VL[v], n: vis.filter(function(l) { return l.vertical === v; }).length, color: '#1E6FF5' };
+    }));
+    renderBars('ch-source', ['website','referral','linkedin','cold_outreach','event','other'].map(function(s) {
+      return { label: SRL[s], n: vis.filter(function(l) { return l.source === s; }).length, color: '#7c3aed' };
+    }));
+    renderBars('ch-value', SO.map(function(s) {
+      var v = vis.filter(function(l) { return l.stage === s && l.estimatedValue; })
+                   .reduce(function(a,l) { return a + (l.estimatedValue||0); }, 0);
+      return { label: SL[s], n: v, color: SC[s], prefix: '£' };
+    }));
+  }
+
+  function renderBars(id, items) {
+    var el = document.getElementById(id);
+    var max = Math.max.apply(null, items.map(function(i) { return i.n; }).concat([1]));
+    var nonEmpty = items.filter(function(i) { return i.n > 0; });
+    if (!nonEmpty.length) { el.innerHTML = '<div class="no-data">No data yet.</div>'; return; }
+    el.innerHTML = nonEmpty.map(function(i) {
+      var pct = (i.n / max * 100).toFixed(1);
+      var display = (i.prefix || '') + (i.n > 999 ? Number(i.n).toLocaleString('en-GB') : i.n);
+      return '<div class="bar-row">' +
+        '<span class="bar-lbl">' + esc(i.label) + '</span>' +
+        '<div class="bar-track"><div class="bar-fill" style="width:' + pct + '%;background:' + i.color + '"></div></div>' +
+        '<span class="bar-n">' + display + '</span>' +
+      '</div>';
+    }).join('');
+  }
+
+  // ── Modal ─────────────────────────────────────────────────────
+  function openLead(id) {
+    var l = leads.find(function(x) { return x.id === id; });
+    if (!l) return;
+    modalLeadId = id;
+
+    // Header
+    var compInput = document.getElementById('modal-company-input');
+    compInput.value = l.companyName;
+    var stagePill = document.getElementById('modal-stage-pill');
+    stagePill.textContent = SL[l.stage];
+    stagePill.style.background = SC[l.stage] + '22';
+    stagePill.style.color = SC[l.stage];
+
+    var od = isOverdue(l);
+
+    // Build body: editable fields + notes
+    var stageOpts = SO.map(function(s) {
+      return '<option value="' + s + '"' + (s === l.stage ? ' selected' : '') + '>' + SL[s] + '</option>';
+    }).join('');
+    var vertOpts = Object.keys(VL).map(function(v) {
+      return '<option value="' + v + '"' + (v === l.vertical ? ' selected' : '') + '>' + VL[v] + '</option>';
+    }).join('');
+    var srcOpts = Object.keys(SRL).map(function(s) {
+      return '<option value="' + s + '"' + (s === l.source ? ' selected' : '') + '>' + SRL[s] + '</option>';
+    }).join('');
+    var assignOpts = ['joseph@jdfortress.com','dev@jdfortress.com'].map(function(e) {
+      return '<option value="' + e + '"' + (e === l.assignedTo ? ' selected' : '') + '>' + e + '</option>';
+    }).join('');
+
+    document.getElementById('modal-body').innerHTML =
+      '<div class="modal-section">' +
+        '<div class="modal-section-title">Details</div>' +
+        '<div class="edit-grid">' +
+          '<div class="fg"><label class="fl">Contact Name</label><input class="fi" id="e-contact" type="text" value="' + escAttr(l.contactName) + '" /></div>' +
+          '<div class="fg"><label class="fl">Email</label><input class="fi" id="e-email" type="email" value="' + escAttr(l.contactEmail) + '" /></div>' +
+          '<div class="fg"><label class="fl">Phone</label><input class="fi" id="e-phone" type="tel" value="' + escAttr(l.contactPhone || '') + '" /></div>' +
+          '<div class="fg"><label class="fl">Est. Value (£)</label><input class="fi" id="e-value" type="number" value="' + escAttr(l.estimatedValue || '') + '" /></div>' +
+          '<div class="fg"><label class="fl">Stage</label><select class="fsel" id="e-stage">' + stageOpts + '</select></div>' +
+          '<div class="fg"><label class="fl">Vertical</label><select class="fsel" id="e-vertical">' + vertOpts + '</select></div>' +
+          '<div class="fg"><label class="fl">Source</label><select class="fsel" id="e-source">' + srcOpts + '</select></div>' +
+          '<div class="fg"><label class="fl">Assigned To</label><select class="fsel" id="e-assigned">' + assignOpts + '</select></div>' +
+          '<div class="fg"><label class="fl">Next Action</label><input class="fi" id="e-action" type="text" value="' + escAttr(l.nextAction || '') + '" /></div>' +
+          '<div class="fg"><label class="fl">Action Due</label><input class="fi" id="e-due" type="date" value="' + escAttr(isoToDateInput(l.nextActionDue)) + '" /></div>' +
+        '</div>' +
+      '</div>' +
+      '<hr class="divider" />' +
+      '<div class="modal-section">' +
+        '<div class="modal-section-title">Notes</div>' +
+        '<div class="notes-list" id="modal-notes">' +
+          ((l.notes && l.notes.length)
+            ? l.notes.map(function(n) {
+                return '<div class="note-item">' +
+                  '<div class="note-meta">' + esc(n.author) + ' · ' + fmtDate(n.createdAt) + '</div>' +
+                  '<div class="note-text">' + esc(n.text) + '</div>' +
+                '</div>';
+              }).join('')
+            : '<div class="no-data">No notes yet.</div>') +
+        '</div>' +
+        '<textarea class="note-input" id="note-input" placeholder="Add a note…"></textarea>' +
+        '<div style="margin-top:8px"><button class="btn-primary" id="btn-add-note">Add Note</button></div>' +
+      '</div>';
+
+    // Wire add note
+    document.getElementById('btn-add-note').addEventListener('click', function() {
+      var text = (document.getElementById('note-input').value || '').trim();
+      if (!text) return;
+      var newNote = { id: 'note-' + Date.now(), text: text, author: userEmail, createdAt: new Date().toISOString() };
+      var updatedNotes = (l.notes || []).concat([newNote]);
+      apiPatch(l.id, { notes: updatedNotes }).then(function(updated) {
+        l = updated;
+        leads[leads.findIndex(function(x) { return x.id === id; })] = updated;
+        openLead(id);
+      }).catch(function(e) { alert('Could not add note: ' + e.message); });
+    });
+
+    document.getElementById('overlay').classList.add('open');
+  }
+
+  function collectModalEdits() {
+    return {
+      companyName:   document.getElementById('modal-company-input').value.trim(),
+      contactName:   document.getElementById('e-contact').value.trim(),
+      contactEmail:  document.getElementById('e-email').value.trim(),
+      contactPhone:  document.getElementById('e-phone').value.trim() || undefined,
+      estimatedValue: parseInt(document.getElementById('e-value').value) || undefined,
+      stage:         document.getElementById('e-stage').value,
+      vertical:      document.getElementById('e-vertical').value,
+      source:        document.getElementById('e-source').value,
+      assignedTo:    document.getElementById('e-assigned').value,
+      nextAction:    document.getElementById('e-action').value.trim() || undefined,
+      nextActionDue: (function() {
+        var d = document.getElementById('e-due').value;
+        return d ? new Date(d).toISOString() : undefined;
+      })(),
+    };
+  }
+
+  function closeModal() {
+    document.getElementById('overlay').classList.remove('open');
+    document.getElementById('saved-flash').classList.remove('show');
+    modalLeadId = null;
+  }
+
+  // ── Tabs ──────────────────────────────────────────────────────
+  function switchTab(name) {
+    document.querySelectorAll('.section').forEach(function(s) { s.classList.remove('active'); });
+    document.querySelectorAll('.tab').forEach(function(t) { t.classList.remove('active'); });
+    document.getElementById('tab-' + name).classList.add('active');
+    document.querySelector('.tab[data-tab="' + name + '"]').classList.add('active');
+  }
+
+  // ── Boot ──────────────────────────────────────────────────────
+  document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('user-name').textContent = userName;
+
+    // Demo toggle
+    var demoBtn = document.getElementById('btn-demo-toggle');
+    demoBtn.textContent = showDemo ? 'Demo: visible' : 'Demo: hidden';
+    if (showDemo) demoBtn.classList.add('active');
+    demoBtn.addEventListener('click', function() { setShowDemo(!showDemo); });
+
+    // Tabs
+    document.querySelectorAll('.tab').forEach(function(t) {
+      t.addEventListener('click', function() { switchTab(this.dataset.tab); });
+    });
+
+    // Logout
+    document.getElementById('btn-logout').addEventListener('click', function() {
+      fetch('/api/auth/logout', { method: 'POST' }).then(function() { window.location.href = '/'; });
+    });
+
+    // Modal close
+    document.getElementById('modal-close').addEventListener('click', closeModal);
+    document.getElementById('btn-modal-cancel').addEventListener('click', closeModal);
+    document.getElementById('overlay').addEventListener('click', function(e) {
+      if (e.target === this) closeModal();
+    });
+
+    // Modal save
+    document.getElementById('btn-modal-save').addEventListener('click', function() {
+      if (!modalLeadId) return;
+      var patch = collectModalEdits();
+      var btn = this;
+      btn.textContent = 'Saving…';
+      btn.disabled = true;
+      apiPatch(modalLeadId, patch).then(function() {
+        renderAll();
+        btn.textContent = 'Save Changes';
+        btn.disabled = false;
+        var flash = document.getElementById('saved-flash');
+        flash.classList.add('show');
+        setTimeout(function() { flash.classList.remove('show'); }, 2000);
+        // Update stage pill live
+        var stage = patch.stage;
+        var stagePill = document.getElementById('modal-stage-pill');
+        stagePill.textContent = SL[stage];
+        stagePill.style.background = SC[stage] + '22';
+        stagePill.style.color = SC[stage];
+      }).catch(function(e) {
+        alert('Save failed: ' + e.message);
+        btn.textContent = 'Save Changes';
+        btn.disabled = false;
+      });
+    });
+
+    // Add lead panel
+    document.getElementById('btn-add-toggle').addEventListener('click', function() {
+      document.getElementById('add-panel').classList.toggle('open');
+    });
+    document.getElementById('btn-cancel-lead').addEventListener('click', function() {
+      document.getElementById('add-panel').classList.remove('open');
+    });
+
+    // Save new lead
+    document.getElementById('btn-save-lead').addEventListener('click', function() {
+      var company = document.getElementById('nl-company').value.trim();
+      var contact = document.getElementById('nl-contact').value.trim();
+      var email   = document.getElementById('nl-email').value.trim();
+      if (!company || !contact || !email) { alert('Company, contact name, and email are required.'); return; }
+      var dueVal = document.getElementById('nl-due').value;
+      apiCreate({
+        companyName:   company,
+        contactName:   contact,
+        contactEmail:  email,
+        contactPhone:  document.getElementById('nl-phone').value.trim() || undefined,
+        stage:         document.getElementById('nl-stage').value,
+        source:        document.getElementById('nl-source').value,
+        vertical:      document.getElementById('nl-vertical').value,
+        estimatedValue: parseInt(document.getElementById('nl-value').value) || undefined,
+        nextAction:    document.getElementById('nl-action').value.trim() || undefined,
+        nextActionDue: dueVal ? new Date(dueVal).toISOString() : undefined,
+      }).then(function() {
+        renderAll();
+        document.getElementById('add-panel').classList.remove('open');
+        ['nl-company','nl-contact','nl-email','nl-phone','nl-action','nl-value','nl-due'].forEach(function(id) {
+          document.getElementById(id).value = '';
+        });
+      }).catch(function(e) { alert(e.message); });
+    });
+
+    // Search contacts
+    document.getElementById('search').addEventListener('input', function() {
+      var q = this.value.toLowerCase();
+      renderContacts(visibleLeads().filter(function(l) {
+        return l.companyName.toLowerCase().includes(q) ||
+               l.contactName.toLowerCase().includes(q) ||
+               l.contactEmail.toLowerCase().includes(q);
+      }));
+    });
+
+    fetchLeads();
+  });
+</script>
+
+<!-- Leads tab logic — plain is:inline, no IIFE wrapping -->
+<script is:inline>
+  var candidates = [];
+  var rejectTargetId = null;
+
+  var CAND_SOURCE_LABELS = {
+    linkedin: 'LinkedIn', companies_house: 'Companies House',
+    web_search: 'Web Search', legal_directory: 'Legal Directory',
+    news: 'News', referral: 'Referral', other: 'Other',
+  };
+
+  // ── Fetch candidates ────────────────────────────────────────
+  async function fetchCandidates() {
+    var res = await fetch('/api/crm/candidates');
+    if (res.status === 401) { window.location.href = '/'; return; }
+    candidates = await res.json();
+    renderLeadsTab();
+  }
+
+  // ── Render leads board ──────────────────────────────────────
+  function visibleCandidates() {
+    return showDemo ? candidates : candidates.filter(function(c) { return !c.isDemo; });
+  }
+
+  function renderLeadsTab() {
+    var vis = visibleCandidates();
+    var inbox    = vis.filter(function(c) { return c.status === 'inbox'; });
+    var followup = vis.filter(function(c) { return c.status === 'follow_up'; });
+    var rejected = vis.filter(function(c) { return c.status === 'rejected'; });
+
+    document.getElementById('lc-inbox').textContent   = inbox.length;
+    document.getElementById('lc-followup').textContent = followup.length;
+    document.getElementById('lc-rejected').textContent = rejected.length;
+
+    renderLcards('lcards-inbox',    inbox,    ['followup','reject']);
+    renderLcards('lcards-followup', followup, ['promote','reject']);
+    renderLcards('lcards-rejected', rejected, ['undo']);
+  }
+
+  function renderLcards(containerId, items, actions) {
+    var el = document.getElementById(containerId);
+    if (!items.length) { el.innerHTML = '<div class="lempty">—</div>'; return; }
+    el.innerHTML = items.map(function(c) {
+      var actionBtns = actions.map(function(a) {
+        var labels = { reject: 'Reject', followup: 'Follow Up', promote: '→ Pipeline', undo: 'Move to Inbox' };
+        return '<button class="lcard-btn ' + a + '" data-id="' + esc(c.id) + '" data-action="' + a + '">' + labels[a] + '</button>';
+      }).join('');
+      return '<div class="lcard ' + c.status + '" data-id="' + esc(c.id) + '">' +
+        '<div class="lcard-co">' + esc(c.companyName) + (c.isDemo ? '<span class="demo-badge">demo</span>' : '') + '</div>' +
+        '<div class="lcard-ct">' + esc(c.contactName) + ' · ' + esc(c.contactEmail) + '</div>' +
+        '<div class="lcard-summary">' + esc(c.summary) + '</div>' +
+        '<div class="lcard-meta">' +
+          '<span class="lcard-source">' + esc(CAND_SOURCE_LABELS[c.source] || c.source) + '</span>' +
+          (c.location ? '<span class="lcard-loc">📍 ' + esc(c.location) + '</span>' : '') +
+        '</div>' +
+        (c.rejectionReason ? '<div class="lcard-reject-reason">"' + esc(c.rejectionReason) + '"</div>' : '') +
+        (c.promotedToLeadId ? '<div class="lcard-promoted">✓ Added to pipeline</div>' : '') +
+        '<div class="lcard-actions">' + actionBtns + '</div>' +
+      '</div>';
+    }).join('');
+
+    // Wire buttons
+    el.querySelectorAll('.lcard-btn').forEach(function(btn) {
+      btn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        var id     = this.dataset.id;
+        var action = this.dataset.action;
+        if (action === 'reject') {
+          rejectTargetId = id;
+          document.getElementById('reject-reason-input').value = '';
+          document.getElementById('reject-overlay').classList.add('open');
+          setTimeout(function() { document.getElementById('reject-reason-input').focus(); }, 80);
+        } else if (action === 'followup') {
+          candAction(id, 'followup');
+        } else if (action === 'promote') {
+          candAction(id, 'promote');
+        } else if (action === 'undo') {
+          candAction(id, 'inbox');
+        }
+      });
+    });
+  }
+
+  async function candAction(id, action, body) {
+    var url = '/api/crm/candidates?id=' + id + '&action=' + action;
+    var res = await fetch(url, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body || {}),
+    });
+    if (!res.ok) { var e = await res.json(); throw new Error(e.error || 'Failed'); }
+    var data = await res.json();
+    // Update local array
+    var incoming = data.candidate || data;
+    var idx = candidates.findIndex(function(c) { return c.id === incoming.id; });
+    if (idx !== -1) candidates[idx] = incoming;
+    // If promoted, also add to pipeline leads
+    if (data.lead) {
+      leads.push(data.lead);
+      renderAll();
+    }
+    renderLeadsTab();
+    return data;
+  }
+
+  // Boot — wire leads tab + reject modal after DOM ready
+  document.addEventListener('DOMContentLoaded', function() {
+    // Reject modal confirm
+    document.getElementById('btn-reject-confirm').addEventListener('click', function() {
+      if (!rejectTargetId) return;
+      var reason = (document.getElementById('reject-reason-input').value || '').trim();
+      candAction(rejectTargetId, 'reject', { reason: reason }).then(function() {
+        document.getElementById('reject-overlay').classList.remove('open');
+        rejectTargetId = null;
+      }).catch(function(e) { alert('Could not reject: ' + e.message); });
+    });
+
+    document.getElementById('btn-reject-cancel').addEventListener('click', function() {
+      document.getElementById('reject-overlay').classList.remove('open');
+      rejectTargetId = null;
+    });
+
+    // Also fetch candidates on load
+    fetchCandidates();
+  });
+</script>
+
+</body>
+</html>
