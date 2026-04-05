@@ -3,6 +3,7 @@ export type LeadStage =
   | "discovery_booked"
   | "discovery_done"
   | "proposal_sent"
+  | "sow_shared"
   | "negotiation"
   | "won"
   | "lost"
@@ -64,6 +65,7 @@ export const STAGE_ORDER: LeadStage[] = [
   "discovery_booked",
   "discovery_done",
   "proposal_sent",
+  "sow_shared",
   "negotiation",
   "won",
   "lost",
@@ -75,6 +77,7 @@ export const STAGE_LABELS: Record<LeadStage, string> = {
   discovery_booked: "Discovery Booked",
   discovery_done: "Discovery Done",
   proposal_sent: "Proposal Sent",
+  sow_shared: "SOW Shared",
   negotiation: "Negotiation",
   won: "Won ✓",
   lost: "Lost",
@@ -86,6 +89,7 @@ export const STAGE_COLORS: Record<LeadStage, string> = {
   discovery_booked: "#7c3aed",
   discovery_done: "#0891b2",
   proposal_sent: "#d97706",
+  sow_shared: "#c2410c",
   negotiation: "#ea580c",
   won: "#16a34a",
   lost: "#dc2626",
@@ -192,6 +196,35 @@ export function addNote(
 // ── Singleton in-memory store (SSR process lifetime) ────────────
 
 const SEED_LEADS: Lead[] = [
+  {
+    id: "lead-prince",
+    companyName: "Workforce Housing Co.",
+    contactName: "Prince",
+    contactEmail: "",
+    stage: "sow_shared",
+    source: "referral",
+    vertical: "enterprise",
+    estimatedValue: 3200,
+    notes: [
+      {
+        id: "n-prince-1",
+        text: "Met via church — contractor/workforce housing business. Needs a platform: CRM, DB, API, agents. Existing site cost £450 (WordPress). We framed our £3,200 as a platform build, not a website.",
+        author: "joseph@jdfortress.com",
+        createdAt: "2026-03-01T10:00:00Z",
+      },
+      {
+        id: "n-prince-2",
+        text: "SOW v6 shared — revised by Shinae (lawyer). Includes: deemed acceptance clause, late payment interest, suspension right, client delay clause, GDPR split, mutual liability cap, change control. Awaiting reply.",
+        author: "joseph@jdfortress.com",
+        createdAt: "2026-04-01T09:00:00Z",
+      },
+    ],
+    createdAt: "2026-03-01T10:00:00Z",
+    updatedAt: "2026-04-01T09:00:00Z",
+    assignedTo: "joseph@jdfortress.com",
+    nextAction: "Chase SOW reply",
+    nextActionDue: "2026-04-10T09:00:00Z",
+  },
   {
     id: "lead-001",
     isDemo: true,
