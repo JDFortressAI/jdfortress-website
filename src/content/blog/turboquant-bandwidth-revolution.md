@@ -82,7 +82,7 @@ Long context (>100K tokens) has been a differentiator among cloud and local AI v
 
 This is where it connects to our earlier point on [capability sovereignty](/blog/capability-sovereignty). The biggest friction in deploying local AI has been the infrastructure cost. Cloud providers could amortise massive GPU farms; individual businesses couldn’t match that.
 
-TurboQuant compresses the gap. A single NVIDIA RTX 4090 (retail, £1K) with TurboQuant can now handle workloads that previously required enterprise clusters. The economics of ownership vs. leasing just tilted sharply.
+TurboQuant compresses the gap. A single NVIDIA RTX 4090 (retail, £2K — prices have doubled since launch due to AI demand) with TurboQuant can now handle workloads that previously required enterprise clusters.
 
 ## The Community Reaction
 
@@ -100,15 +100,17 @@ The AI community is appropriately excited — and appropriately cautious.
 
 The consensus: this isn’t hype. It’s a genuine architectural breakthrough that solves a known bottleneck.
 
-## Market Reaction: Early Signals
+## Market Reaction: The Memory Chip Sell-Off
 
-We can’t predict stock markets, but early signals are interesting:
+The TurboQuant announcement triggered an unexpected, swift market reaction that financial commentators dubbed "Google's DeepSeek moment" — referencing the 2025 efficiency breakthrough that caused similar panic in AI hardware stocks.
 
-- **NVIDIA**: no immediate stock movement — this actually *helps* them, as bandwidth-optimised compute is still their wheelhouse
-- **Ollama / llama.cpp maintainers**: immediate porting within days — the open-source ecosystem is moving fast
-- **Cloud providers**: quiet. Why? This strengthens the *local* case, making some inference workloads less attractive to keep in cloud. Expect them to adopt it quickly (to keep customers who run hybrid), but not loudly.
+Within days of the March 2026 paper release, memory semiconductor stocks saw a multi-billion dollar sell-off. Samsung Electronics, SK Hynix, and Micron Technology all posted significant declines — with some reports estimating over $90 billion in evaporated market value. Micron fell more than 7%, SK Hynix dropped roughly 6%.
 
-One anecdotal data point: several UK AI startups we spoke to privately said they’re re-evaluating on-prem deployments *this week* because of TurboQuant. The conversation shifted from “can we afford it” to “when can we deploy it.”
+**The logic**: analysts feared TurboQuant threatened the long-term demand for high-bandwidth memory (HBM), the specialised memory that commands premium pricing in AI data centres. If software compression can reduce memory requirements by 6×, does the industry need as much HBM?
+
+**The recovery**: within days, some memory stocks rebounded after analysts at firms like Bernstein labelled the fears overdone. The consensus argument: TurboQuant only targets inference stack KV cache memory, not training workloads. Plus, Jevons' Paradox likely applies — higher efficiency drives increased overall usage, not decreased demand.
+
+**What this signals**: the financial markets took TurboQuant seriously. Not as incremental improvement, but as a potential structural shift in AI hardware economics. For businesses: infrastructure decisions made 12 months ago are already outdated. The companies that adapted fastest to efficiency breakthroughs will compound their advantages.
 
 ## What This Means for JD Fortress Clients
 
