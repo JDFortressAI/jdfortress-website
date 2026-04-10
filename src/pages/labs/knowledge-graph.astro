@@ -1,0 +1,533 @@
+---
+export const prerender = false;
+
+import Layout from '../../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+
+const allPosts = await getCollection('blog');
+
+// ── Cluster assignments — extend when new posts are added ─────────────────
+// New posts without an entry default to 'infrastructure'.
+// Add a slug → cluster entry here when the post belongs elsewhere.
+const CLUSTER_MAP: Record<string, string> = {
+  'why-law-firms-cant-afford-cloud-ai':  'sovereignty',
+  'capability-sovereignty':              'sovereignty',
+  'karpathy-llm-knowledge-base':         'infrastructure',
+  'what-is-rag':                         'infrastructure',
+  'context-is-not-free':                 'infrastructure',
+  'cache-rules-everything':              'infrastructure',
+  'the-memory-wall':                     'infrastructure',
+  'eniac-moment-future-on-premise-ai':   'infrastructure',
+  'what-is-openclaw':                    'infrastructure',
+  'chatgpt-discovery-legal-risk':        'legal',
+  'ai-third-party-privilege-ruling':     'legal',
+  'notebooklm-lawyer-lockout-warning':   'legal',
+  'gen-ai-for-in-house-lawyers':         'legal',
+  'on-cocounsel':                        'legal',
+  'when-guardrails-break':               'security',
+  'litellm-supply-chain-attack':         'security',
+  'bobby-tables-mckinsey-lilli-hack':    'security',
+  'claude-code-source-leak':             'security',
+  'sqlite-code-of-ethics':              'security',
+  'anonymity-era-over':                  'privacy',
+  'meta-glasses-privacy-scandal':        'privacy',
+  'small-enough-to-trust':               'privacy',
+};
+
+// ── Build slug set ────────────────────────────────────────────────────────
+const slugSet = new Set(allPosts.map(p => p.id));
+
+// ── Dynamically extract outbound /blog/<slug> links from each post body ───
+const linkGraph: Record<string, string[]> = {};
+for (const post of allPosts) {
+  const body: string = (post as any).body ?? '';
+  // Match markdown links: [text](/blog/slug) or [text](/blog/slug#anchor)
+  const matches = [...body.matchAll(/\(\/blog\/([\w-]+)(?:#[^)]+)?\)/g)];
+  const targets = [...new Set(
+    matches
+      .map(m => m[1])
+      .filter(t => t !== post.id && slugSet.has(t))
+  )];
+  if (targets.length > 0) linkGraph[post.id] = targets;
+}
+
+// ── Compute inbound counts ────────────────────────────────────────────────
+const inboundCount: Record<string, number> = {};
+for (const post of allPosts) inboundCount[post.id] = 0;
+for (const targets of Object.values(linkGraph)) {
+  for (const t of targets) {
+    if (inboundCount[t] !== undefined) inboundCount[t]++;
+  }
+}
+
+// ── Build nodes ───────────────────────────────────────────────────────────
+const nodes = allPosts.map(post => ({
+  id:      post.id,
+  title:   post.data.title,
+  date:    post.data.date.toISOString().split('T')[0],
+  excerpt: post.data.excerpt,
+  cluster: CLUSTER_MAP[post.id] ?? 'infrastructure',
+  inbound: inboundCount[post.id] ?? 0,
+}));
+
+// ── Build edges ───────────────────────────────────────────────────────────
+const edges: Array<{source: string; target: string}> = [];
+for (const [source, targets] of Object.entries(linkGraph)) {
+  for (const target of targets) {
+    edges.push({ source, target });
+  }
+}
+
+const clusterCount = new Set(nodes.map(n => n.cluster)).size;
+const graphData = JSON.stringify({ nodes, edges });
+---
+
+<Layout
+  title="Knowledge Graph — JD Fortress AI Labs"
+  description="An interactive knowledge graph mapping every JD Fortress blog article — connections, clusters, and the ideas that link them."
+>
+
+  <!-- HERO -->
+  <section style="background:#0F2041; padding:72px 24px 56px; text-align:center;">
+    <div style="max-width:720px; margin:0 auto;">
+      <p style="color:#1E6FF5; font-size:0.8rem; font-weight:600; letter-spacing:0.14em; text-transform:uppercase; margin:0 0 16px;">JD Fortress Labs</p>
+      <h1 style="color:#fff; font-size:clamp(1.9rem, 4.5vw, 3rem); font-weight:700; line-height:1.1; letter-spacing:-0.03em; margin:0 0 20px;">
+        The Knowledge Graph
+      </h1>
+      <p style="color:rgba(255,255,255,0.65); font-size:1rem; line-height:1.7; max-width:560px; margin:0 auto 28px;">
+        Every article in the JD Fortress blog, mapped by the ideas that connect them. Nodes sized by influence. Edges drawn from cross-references. Built live from the corpus.
+      </p>
+      <div style="display:flex; gap:20px; justify-content:center; flex-wrap:wrap;">
+        <div id="legend" style="display:flex; gap:16px; flex-wrap:wrap; justify-content:center; font-size:0.8rem;">
+          <span style="display:flex;align-items:center;gap:6px;color:rgba(255,255,255,0.7)"><span style="width:10px;height:10px;border-radius:50%;background:#1E6FF5;display:inline-block;"></span>Infrastructure</span>
+          <span style="display:flex;align-items:center;gap:6px;color:rgba(255,255,255,0.7)"><span style="width:10px;height:10px;border-radius:50%;background:#22c55e;display:inline-block;"></span>Sovereignty</span>
+          <span style="display:flex;align-items:center;gap:6px;color:rgba(255,255,255,0.7)"><span style="width:10px;height:10px;border-radius:50%;background:#f59e0b;display:inline-block;"></span>Legal &amp; Compliance</span>
+          <span style="display:flex;align-items:center;gap:6px;color:rgba(255,255,255,0.7)"><span style="width:10px;height:10px;border-radius:50%;background:#ef4444;display:inline-block;"></span>Security</span>
+          <span style="display:flex;align-items:center;gap:6px;color:rgba(255,255,255,0.7)"><span style="width:10px;height:10px;border-radius:50%;background:#a855f7;display:inline-block;"></span>Privacy</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GRAPH CANVAS -->
+  <section style="background:#080E1E; padding:0; position:relative; overflow:hidden;">
+    <!-- Stats bar -->
+    <div style="background:#0B1628; border-bottom:1px solid rgba(255,255,255,0.06); padding:12px 24px; display:flex; gap:32px; justify-content:center; flex-wrap:wrap;">
+      <span style="color:rgba(255,255,255,0.5); font-size:0.8rem;"><strong style="color:#1E6FF5;">{nodes.length}</strong> articles</span>
+      <span style="color:rgba(255,255,255,0.5); font-size:0.8rem;"><strong style="color:#1E6FF5;">{edges.length}</strong> connections</span>
+      <span style="color:rgba(255,255,255,0.5); font-size:0.8rem;"><strong style="color:#1E6FF5;">{clusterCount}</strong> topic clusters</span>
+      <span style="color:rgba(255,255,255,0.5); font-size:0.8rem; display:flex; align-items:center; gap:6px;">
+        <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="5" stroke="rgba(255,255,255,0.4)" stroke-width="1.5"/><path d="M6 4v4M4 6h4" stroke="rgba(255,255,255,0.4)" stroke-width="1.5" stroke-linecap="round"/></svg>
+        Scroll to zoom · Drag to pan · Click a node to read
+      </span>
+    </div>
+
+    <div id="graph-container" style="width:100%; height:72vh; min-height:520px; position:relative; cursor:grab;">
+      <svg id="graph-svg" style="width:100%;height:100%;"></svg>
+      <!-- Tooltip -->
+      <div id="tooltip" style="display:none; position:absolute; background:#0F2041; border:1px solid rgba(30,111,245,0.4); border-radius:10px; padding:14px 18px; max-width:300px; pointer-events:none; z-index:100; box-shadow:0 8px 32px rgba(0,0,0,0.6);">
+        <p id="tt-cluster" style="color:#1E6FF5; font-size:0.72rem; font-weight:600; letter-spacing:0.1em; text-transform:uppercase; margin:0 0 6px;"></p>
+        <p id="tt-title" style="color:#fff; font-size:0.95rem; font-weight:600; line-height:1.35; margin:0 0 8px;"></p>
+        <p id="tt-excerpt" style="color:rgba(255,255,255,0.6); font-size:0.8rem; line-height:1.6; margin:0 0 10px;"></p>
+        <p id="tt-meta" style="color:rgba(255,255,255,0.35); font-size:0.73rem; margin:0;"></p>
+        <p style="color:#1E6FF5; font-size:0.75rem; margin:8px 0 0; font-weight:500;">Click to read →</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ARTICLE LIST -->
+  <section style="background:#fff; padding:72px 24px 96px;">
+    <div style="max-width:900px; margin:0 auto;">
+      <h2 style="color:#0F2041; font-size:1.6rem; font-weight:700; letter-spacing:-0.02em; margin:0 0 8px;">All Articles in the Corpus</h2>
+      <p style="color:#56585E; font-size:0.95rem; margin:0 0 40px;">The {nodes.length} articles powering this knowledge graph, sorted by influence (inbound connections).</p>
+      <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(260px, 1fr)); gap:20px;" id="article-grid">
+        {nodes.sort((a, b) => b.inbound - a.inbound).map(n => (
+          <a href={`/blog/${n.id}`}
+             style="display:block; background:#F0F4FF; border:1px solid #e0e8f5; border-radius:12px; padding:20px; text-decoration:none; transition:border-color 0.2s, box-shadow 0.2s;"
+             onmouseover="this.style.borderColor='#1E6FF5';this.style.boxShadow='0 4px 16px rgba(30,111,245,0.12)'"
+             onmouseout="this.style.borderColor='#e0e8f5';this.style.boxShadow='none'">
+            <div style="display:flex; justify-content:space-between; align-items:start; margin-bottom:8px;">
+              <span style={`display:inline-block; padding:3px 8px; border-radius:4px; font-size:0.7rem; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; background:${
+                n.cluster === 'sovereignty' ? '#dcfce7' :
+                n.cluster === 'legal' ? '#fef3c7' :
+                n.cluster === 'security' ? '#fee2e2' :
+                n.cluster === 'privacy' ? '#f3e8ff' :
+                '#dbeafe'
+              }; color:${
+                n.cluster === 'sovereignty' ? '#166534' :
+                n.cluster === 'legal' ? '#92400e' :
+                n.cluster === 'security' ? '#991b1b' :
+                n.cluster === 'privacy' ? '#6b21a8' :
+                '#1e40af'
+              };`}>{n.cluster}</span>
+              {n.inbound > 0 && <span style="color:#1E6FF5; font-size:0.72rem; font-weight:600;">{n.inbound} ←</span>}
+            </div>
+            <p style="color:#0D141A; font-size:0.9rem; font-weight:600; line-height:1.4; margin:0 0 6px;">{n.title}</p>
+            <p style="color:#56585E; font-size:0.78rem; line-height:1.5; margin:0; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;">{n.excerpt}</p>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+</Layout>
+
+<script define:vars={{ graphData }}>
+const { nodes, edges } = JSON.parse(graphData);
+
+const CLUSTER_COLORS = {
+  infrastructure: '#1E6FF5',
+  sovereignty:    '#22c55e',
+  legal:          '#f59e0b',
+  security:       '#ef4444',
+  privacy:        '#a855f7',
+};
+
+function getColor(cluster) {
+  return CLUSTER_COLORS[cluster] || '#1E6FF5';
+}
+
+// Compute inbound counts for node sizing
+const inboundMap = {};
+nodes.forEach(n => { inboundMap[n.id] = 0; });
+edges.forEach(e => { if (inboundMap[e.target] !== undefined) inboundMap[e.target]++; });
+
+function nodeRadius(n) {
+  const base = 8;
+  const bonus = inboundMap[n.id] || 0;
+  return base + bonus * 3.5;
+}
+
+// ── D3 force simulation ───────────────────────────────────────────────────
+const container = document.getElementById('graph-container');
+const svg = document.getElementById('graph-svg');
+const tooltip = document.getElementById('tooltip');
+const ttCluster = document.getElementById('tt-cluster');
+const ttTitle   = document.getElementById('tt-title');
+const ttExcerpt = document.getElementById('tt-excerpt');
+const ttMeta    = document.getElementById('tt-meta');
+
+let W = container.offsetWidth;
+let H = container.offsetHeight;
+
+// SVG namespace helper
+const NS = 'http://www.w3.org/2000/svg';
+function el(tag, attrs = {}) {
+  const e = document.createElementNS(NS, tag);
+  for (const [k, v] of Object.entries(attrs)) e.setAttribute(k, v);
+  return e;
+}
+
+// Build simulation-ready node/edge arrays
+const simNodes = nodes.map(n => ({ ...n, x: W / 2 + (Math.random() - 0.5) * 200, y: H / 2 + (Math.random() - 0.5) * 200, vx: 0, vy: 0 }));
+const nodeById = {};
+simNodes.forEach(n => nodeById[n.id] = n);
+
+const simEdges = edges
+  .filter(e => nodeById[e.source] && nodeById[e.target])
+  .map(e => ({ source: nodeById[e.source], target: nodeById[e.target] }));
+
+// SVG layers
+const gLinks = el('g'); svg.appendChild(gLinks);
+const gNodes = el('g'); svg.appendChild(gNodes);
+const gLabels = el('g'); svg.appendChild(gLabels);
+
+// Defs for glow filter
+const defs = el('defs');
+const filter = el('filter', { id: 'glow', x: '-50%', y: '-50%', width: '200%', height: '200%' });
+const blur = el('feGaussianBlur', { stdDeviation: '3', result: 'blur' });
+const merge = el('feMerge');
+const m1 = el('feMergeNode', { in: 'blur' });
+const m2 = el('feMergeNode', { in: 'SourceGraphic' });
+merge.appendChild(m1); merge.appendChild(m2);
+filter.appendChild(blur); filter.appendChild(merge);
+defs.appendChild(filter);
+svg.insertBefore(defs, gLinks);
+
+// Draw edges
+const linkEls = simEdges.map(e => {
+  const line = el('line', {
+    stroke: 'rgba(30,111,245,0.18)',
+    'stroke-width': '1.5',
+    'stroke-linecap': 'round',
+  });
+  gLinks.appendChild(line);
+  return { el: line, edge: e };
+});
+
+// Draw nodes
+const nodeEls = simNodes.map(n => {
+  const r = nodeRadius(n);
+  const g = el('g', { style: 'cursor:pointer;' });
+
+  // Outer glow ring for high-influence nodes
+  if ((inboundMap[n.id] || 0) >= 5) {
+    const ring = el('circle', {
+      r: r + 5,
+      fill: 'none',
+      stroke: getColor(n.cluster),
+      'stroke-width': '1',
+      opacity: '0.25',
+      filter: 'url(#glow)',
+    });
+    g.appendChild(ring);
+  }
+
+  const circle = el('circle', {
+    r,
+    fill: getColor(n.cluster),
+    opacity: '0.92',
+    'stroke-width': '0',
+  });
+  g.appendChild(circle);
+
+  // Short label for large nodes
+  if (r >= 15) {
+    const words = n.title.split(' ');
+    const shortTitle = words.slice(0, 3).join(' ') + (words.length > 3 ? '…' : '');
+    const label = el('text', {
+      'text-anchor': 'middle',
+      'dominant-baseline': 'central',
+      fill: '#fff',
+      'font-size': '9',
+      'font-family': 'Inter, system-ui, sans-serif',
+      'font-weight': '600',
+      'pointer-events': 'none',
+      style: 'user-select:none;',
+    });
+    label.textContent = shortTitle;
+    g.appendChild(label);
+  }
+
+  gNodes.appendChild(g);
+
+  // Hover/click events
+  g.addEventListener('mouseenter', (ev) => {
+    circle.setAttribute('opacity', '1');
+    circle.setAttribute('stroke', '#fff');
+    circle.setAttribute('stroke-width', '2');
+    showTooltip(n, ev);
+    // Highlight connected edges
+    linkEls.forEach(({ el: le, edge }) => {
+      if (edge.source.id === n.id || edge.target.id === n.id) {
+        le.setAttribute('stroke', getColor(n.cluster));
+        le.setAttribute('stroke-width', '2');
+        le.setAttribute('opacity', '0.8');
+      } else {
+        le.setAttribute('opacity', '0.06');
+      }
+    });
+  });
+  g.addEventListener('mousemove', (ev) => positionTooltip(ev));
+  g.addEventListener('mouseleave', () => {
+    circle.setAttribute('opacity', '0.92');
+    circle.setAttribute('stroke-width', '0');
+    hideTooltip();
+    linkEls.forEach(({ el: le }) => {
+      le.setAttribute('stroke', 'rgba(30,111,245,0.18)');
+      le.setAttribute('stroke-width', '1.5');
+      le.setAttribute('opacity', '1');
+    });
+  });
+  g.addEventListener('click', () => {
+    window.location.href = `/blog/${n.id}`;
+  });
+
+  return { el: g, circle, node: n };
+});
+
+// Tooltip helpers
+function showTooltip(n, ev) {
+  ttCluster.textContent = n.cluster.charAt(0).toUpperCase() + n.cluster.slice(1);
+  ttCluster.style.color = getColor(n.cluster);
+  ttTitle.textContent = n.title;
+  ttExcerpt.textContent = n.excerpt.length > 120 ? n.excerpt.slice(0, 120) + '…' : n.excerpt;
+  ttMeta.textContent = `${n.date} · ${inboundMap[n.id] || 0} inbound links`;
+  tooltip.style.display = 'block';
+  positionTooltip(ev);
+}
+function positionTooltip(ev) {
+  const rect = container.getBoundingClientRect();
+  let x = ev.clientX - rect.left + 16;
+  let y = ev.clientY - rect.top - 10;
+  const tw = tooltip.offsetWidth || 300;
+  const th = tooltip.offsetHeight || 140;
+  if (x + tw > W - 8) x = ev.clientX - rect.left - tw - 16;
+  if (y + th > H - 8) y = ev.clientY - rect.top - th - 10;
+  tooltip.style.left = x + 'px';
+  tooltip.style.top  = y + 'px';
+}
+function hideTooltip() { tooltip.style.display = 'none'; }
+
+// ── Force simulation (pure JS, no D3 needed) ─────────────────────────────
+const ALPHA_DECAY = 0.02;
+const LINK_DIST   = 120;
+const LINK_STRENGTH = 0.08;
+const CHARGE      = -280;
+const CENTER_X    = W / 2;
+const CENTER_Y    = H / 2;
+const CENTER_STR  = 0.04;
+const COLLISION_PAD = 4;
+
+let alpha = 1;
+let animId;
+
+function tick() {
+  // Apply forces
+  // 1. Repulsion (charge)
+  for (let i = 0; i < simNodes.length; i++) {
+    for (let j = i + 1; j < simNodes.length; j++) {
+      const a = simNodes[i], b = simNodes[j];
+      const dx = b.x - a.x, dy = b.y - a.y;
+      const dist2 = dx * dx + dy * dy + 1;
+      const dist = Math.sqrt(dist2);
+      const force = CHARGE / dist2;
+      const fx = (dx / dist) * force * alpha;
+      const fy = (dy / dist) * force * alpha;
+      a.vx -= fx; a.vy -= fy;
+      b.vx += fx; b.vy += fy;
+    }
+  }
+
+  // 2. Link spring
+  simEdges.forEach(({ source: s, target: t }) => {
+    const dx = t.x - s.x, dy = t.y - s.y;
+    const dist = Math.sqrt(dx * dx + dy * dy) || 1;
+    const diff = (dist - LINK_DIST) * LINK_STRENGTH * alpha;
+    const fx = (dx / dist) * diff;
+    const fy = (dy / dist) * diff;
+    s.vx += fx; s.vy += fy;
+    t.vx -= fx; t.vy -= fy;
+  });
+
+  // 3. Center gravity
+  simNodes.forEach(n => {
+    n.vx += (CENTER_X - n.x) * CENTER_STR * alpha;
+    n.vy += (CENTER_Y - n.y) * CENTER_STR * alpha;
+  });
+
+  // 4. Collision
+  for (let i = 0; i < simNodes.length; i++) {
+    for (let j = i + 1; j < simNodes.length; j++) {
+      const a = simNodes[i], b = simNodes[j];
+      const minDist = nodeRadius(a) + nodeRadius(b) + COLLISION_PAD;
+      const dx = b.x - a.x, dy = b.y - a.y;
+      const dist = Math.sqrt(dx * dx + dy * dy) || 1;
+      if (dist < minDist) {
+        const push = (minDist - dist) / dist * 0.5;
+        const fx = dx * push, fy = dy * push;
+        a.x -= fx; a.y -= fy;
+        b.x += fx; b.y += fy;
+      }
+    }
+  }
+
+  // 5. Integrate + damp + bound
+  const margin = 24;
+  simNodes.forEach(n => {
+    n.vx *= 0.7; n.vy *= 0.7;
+    n.x += n.vx; n.y += n.vy;
+    const r = nodeRadius(n);
+    n.x = Math.max(r + margin, Math.min(W - r - margin, n.x));
+    n.y = Math.max(r + margin, Math.min(H - r - margin, n.y));
+  });
+
+  alpha = Math.max(0, alpha - ALPHA_DECAY * alpha);
+
+  render();
+  if (alpha > 0.001) {
+    animId = requestAnimationFrame(tick);
+  }
+}
+
+function render() {
+  linkEls.forEach(({ el: le, edge }) => {
+    le.setAttribute('x1', edge.source.x);
+    le.setAttribute('y1', edge.source.y);
+    le.setAttribute('x2', edge.target.x);
+    le.setAttribute('y2', edge.target.y);
+  });
+  nodeEls.forEach(({ el: g, node: n }) => {
+    g.setAttribute('transform', `translate(${n.x},${n.y})`);
+  });
+}
+
+// ── Pan & Zoom ────────────────────────────────────────────────────────────
+let scale = 1, panX = 0, panY = 0;
+let isPanning = false, lastPanX = 0, lastPanY = 0;
+
+const innerG = el('g');
+// Move all children into innerG
+while (svg.firstChild) innerG.appendChild(svg.firstChild);
+svg.appendChild(innerG);
+
+function applyTransform() {
+  innerG.setAttribute('transform', `translate(${panX},${panY}) scale(${scale})`);
+}
+
+svg.addEventListener('wheel', (ev) => {
+  ev.preventDefault();
+  const rect = svg.getBoundingClientRect();
+  const mx = ev.clientX - rect.left;
+  const my = ev.clientY - rect.top;
+  const delta = ev.deltaY > 0 ? 0.85 : 1.18;
+  const newScale = Math.min(4, Math.max(0.25, scale * delta));
+  panX = mx - (mx - panX) * (newScale / scale);
+  panY = my - (my - panY) * (newScale / scale);
+  scale = newScale;
+  applyTransform();
+}, { passive: false });
+
+svg.addEventListener('mousedown', (ev) => {
+  if (ev.target === svg || ev.target === innerG) {
+    isPanning = true;
+    lastPanX = ev.clientX - panX;
+    lastPanY = ev.clientY - panY;
+    svg.style.cursor = 'grabbing';
+  }
+});
+window.addEventListener('mousemove', (ev) => {
+  if (!isPanning) return;
+  panX = ev.clientX - lastPanX;
+  panY = ev.clientY - lastPanY;
+  applyTransform();
+});
+window.addEventListener('mouseup', () => {
+  isPanning = false;
+  svg.style.cursor = 'grab';
+});
+
+// Touch pan
+svg.addEventListener('touchstart', (ev) => {
+  if (ev.touches.length === 1) {
+    isPanning = true;
+    lastPanX = ev.touches[0].clientX - panX;
+    lastPanY = ev.touches[0].clientY - panY;
+  }
+}, { passive: true });
+svg.addEventListener('touchmove', (ev) => {
+  if (!isPanning || ev.touches.length !== 1) return;
+  panX = ev.touches[0].clientX - lastPanX;
+  panY = ev.touches[0].clientY - lastPanY;
+  applyTransform();
+}, { passive: true });
+svg.addEventListener('touchend', () => { isPanning = false; });
+
+// Resize
+const resizeObs = new ResizeObserver(() => {
+  W = container.offsetWidth;
+  H = container.offsetHeight;
+  if (alpha <= 0.001) render();
+});
+resizeObs.observe(container);
+
+// Reheat on double-click
+svg.addEventListener('dblclick', () => {
+  alpha = 0.4;
+  cancelAnimationFrame(animId);
+  tick();
+});
+
+// Start
+requestAnimationFrame(tick);
+</script>

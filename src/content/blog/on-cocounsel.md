@@ -44,10 +44,10 @@ But for High Street practices handling personal injury, family, conveyancing, or
 
 That’s why we focus on fully offline, on-premises deployments. Our systems run entirely on your hardware or private VPC/air-gapped networks: no data ever leaves your perimeter, no third-party APIs, no anonymisation gymnastics required. Custom [RAG pipelines](/blog/what-is-rag) pull answers exclusively from your documents and knowledge base, and we can layer on [agentic behaviours](/blog/what-is-openclaw) (proactive monitoring, task execution, autonomous drafting/responses) inspired by open frameworks-all local, all under your control.
 
-The efficiency is comparable (research, summarisation, first drafts, compliance checks), but the risk profile is fundamentally different. No CLOUD Act exposure, no evolving third-party terms, no "trust us" on zero-retention.
+The efficiency is comparable (research, summarisation, first drafts, compliance checks), but the risk profile is fundamentally different. No CLOUD Act exposure, no evolving third-party terms, no “trust us” on zero-retention.
 
 If you’re weighing tools like CoCounsel and wondering whether the convenience outweighs the confidentiality questions, we’re happy to talk through what a truly private setup looks like for your firm-no hard sell, just practical comparison.
 
 * * *
 
-*JD Fortress AI builds secure, on-premises RAG and agent solutions for UK businesses in regulated sectors. If you’re exploring always-on, private AI teammates, get in touch for a confidential discussion - no pitch, just practical talk.*
+*JD Fortress AI builds secure, on-premises RAG and agent solutions for UK businesses in regulated sectors. If you’re exploring always-on, private AI teammates, get in touch for a confidential discussion — no pitch, just practical talk.*

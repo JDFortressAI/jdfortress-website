@@ -1,10 +1,14 @@
 ---
 import Layout from '../../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+
+const blogPosts = await getCollection('blog');
+const articleCount = blogPosts.length;
 ---
 
 <Layout
   title="JD Fortress Labs - Secure AI in Action"
-  description="Real-world experiments showing what&#x2019;s possible when security, simplicity, and data sovereignty meet. Bible Fortress and FortiCIS."
+  description="Real-world experiments showing what&#x2019;s possible when security, simplicity, and data sovereignty meet. Bible Fortress and the Knowledge Graph."
 >
 
   <!-- HERO -->
@@ -60,41 +64,40 @@ import Layout from '../../layouts/Layout.astro';
         </div>
       </div>
 
-      <!-- FortiCIS -->
-      <div class="labs-card-grid" style="background:#F0F4FF; border:1px solid #e0e8f5; border-radius:16px; padding:48px; display:grid; grid-template-columns:1fr auto; gap:32px; align-items:start;">
-        <div>
+      <!-- Knowledge Graph -->
+      <div class="labs-card-grid" style="background:#080E1E; border:1px solid rgba(30,111,245,0.25); border-radius:16px; padding:48px; display:grid; grid-template-columns:1fr auto; gap:32px; align-items:start; position:relative; overflow:hidden;">
+        <!-- Subtle grid bg -->
+        <div aria-hidden="true" style="position:absolute; inset:0; background-image:radial-gradient(rgba(30,111,245,0.08) 1px, transparent 1px); background-size:28px 28px; pointer-events:none;"></div>
+        <div style="position:relative;">
           <div style="display:flex; align-items:center; gap:12px; margin-bottom:20px;">
-            <div style="width:48px; height:48px; background:#0F2041; border-radius:10px; display:flex; align-items:center; justify-content:center;">
-              <span style="font-size:1.4rem;">🛡️</span>
+            <div style="width:48px; height:48px; background:#1E6FF5; border-radius:10px; display:flex; align-items:center; justify-content:center;">
+              <span style="font-size:1.4rem;">🕸️</span>
             </div>
             <div>
-              <p style="color:#1E6FF5; font-size:0.8rem; font-weight:600; letter-spacing:0.1em; text-transform:uppercase; margin:0 0 4px;">Live Project</p>
-              <h2 style="color:#0D141A; font-size:1.4rem; font-weight:700; margin:0;">FortiCIS</h2>
+              <p style="color:#1E6FF5; font-size:0.8rem; font-weight:600; letter-spacing:0.1em; text-transform:uppercase; margin:0 0 4px;">Live Demo</p>
+              <h2 style="color:#fff; font-size:1.4rem; font-weight:700; margin:0;">Knowledge Graph</h2>
             </div>
           </div>
-          <p style="color:#56585E; font-size:1rem; line-height:1.8; margin:0 0 16px;">
-            <strong style="color:#0D141A;">Your Secure Companion for CIS Benchmarks</strong>
+          <p style="color:rgba(255,255,255,0.85); font-size:1rem; line-height:1.8; margin:0 0 16px;">
+            <strong style="color:#fff;">Every Article. Every Connection. Live.</strong>
           </p>
-          <p style="color:#56585E; font-size:0.95rem; line-height:1.8; margin:0 0 24px;">
-            An intelligent RAG-driven assistant that helps IT and security teams instantly access, interpret, and apply the latest CIS Benchmarks - from a single, secure interface. Ask about specific configurations, get verified, cited answers. No hallucination. No drift.
+          <p style="color:rgba(255,255,255,0.6); font-size:0.95rem; line-height:1.8; margin:0 0 24px;">
+            An interactive force-directed graph mapping all {articleCount} JD Fortress blog articles &#x2014; sized by influence, coloured by topic cluster, linked by the cross-references in the prose. Built the way Karpathy describes it: the AI reads once, the structure compounds. Hover to preview. Click to read.
           </p>
           <div style="display:flex; gap:16px; flex-wrap:wrap;">
-            <a href="https://cis.jdfortress.com" target="_blank" rel="noopener" style="background:#1E6FF5; color:#fff; padding:10px 20px; border-radius:6px; text-decoration:none; font-size:0.9rem; font-weight:600;" onmouseover="this.style.background='#1558cc'" onmouseout="this.style.background='#1E6FF5'">
-              Visit FortiCIS →
-            </a>
-            <a href="mailto:contact@jdfortress.com?subject=FortiCIS Demo Request" style="background:transparent; color:#1E6FF5; border:1px solid #1E6FF5; padding:10px 20px; border-radius:6px; text-decoration:none; font-size:0.9rem; font-weight:600;" onmouseover="this.style.background='#F0F4FF'" onmouseout="this.style.background='transparent'">
-              Request Demo Credentials
+            <a href="/labs/knowledge-graph" style="background:#1E6FF5; color:#fff; padding:10px 20px; border-radius:6px; text-decoration:none; font-size:0.9rem; font-weight:600;" onmouseover="this.style.background='#1558cc'" onmouseout="this.style.background='#1E6FF5'">
+              Explore the graph →
             </a>
           </div>
         </div>
-        <div style="background:#0F2041; border-radius:10px; padding:20px 24px; min-width:180px; text-align:center;">
-          <p style="color:rgba(255,255,255,0.5); font-size:0.75rem; text-transform:uppercase; letter-spacing:0.1em; margin:0 0 8px;">Built With</p>
-          <div style="color:rgba(255,255,255,0.8); font-size:0.85rem; line-height:2; text-align:left;">
-            <div>✓ RAG Architecture</div>
-            <div>✓ CIS Benchmark Data</div>
-            <div>✓ Cited Answers</div>
-            <div>✓ Secure Interface</div>
-            <div>✓ On-Premise Stack</div>
+        <div style="background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.08); border-radius:10px; padding:20px 24px; min-width:180px; text-align:center; position:relative;">
+          <p style="color:rgba(255,255,255,0.4); font-size:0.75rem; text-transform:uppercase; letter-spacing:0.1em; margin:0 0 8px;">What you get</p>
+          <div style="color:rgba(255,255,255,0.75); font-size:0.85rem; line-height:2; text-align:left;">
+            <div>✓ {articleCount} articles mapped</div>
+            <div>✓ 5 topic clusters</div>
+            <div>✓ Force-directed layout</div>
+            <div>✓ Hover previews</div>
+            <div>✓ Zoom &amp; pan</div>
           </div>
         </div>
       </div>
@@ -145,7 +148,7 @@ import Layout from '../../layouts/Layout.astro';
         These aren’t side projects.
       </h2>
       <p style="color:rgba(255,255,255,0.7); font-size:1.05rem; line-height:1.8; margin:0 0 36px;">
-        They’re proof that secure, private AI is not just possible — it’s already running. When we say we can deploy this for your business, we’ve done it ourselves. Three times. With real users.
+        They&#x2019;re proof that secure, private AI is not just possible &#x2014; it&#x2019;s already running. When we say we can deploy this for your business, we&#x2019;ve done it ourselves. Three times. With real users.
       </p>
       <a href="/contact" style="background:#1E6FF5; color:#fff; padding:14px 28px; border-radius:8px; text-decoration:none; font-weight:600; font-size:1rem;" onmouseover="this.style.background='#1558cc'" onmouseout="this.style.background='#1E6FF5'">
         Let’s build yours →
