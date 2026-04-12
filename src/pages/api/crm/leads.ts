@@ -1,6 +1,6 @@
 import type { APIRoute } from "astro";
 import { verifySessionToken, SESSION_COOKIE } from "../../../lib/auth";
-import { getStore, getAllLeads, getLead, createLead, updateLead } from "../../../lib/crm";
+import { getStore, getAllLeads, createLead, updateLead } from "../../../lib/crm";
 import type { LeadInput } from "../../../lib/crm";
 
 function getToken(request: Request): string | undefined {

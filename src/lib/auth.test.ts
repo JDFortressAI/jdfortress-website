@@ -3,22 +3,7 @@ import {
   verifyPassword,
   createSessionToken,
   verifySessionToken,
-  ALLOWED_EMAILS,
 } from "./auth";
-
-describe("ALLOWED_EMAILS", () => {
-  it("contains joseph@jdfortress.com", () => {
-    expect(ALLOWED_EMAILS).toContain("joseph@jdfortress.com");
-  });
-
-  it("contains dev@jdfortress.com", () => {
-    expect(ALLOWED_EMAILS).toContain("dev@jdfortress.com");
-  });
-
-  it("contains exactly two addresses", () => {
-    expect(ALLOWED_EMAILS).toHaveLength(2);
-  });
-});
 
 describe("verifyPassword", () => {
   it("returns true for joseph with correct password", async () => {

@@ -45,26 +45,6 @@ export interface CandidateStore {
   candidates: Candidate[];
 }
 
-export const SOURCE_LABELS: Record<CandidateSource, string> = {
-  linkedin:          "LinkedIn",
-  companies_house:   "Companies House",
-  web_search:        "Web Search",
-  legal_directory:   "Legal Directory",
-  news:              "News",
-  referral:          "Referral",
-  other:             "Other",
-};
-
-export const VERTICAL_LABELS: Record<CandidateVertical, string> = {
-  law_firm:       "Law Firm",
-  in_house_legal: "In-House Legal",
-  finance:        "Finance",
-  healthcare:     "Healthcare",
-  charity:        "Charity",
-  enterprise:     "Enterprise",
-  other:          "Other",
-};
-
 // ── Store operations ─────────────────────────────────────────
 
 export function getAllCandidates(store: CandidateStore): Candidate[] {

@@ -2,7 +2,7 @@ const SALT = "jdfortress-internal-2026";
 const JWT_SECRET = "6ddda4eceb06a789b35765cfe7a6bf98109e28e0fe367bbde3f670b9beb50ca4";
 const SESSION_DURATION_MS = 30 * 24 * 60 * 60 * 1000; // 30 days
 
-export const USERS: Record<string, { hash: string; name: string }> = {
+const USERS: Record<string, { hash: string; name: string }> = {
   "joseph@jdfortress.com": {
     hash: "3dd0787e65fe9b735924839c454163a046a2c3a51be6f9f7835aea1c6a5e427a",
     name: "Joseph",
@@ -13,7 +13,6 @@ export const USERS: Record<string, { hash: string; name: string }> = {
   },
 };
 
-export const ALLOWED_EMAILS = Object.keys(USERS);
 
 async function sha256hex(input: string): Promise<string> {
   const buf = await crypto.subtle.digest(
