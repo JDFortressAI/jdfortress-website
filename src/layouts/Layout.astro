@@ -26,6 +26,7 @@ const canonicalUrl = canonical || new URL(Astro.url.pathname, 'https://jdfortres
   <meta property="og:description" content={description} />
   <meta property="og:type" content="website" />
   {noindex && <meta name="robots" content="noindex, nofollow" />}
+  <link rel="alternate" type="application/rss+xml" title="JD Fortress AI — Blog" href="/rss.xml" />
 </head>
 <body style="background:#fff; color:#0D141A; margin:0; padding:0; font-family:'Inter Variable','Inter',system-ui,sans-serif;">
 
