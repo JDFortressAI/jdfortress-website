@@ -177,8 +177,6 @@ If you're a UK business that takes data sovereignty seriously, now is the time t
 
 ---
 
-*This post is published for JD Fortress AI's blog. For the full "Outcome Primitives" paper and technical appendix, contact us directly.*
 
-*© 2026 JD Fortress AI. All rights reserved. This content may not be reproduced without permission.*
 
 *JD Fortress AI builds secure, on-premises RAG and agent solutions for UK businesses in regulated sectors. If you're exploring always-on, private AI teammates, get in touch for a confidential discussion — no pitch, just practical talk.*
