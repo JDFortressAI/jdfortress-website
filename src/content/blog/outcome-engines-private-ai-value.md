@@ -169,9 +169,9 @@ Outcome Primitives finally give the industry a scoreboard. Download the paper, a
 
 ## What This Means for Your Business
 
-This isn't theoretical anymore. The [outcome engines](/) are here, and the [UK law firms](why-law-firms-cant-afford-cloud-ai.md) that ignore this shift will find themselves on the wrong side of the curve.
+This isn't theoretical anymore. The [outcome engines](/) are here, and the [UK law firms](why-law-firms-cant-afford-cloud-ai) that ignore this shift will find themselves on the wrong side of the curve.
 
-We've been saying for a while now that the [memory wall](the-memory-wall.md) isn't just a hardware problem—it's a strategic one. You can't run enterprise AI at scale without private infrastructure. It's that simple.
+We've been saying for a while now that the [memory wall](the-memory-wall) isn't just a hardware problem—it's a strategic one. You can't run enterprise AI at scale without private infrastructure. It's that simple.
 
 If you're a UK business that takes data sovereignty seriously, now is the time to stop experimenting with cloud AI and start building outcome engines that stay inside your walls.
 
