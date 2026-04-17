@@ -169,7 +169,7 @@ Outcome Primitives finally give the industry a scoreboard. Download the paper, a
 
 ## What This Means for Your Business
 
-This isn't theoretical anymore. The [outcome engines](/) are here, and the [UK law firms](why-law-firms-cant-afford-cloud-ai) that ignore this shift will find themselves on the wrong side of the curve.
+This isn't theoretical anymore. The [outcome engines](https://baejoseph.com/calculator) are here, and the [UK law firms](why-law-firms-cant-afford-cloud-ai) that ignore this shift will find themselves on the wrong side of the curve.
 
 We've been saying for a while now that the [memory wall](the-memory-wall) isn't just a hardware problem—it's a strategic one. You can't run enterprise AI at scale without private infrastructure. It's that simple.
 
