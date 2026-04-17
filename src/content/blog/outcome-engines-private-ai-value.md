@@ -140,7 +140,7 @@ Cloud outcome engines create an impossible bind:
 - You need E2+ evidence trails
 - **But every trace ends up in a foreign data center**
 
-The hardware and sovereignty realities echo what we've been saying about the Memory Wall and capability sovereignty: bandwidth, cost, and compliance all point the same direction — **private infrastructure**.
+The hardware and sovereignty realities echo what we've been saying about [the Memory Wall](../the-memory-wall.md) and [capability sovereignty](../capability-sovereignty.md): bandwidth, cost, and compliance all point the same direction — **private infrastructure**.
 
 ### The JD Fortress AI Difference
 
@@ -167,14 +167,18 @@ Outcome Primitives finally give the industry a scoreboard. Download the paper, a
 
 ---
 
-## Call to Action
+## What This Means for Your Business
 
-If you're a UK law firm, financial institution, or regulated organisation ready to move from copilots to outcome engines without compliance nightmares, get in touch.
+This isn't theoretical anymore. The [outcome engines](/) are here, and the [UK law firms](../why-law-firms-cant-afford-cloud-ai.md) that ignore this shift will find themselves on the wrong side of the curve.
 
-No pitch. No pressure. Just a conversation about private AI that actually stays inside your walls.
+We've been saying for a while now that the [memory wall](../the-memory-wall.md) isn't just a hardware problem—it's a strategic one. You can't run enterprise AI at scale without private infrastructure. It's that simple.
+
+If you're a UK business that takes data sovereignty seriously, now is the time to stop experimenting with cloud AI and start building outcome engines that stay inside your walls.
 
 ---
 
 *This post is published for JD Fortress AI's blog. For the full "Outcome Primitives" paper and technical appendix, contact us directly.*
 
 *© 2026 JD Fortress AI. All rights reserved. This content may not be reproduced without permission.*
+
+*JD Fortress AI builds secure, on-premises RAG and agent solutions for UK businesses in regulated sectors. If you're exploring always-on, private AI teammates, get in touch for a confidential discussion — no pitch, just practical talk.*
