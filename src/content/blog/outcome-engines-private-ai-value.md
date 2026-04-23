@@ -5,8 +5,6 @@ excerpt: "Silicon Valley finally admits SaaS is commoditising. The real money is
 author: "JD Fortress AI"
 ---
 
-## Introduction: The Tweet That Says Everything
-
 On April 16, 2026, Portal AI CTO Hamudi Naanaa dropped a thread that crystallised what the entire AI industry has been avoiding saying out loud. Reacting to Sequoia’s “Services: The New Software” thesis, Naanaa’s response wasn’t just another opinion piece—it was a reality check for anyone still betting on cloud-based AI for enterprise value.
 
 Here’s what Silicon Valley is finally admitting: SaaS has commoditised software. The real money is in AI that sells **finished outcomes**—closed books, won grants, compliant filings, shipped stores—at software margins. But here’s the part nobody in the hype cycle wants to say: you can’t run outcome engines at enterprise scale if every prompt and artefact is leaking to OpenAI, Anthropic, or whoever owns the model this week.
@@ -17,7 +15,7 @@ Here’s what Silicon Valley is finally admitting: SaaS has commoditised softwar
 
 ---
 
-## Section 1: Sequoia’s Services Thesis – The Shift Every CTO Needs to Face
+## Sequoia's Services Thesis
 
 Recap the March 2026 Sequoia essay for those who missed it: for every £1 spent on software, £6 still goes to services. SaaS ate the software pound; AI now eats the services pound — but only if you sell *work delivered*, not another copilot.
 
@@ -29,7 +27,7 @@ The question isn’t *if* you’ll adopt AI. The question is: will you adopt an 
 
 ---
 
-## Section 2: You Can’t Sell Outcomes If You Can’t Measure Them (And Cloud Makes Measurement Dangerous)
+## You Can't Sell Outcomes If You Can't Measure Them
 
 Let me quote the tweet that started this conversation:
 
@@ -47,7 +45,7 @@ This isn’t a technical problem. It’s a governance problem. Cloud AI makes go
 
 ---
 
-## Section 3: Outcome Primitives – The Only Framework That Actually Works for Enterprise
+## Outcome Primitives – The Only Framework That Actually Works
 
 Portal AI and Everwhy AI published a paper in March 2026 that finally gives the industry a scoring system: **“Outcome Primitives: A Framework for Measuring AGI Value in the World.”**
 
@@ -89,7 +87,7 @@ This is how you price AI. Not by tokens. By hours saved.
 
 ---
 
-## Section 4: The Numbers – What 1,300 Agents Really Delivered
+## What 1,300 Agents Really Delivered
 
 Let me give you the methodology so you know this isn’t marketing:
 
@@ -113,7 +111,7 @@ You can’t run a compliance engine on OpenAI’s infrastructure. You can’t bu
 
 ---
 
-## Section 5: Strategic Implications – Who Wins When Outcomes Meet Regulation
+## Who Wins When Outcomes Meet Regulation
 
 ### Builders & CTOs
 
@@ -131,7 +129,7 @@ This isn’t anti-cloud. This is pro-compliance. There’s a difference.
 
 ---
 
-## Section 6: The Private AI Advantage – Why On-Premises Is Now Non-Negotiable
+## Why On-Premises Is Now Non-Negotiable
 
 Cloud outcome engines create an impossible bind:
 
@@ -155,7 +153,7 @@ This isn’t a feature. This is the foundation for everything that follows.
 
 ---
 
-## Conclusion: Choose Your Margin
+## Choose Your Margin
 
 The tweet got it right: **choose software margins (racing the labs to zero) or services margins (replacing the £6 trillion inefficient economy).**
 
@@ -169,7 +167,7 @@ Outcome Primitives finally give the industry a scoreboard. Download the paper, a
 
 ## What This Means for Your Business
 
-This isn’t theoretical anymore. The [outcome engines](https://jdfortress.com/calculator) are here, and the [UK law firms](why-law-firms-cant-afford-cloud-ai) that ignore this shift will find themselves on the wrong side of the curve.
+This isn’t theoretical anymore. The [outcome engines](https://jdfortress.com/calculator) are here, and the [UK law firms](/blog/why-law-firms-cant-afford-cloud-ai) that ignore this shift will find themselves on the wrong side of the curve.
 
 We’ve been saying for a while now that the [memory wall](/blog/the-memory-wall) isn’t just a hardware problem—it’s a strategic one. You can’t run enterprise AI at scale without private infrastructure. It’s that simple.
 
