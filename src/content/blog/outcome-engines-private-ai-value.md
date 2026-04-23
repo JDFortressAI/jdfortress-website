@@ -15,7 +15,7 @@ Here’s what Silicon Valley is finally admitting: SaaS has commoditised softwar
 
 ---
 
-## Sequoia's Services Thesis
+## Sequoia’s Services Thesis
 
 Recap the March 2026 Sequoia essay for those who missed it: for every £1 spent on software, £6 still goes to services. SaaS ate the software pound; AI now eats the services pound — but only if you sell *work delivered*, not another copilot.
 
@@ -27,7 +27,7 @@ The question isn’t *if* you’ll adopt AI. The question is: will you adopt an 
 
 ---
 
-## You Can't Sell Outcomes If You Can't Measure Them
+## You Can’t Sell Outcomes If You Can’t Measure Them
 
 Let me quote the tweet that started this conversation:
 

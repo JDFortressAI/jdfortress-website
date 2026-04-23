@@ -102,13 +102,13 @@ The consensus: this isn’t hype. It’s a genuine architectural breakthrough th
 
 ## Market Reaction: The Memory Chip Sell-Off
 
-The TurboQuant announcement triggered an unexpected, swift market reaction that financial commentators dubbed "Google's DeepSeek moment" — referencing the 2025 efficiency breakthrough that caused similar panic in AI hardware stocks.
+The TurboQuant announcement triggered an unexpected, swift market reaction that financial commentators dubbed “Google’s DeepSeek moment” — referencing the 2025 efficiency breakthrough that caused similar panic in AI hardware stocks.
 
 Within days of the March 2026 paper release, memory semiconductor stocks saw a multi-billion dollar sell-off. Samsung Electronics, SK Hynix, and Micron Technology all posted significant declines — with some reports estimating over $90 billion in evaporated market value. Micron fell more than 7%, SK Hynix dropped roughly 6%.
 
 **The logic**: analysts feared TurboQuant threatened the long-term demand for high-bandwidth memory (HBM), the specialised memory that commands premium pricing in AI data centres. If software compression can reduce memory requirements by 6×, does the industry need as much HBM?
 
-**The recovery**: within days, some memory stocks rebounded after analysts at firms like Bernstein labelled the fears overdone. The consensus argument: TurboQuant only targets inference stack KV cache memory, not training workloads. Plus, Jevons' Paradox likely applies — higher efficiency drives increased overall usage, not decreased demand.
+**The recovery**: within days, some memory stocks rebounded after analysts at firms like Bernstein labelled the fears overdone. The consensus argument: TurboQuant only targets inference stack KV cache memory, not training workloads. Plus, Jevons’ Paradox likely applies — higher efficiency drives increased overall usage, not decreased demand.
 
 **What this signals**: the financial markets took TurboQuant seriously. Not as incremental improvement, but as a potential structural shift in AI hardware economics. For businesses: infrastructure decisions made 12 months ago are already outdated. The companies that adapted fastest to efficiency breakthroughs will compound their advantages.
 
