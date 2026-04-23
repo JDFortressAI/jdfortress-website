@@ -5,10 +5,6 @@ excerpt: "A 27B open-weight model that ties Claude 4.5 Opus on coding benchmarks
 author: "JD Fortress AI"
 ---
 
-A colleague in legal tech sent me a screenshot last week that changed how I think about what’s possible on-premises. He’d spent a weekend running benchmarks on Qwen3.6-27B hosted on his own server, and the results left him quietly astonished. A 27-billion-parameter dense model running entirely offline, outperforming the previous open-source flagship that has fifteen times the parameters.
-
-That was before yesterday’s release.
-
 On April 22, Qwen released Qwen3.6-27B as fully open weights under an Apache 2.0 licence. It’s a multimodal dense model at the scale the community has been asking for, and the numbers are remarkable.
 
 On SWE-bench Verified — widely regarded as the gold standard for coding agent evaluation — it scores 77.2, edging past Qwen3.5-397B-A17B’s 76.2. On SkillsBench, it hits 48.2 against the previous generation’s 30.0, and ties Claude 4.5 Opus at 59.3 on Terminal-Bench 2.0. It even handles multimodal reasoning, natively understanding images alongside text.
@@ -57,7 +53,7 @@ What’s changed is that you no longer sacrifice capability for sovereignty. The
 
 The [memory wall](/blog/the-memory-wall) hasn’t disappeared. Hardware costs are still high. But the capability you get per pound of hardware has jumped in a single generation. And that trajectory is accelerating.
 
-This isn’t the future. This is Tuesday.
+This isn’t the future. This is Friday.
 
 * * *
 
