@@ -1,6 +1,6 @@
 ---
 title: "What is RAG and Why Does It Matter for Your Business?"
-date: 2026-02-10
+date: 2026-04-28
 excerpt: "Retrieval-Augmented Generation lets AI answer questions using your own documents. Here’s what it means, how it works, and why it’s the missing piece for businesses that can’t share their data with public AI."
 author: JD Fortress AI
 ---

@@ -1,6 +1,6 @@
 ---
 title: "Qwen3.6-27B: The Gap Between Cloud SOTA and Local LLMs Has Closed"
-date: 2026-04-24
+date: 2026-04-28
 excerpt: "A 27B open-weight model that ties Claude 4.5 Opus on coding benchmarks and runs entirely offline. The performance gap between cloud AI and on-premises models has effectively closed for most business workloads."
 author: "JD Fortress AI"
 ---

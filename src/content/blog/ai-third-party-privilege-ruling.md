@@ -1,6 +1,6 @@
 ---
 title: "When AI Becomes the Third Party: The US Ruling Every UK Lawyer Needs to Read"
-date: 2026-03-03
+date: 2026-04-28
 excerpt: "A US federal court just stripped legal privilege from documents created in a public AI tool. The reasoning maps directly onto UK practice - and no one should wait for a domestic equivalent."
 author: "JD Fortress AI"
 ---

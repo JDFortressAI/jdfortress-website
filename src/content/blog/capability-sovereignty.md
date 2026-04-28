@@ -1,6 +1,6 @@
 ---
 title: "Capability Sovereignty: What Anthropic’s April Crackdown Really Means"
-date: 2026-04-10
+date: 2026-04-28
 excerpt: "Anthropic’s April 5th policy update targeted third-party agentic wrappers — tools like OpenClaw and Hermes Agent that tens of thousands of developers and businesses depend on. The community’s anger is justified. But the deeper lesson isn’t about Anthropic."
 author: "JD Fortress AI"
 ---

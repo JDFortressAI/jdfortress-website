@@ -1,6 +1,6 @@
 ---
 title: "When the Guardrail Breaks: What the Mexico Hack Means for Enterprise AI"
-date: 2026-03-17
+date: 2026-04-28
 excerpt: "A hacker spent a month using Claude to attack the Mexican government. 195 million taxpayer records. Voter data. Government credentials. The AI refused at first — then it didn’t. Here’s what that means for how enterprises should be thinking about AI security."
 author: "JD Fortress AI"
 ---

@@ -1,6 +1,6 @@
 ---
 title: "Outcome Engines Are the Next $1T Play – But Only Private On-Prem AI Can Deliver Verifiable Value"
-date: 2026-04-21
+date: 2026-04-28
 excerpt: "Silicon Valley finally admits SaaS is commoditising. The real money is in AI that sells finished outcomes. But you can’t run outcome engines at enterprise scale if every prompt leaks to the cloud. Here’s why private on-prem AI is now non-negotiable for UK enterprises."
 author: "JD Fortress AI"
 ---

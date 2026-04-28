@@ -1,6 +1,6 @@
 ---
 title: "The 1,500-Year-Old Code of Ethics at the Heart of SQLite"
-date: 2026-03-24
+date: 2026-04-28
 excerpt: "The most deployed database software on the planet runs on a 6th-century Christian monastic code, voluntarily adopted as a one-way covenant. We think that’s worth talking about."
 author: "JD Fortress AI"
 ---

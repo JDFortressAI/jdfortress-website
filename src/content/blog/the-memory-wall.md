@@ -1,6 +1,6 @@
 ---
 title: "The Memory Wall: Why AI Hardware Is Getting More Expensive Before It Gets Cheaper"
-date: 2026-02-13
+date: 2026-04-28
 excerpt: "AI memory is sold out. Prices jumped more than 50% in a single quarter. The hyperscalers are first in line, and they’re taking most of the supply. Here’s what that means if you’re planning private AI infrastructure."
 author: "JD Fortress AI"
 ---

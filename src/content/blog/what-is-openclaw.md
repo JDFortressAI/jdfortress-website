@@ -1,6 +1,6 @@
 ---
 title: "OpenClaw Changed My Life — And It’s About to Change How We Build AI for Businesses"
-date: 2026-02-17
+date: 2026-04-28
 excerpt: "We’ve tracked this project from its early ClaudeBot days through Moltbot and now OpenClaw. What started as a quirky personal assistant has become the most compelling proof yet that autonomous, local AI agents are ready for real work. Here’s why we’re paying close attention."
 author: "JD Fortress AI"
 ---
