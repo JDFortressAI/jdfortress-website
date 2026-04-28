@@ -1,6 +1,6 @@
 ---
 title: "TurboQuant: The Bandwidth Breakthrough That Changes AI Economics"
-date: 2026-04-28
+date: 2026-04-17
 excerpt: "Google’s TurboQuantization compresses AI memory access 6× with zero quality loss. For CTOs: the bottleneck just shifted from ‘can we fit the model’ to ‘can we fit the context’ — and now the answer is yes."
 author: "JD Fortress AI"
 ---

@@ -1,6 +1,6 @@
 ---
 title: "Cache Rules Everything: A Practical Guide to Prompt Caching for Enterprise AI"
-date: 2026-04-28
+date: 2026-03-13
 excerpt: "Part two in our series on context engineering. Prompt caching is the mechanism that makes long-running AI agents economically viable — and breaking it is easier than you think."
 author: "JD Fortress AI"
 ---

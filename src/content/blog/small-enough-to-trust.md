@@ -1,6 +1,6 @@
 ---
 title: "Small Enough to Trust: What NanoClaw Gets Right About Private AI"
-date: 2026-04-28
+date: 2026-03-10
 excerpt: "Most enterprise AI is a black box you’re asked to simply trust. A project called NanoClaw takes a different view - and it points toward something important about how serious AI deployments should be built."
 author: "JD Fortress AI"
 ---

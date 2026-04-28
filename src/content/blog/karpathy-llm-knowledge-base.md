@@ -1,6 +1,6 @@
 ---
 title: "The Knowledge Base That the Internet Stopped and Read"
-date: 2026-04-28
+date: 2026-04-14
 excerpt: "Andrej Karpathy’s April 2026 post on LLM knowledge bases attracted 53,000 likes, 97,000 bookmarks, and a wave of open-source tools built overnight. Here’s what he described, and what it actually means for businesses."
 author: "JD Fortress AI"
 ---

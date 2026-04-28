@@ -1,6 +1,6 @@
 ---
 title: "Accidentally More Open Than OpenAI"
-date: 2026-04-28
+date: 2026-04-07
 excerpt: "A missing .npmignore entry in Anthropic’s npm package accidentally published 512,000 lines of Claude Code’s source. Within hours, the community had forked it 41,500 times and declared Anthropic more open than OpenAI."
 author: "JD Fortress AI"
 ---

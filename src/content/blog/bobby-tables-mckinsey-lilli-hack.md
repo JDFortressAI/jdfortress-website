@@ -1,6 +1,6 @@
 ---
 title: "Little Bobby Tables Comes for McKinsey"
-date: 2026-04-28
+date: 2026-03-31
 excerpt: "McKinsey’s AI platform was breached in two hours by an exploit first documented in 1998. This wasn’t an AI problem - and that’s precisely what makes it alarming."
 author: "JD Fortress AI"
 ---

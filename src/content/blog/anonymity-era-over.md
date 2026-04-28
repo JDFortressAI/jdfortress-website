@@ -1,6 +1,6 @@
 ---
 title: "The Anonymity Era Is Over: What a £1 Deanonymisation Attack Means for Your Data"
-date: 2026-04-28
+date: 2026-03-20
 excerpt: "Last month, researchers from ETH Zurich and Anthropic published a paper that makes uncomfortable reading. They built an AI pipeline that unmasks anonymous internet users with 67% accuracy and 90% precision — for less than the cost of a coffee."
 author: "JD Fortress AI"
 ---

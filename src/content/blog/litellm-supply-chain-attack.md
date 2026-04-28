@@ -1,6 +1,6 @@
 ---
 title: "The Fork Bomb That Saved Thousands of Developers"
-date: 2026-04-28
+date: 2026-04-03
 excerpt: "On 24 March, a bug in malware hidden inside a popular AI library accidentally crashed the machine of the developer who discovered it - and in doing so, exposed a supply chain attack that could otherwise have run undetected for weeks."
 author: "JD Fortress AI"
 ---

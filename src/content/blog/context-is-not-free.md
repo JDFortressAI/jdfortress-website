@@ -1,6 +1,6 @@
 ---
 title: "Context Is Not Free: The Engineering Problem at the Heart of Enterprise RAG"
-date: 2026-04-28
+date: 2026-01-13
 excerpt: "Every time context windows grow larger, someone declares RAG obsolete. They’re wrong - and the research explains exactly why dumping everything into a model’s context is a costly mistake."
 author: "JD Fortress AI"
 ---

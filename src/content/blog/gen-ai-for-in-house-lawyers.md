@@ -1,6 +1,6 @@
 ---
 title: "From Stretched to Superhuman: What Generative AI Actually Does for the In-House Lawyer"
-date: 2026-04-28
+date: 2026-01-20
 excerpt: "Most in-house legal teams are one or two people carrying the workload of ten. Generative AI doesn’t replace the lawyer’s judgment — it replaces the hours of work that came before the judgment started."
 author: "JD Fortress AI"
 ---

@@ -1,6 +1,6 @@
 ---
 title: "\u2018We See Everything\u2019: Meta\u2019s Smart Glasses Scandal and What It Tells You About Cloud AI"
-date: 2026-04-28
+date: 2026-03-27
 excerpt: "Workers in Nairobi describe intimate footage from Meta Ray-Ban glasses — bathroom visits, sex scenes, private conversations. The ICO is asking questions. The issue is not Meta specifically. It is how cloud AI works."
 author: "JD Fortress AI"
 ---

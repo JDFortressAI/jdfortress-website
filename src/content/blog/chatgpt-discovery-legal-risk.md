@@ -1,6 +1,6 @@
 ---
 title: "ChatGPT Won’t Forget: The Legal Discovery Risk Every UK Business Should Understand"
-date: 2026-04-28
+date: 2026-01-27
 excerpt: "A US court has ordered OpenAI to hand over 20 million ChatGPT conversations. The case started as a copyright dispute. The implications reach every business that uses cloud AI for anything sensitive."
 author: "JD Fortress AI"
 ---
